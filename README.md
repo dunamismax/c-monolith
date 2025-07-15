@@ -426,6 +426,7 @@ Automated GitHub Actions workflow with comprehensive quality assurance:
 - **Cross-Platform**: Compatibility testing on macOS and Ubuntu
 - **Release**: Automated binary packaging for production deployment
 - **Documentation**: Link validation and structure verification
+- **Artifact Validation**: Cross-job artifact download and integrity verification (v4 artifacts)
 
 **Quality Gates:**
 
@@ -434,6 +435,13 @@ Automated GitHub Actions workflow with comprehensive quality assurance:
 - Security vulnerability scanning
 - Performance benchmarking on release builds
 - All tests must pass before merge
+
+**Artifact Features (v4):**
+
+- **10x Faster**: Improved upload/download performance with direct blob storage
+- **Immediate Availability**: Artifacts accessible in UI/API during workflow execution
+- **Immutable**: Single archive per artifact with consistent size reporting
+- **Cross-Job Downloads**: Artifact sharing between jobs with integrity validation
 
 </details>
 

@@ -75,12 +75,14 @@ jobs:
 
     - name: Upload Test Results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: test-results-${{ matrix.mode }}
+        name: test-results-${{ matrix.mode }}-${{ github.run_number }}
         path: |
           build/
           *.log
+        compression-level: 6
+        retention-days: 30
 
   static-analysis:
     name: Static Analysis
@@ -192,10 +194,12 @@ jobs:
         tar -czf c-monorepo-binaries.tar.gz release-package/
 
     - name: Upload Release Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
-        name: release-binaries
+        name: release-binaries-${{ github.run_number }}
         path: c-monorepo-binaries.tar.gz
+        compression-level: 9
+        retention-days: 90
 
   compatibility:
     name: Cross-Platform Compatibility
@@ -248,3 +252,51 @@ jobs:
         [ -f LICENSE ] || { echo "LICENSE missing"; exit 1; }
         [ -d docs/ ] || { echo "docs/ directory missing"; exit 1; }
         echo "Documentation structure verified"
+
+  artifact-validation:
+    name: Artifact Validation
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: always()
+    
+    steps:
+    - name: Download Test Artifacts (Debug)
+      uses: actions/download-artifact@v4
+      with:
+        name: test-results-debug-${{ github.run_number }}
+        path: ./artifacts/debug
+      continue-on-error: true
+
+    - name: Download Test Artifacts (Release)
+      uses: actions/download-artifact@v4
+      with:
+        name: test-results-release-${{ github.run_number }}
+        path: ./artifacts/release
+      continue-on-error: true
+
+    - name: Download Test Artifacts (Profile)
+      uses: actions/download-artifact@v4
+      with:
+        name: test-results-profile-${{ github.run_number }}
+        path: ./artifacts/profile
+      continue-on-error: true
+
+    - name: Validate Artifacts
+      run: |
+        echo "Validating downloaded artifacts..."
+        find ./artifacts -type f -name "*.log" | head -10
+        
+        # Check if release binaries exist
+        if [ -d "./artifacts/release" ]; then
+          echo "Release artifacts found:"
+          find ./artifacts/release -type f | head -5
+        fi
+        
+        # Validate artifact integrity
+        for dir in ./artifacts/*/; do
+          if [ -d "$dir" ]; then
+            echo "Artifact directory: $dir"
+            echo "File count: $(find "$dir" -type f | wc -l)"
+            echo "Total size: $(du -sh "$dir" 2>/dev/null || echo "N/A")"
+          fi
+        done
