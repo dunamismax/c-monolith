@@ -183,7 +183,7 @@ If you discover a security vulnerability:
 
 - **Security-focused review** for all changes
 - **Two-person approval** for security-critical code
-- **Automated security testing** in CI/CD pipeline
+- **Automated security testing** with comprehensive test suite
 - **Documentation updates** for security changes
 
 ## Compliance and Standards

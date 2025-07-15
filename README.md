@@ -9,7 +9,6 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/dunamismax/c-monorepo/actions"><img src="https://github.com/dunamismax/c-monorepo/workflows/CI%2FCD%20Pipeline/badge.svg" alt="CI/CD Pipeline"></a>
   <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-17+-blue.svg?logo=llvm" alt="Clang Version"></a>
   <a href="https://developer.apple.com/documentation/apple-silicon"><img src="https://img.shields.io/badge/ARM64-Apple_Silicon-black.svg?logo=apple" alt="ARM64 Apple Silicon"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
@@ -27,7 +26,7 @@ A production-ready, security-hardened C monorepo optimized for ARM64 Apple Silic
 
 - **ARM64 Optimized**: Apple Silicon-specific optimizations with parallel builds and LTO
 - **Security Hardened**: Buffer overflow protection, input validation, memory safety
-- **Production Ready**: Complete CI/CD pipeline with comprehensive testing and quality gates
+- **Production Ready**: Comprehensive testing and quality assurance with automated test suite
 - **Professional Build System**: Cross-platform Makefile with intelligent dependency detection
 - **Complete Applications**: Calculator, file utilities, text processor, games with AI
 - **Optimized Libraries**: Math utilities and data structures for high-performance computing
@@ -42,7 +41,7 @@ A production-ready, security-hardened C monorepo optimized for ARM64 Apple Silic
 # macOS (Primary Platform)
 xcode-select --install
 
-# Ubuntu/Debian  
+# Ubuntu/Debian
 sudo apt-get install build-essential clang make
 
 # Optional tools
@@ -84,7 +83,7 @@ make libs apps              # Build libraries and applications
 make test                   # Build and run test suite
 make clean                  # Clean build artifacts
 
-# Quality Assurance  
+# Quality Assurance
 make format                 # Format code with clang-format
 make lint                   # Static analysis with clang-tidy
 make benchmark             # Performance testing
@@ -112,12 +111,11 @@ c-monorepo/
 ├── apps/                   # Applications
 │   ├── cli/               # Command-line tools
 │   └── games/             # Interactive games
-├── libs/                  # Shared libraries  
+├── libs/                  # Shared libraries
 │   ├── data_structures/   # Vector implementation
 │   └── math_utils/        # Mathematical algorithms
 ├── tests/                 # Comprehensive test suite
 ├── scripts/               # Build automation
-├── .github/workflows/     # CI/CD pipeline
 └── Makefile              # Build system
 ```
 
@@ -125,7 +123,7 @@ c-monorepo/
 
 - **C11 Standard** with ARM64-specific optimizations
 - **Clang Compiler** for Apple Silicon and cross-platform compatibility
-- **GitHub Actions CI/CD** with comprehensive testing and security scanning
+- **Comprehensive Testing** with automated test suite and security scanning
 - **Static Analysis** with clang-tidy and AddressSanitizer
 - **Cross-Platform Support** for macOS and Linux
 
@@ -164,40 +162,42 @@ make test MODE=release     # Release validation
 ```
 
 **Test Coverage:**
+
 - **Unit Tests**: Math utilities, data structures
 - **Integration Tests**: Application functionality and security
 - **Security Tests**: Buffer overflow, format string protection
 - **Cross-Platform**: macOS and Linux compatibility
 
-### CI/CD Pipeline
+### Automated Testing
 
-Automated GitHub Actions workflow with multi-platform testing:
+Comprehensive test automation with multi-platform support:
 
-- **Build & Test**: Debug, release, and profile modes across macOS and Ubuntu
-- **Security Scanning**: Buffer overflow and vulnerability detection  
+- **Build & Test**: Debug, release, and profile modes across macOS and Linux
+- **Security Testing**: Buffer overflow and vulnerability detection
 - **Static Analysis**: clang-tidy integration with comprehensive checks
 - **Performance Testing**: Benchmarking on release builds
-- **Artifact Management**: GitHub Actions v4 with 10x performance improvement
-
-All tests must pass before merge with comprehensive quality gates.
+- **Quality Assurance**: All tests must pass with comprehensive quality gates
 
 ---
 
 ## Security Features
 
 ### Memory Safety
+
 - Buffer overflow protection with bounds checking
 - Safe string operations with size validation
 - Memory leak prevention with comprehensive cleanup
 - AddressSanitizer and UndefinedBehaviorSanitizer integration
 
-### Input Validation  
+### Input Validation
+
 - Path traversal prevention in file operations
 - Format string attack protection in calculator
 - Comprehensive input sanitization across all applications
 - Integer overflow detection in mathematical operations
 
 ### Secure Development
+
 - Compiler hardening flags (`-fstack-protector-strong`)
 - Static analysis integration for vulnerability detection
 - Security-focused code review and testing procedures
