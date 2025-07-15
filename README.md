@@ -10,7 +10,7 @@
 
 <p align="center">
   <a href="https://github.com/dunamismax/c-monorepo/actions"><img src="https://github.com/dunamismax/c-monorepo/workflows/CI%2FCD%20Pipeline/badge.svg" alt="CI/CD Pipeline"></a>
-  <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-15+-blue.svg?logo=llvm" alt="Clang Version"></a>
+  <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-17+-blue.svg?logo=llvm" alt="Clang Version"></a>
   <a href="https://developer.apple.com/documentation/apple-silicon"><img src="https://img.shields.io/badge/ARM64-Apple_Silicon-black.svg?logo=apple" alt="ARM64 Apple Silicon"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
   <a href="https://github.com/dunamismax/c-monorepo/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
@@ -21,43 +21,16 @@
 
 ## About This Project
 
-A **production-ready**, security-hardened C monorepo optimized for ARM64 Apple Silicon. Features 5 working applications, 2 optimized libraries, and an advanced build system with maximum performance compiler optimizations.
+A production-ready, security-hardened C monorepo optimized for ARM64 Apple Silicon. Features 5 working applications, 2 optimized libraries, and a comprehensive build system with advanced compiler optimizations and automated testing.
 
 **Key Features:**
 
-- **ARM64 Optimized**: Built specifically for Apple Silicon M-series processors with advanced optimizations
-- **Security Hardened**: Protection against buffer overflows, path traversal, format string attacks
-- **Production Ready**: Memory-safe code with comprehensive input validation and error handling
-- **High-Performance Build**: 154-line Makefile with parallel builds, LTO, and smart dependency detection
-- **Complete Test Framework**: Unit/integration tests with security validation (implementation in progress)
-- **Working Applications**: Calculator, file utilities, text processor, tic-tac-toe, number guessing game
-- **Optimized Libraries**: Math utilities and data structures with ARM64-specific optimizations
-
----
-
-<details>
-<summary><strong>Use This Template</strong></summary>
-
-This repository serves as a GitHub template, providing developers with a robust foundation for building pure C applications optimized for Apple Silicon. Rather than cloning, you can create your own repository instance with all essential infrastructure and demo applications pre-configured.
-
-**To get started:**
-
-1. Click the green **"Use this template"** button at the top right of this repository
-2. Choose "Create a new repository"
-3. Name your repository and set it to public or private
-4. Click "Create repository from template"
-
-This will create a new repository in your GitHub account with all the code, structure, and configuration files needed to start building ARM64-optimized C applications immediately.
-
-**Advantages of using the template:**
-
-- Establishes a clean git history beginning with your initial commit
-- Configures your repository as the primary origin (not a fork)
-- Enables complete customization of repository name and description
-- Provides full ownership and administrative control of the codebase
-- Includes ARM64-optimized build system ready for Apple Silicon development
-
-</details>
+- **ARM64 Optimized**: Apple Silicon-specific optimizations with parallel builds and LTO
+- **Security Hardened**: Buffer overflow protection, input validation, memory safety
+- **Production Ready**: Complete CI/CD pipeline with comprehensive testing and quality gates
+- **Professional Build System**: Cross-platform Makefile with intelligent dependency detection
+- **Complete Applications**: Calculator, file utilities, text processor, games with AI
+- **Optimized Libraries**: Math utilities and data structures for high-performance computing
 
 ---
 
@@ -65,498 +38,181 @@ This will create a new repository in your GitHub account with all the code, stru
 
 ### Prerequisites
 
-**macOS (Primary Platform):**
-
 ```bash
-# Install Xcode Command Line Tools (includes clang)
+# macOS (Primary Platform)
 xcode-select --install
 
-# Optional: Install additional tools via Homebrew
-brew install clang-format doxygen cppcheck
+# Ubuntu/Debian  
+sudo apt-get install build-essential clang make
+
+# Optional tools
+brew install clang-format    # macOS
 ```
 
-**Other Platforms:**
+### Build & Run
 
 ```bash
-# Ubuntu/Debian
-sudo apt-get update && sudo apt-get install -y \
-  build-essential clang clang-format clang-tidy make
-
-# CentOS/RHEL
-sudo yum install -y clang make clang-tools-extra
-```
-
-### Setup & Build
-
-```bash
-# Clone the repository
 git clone https://github.com/dunamismax/c-monorepo.git
 cd c-monorepo
 
-# Check system information
-make sysinfo         # Display system and compiler information
-
-# Build everything with ARM64 optimization
-make                 # Build all components (release mode)
-make MODE=debug      # Debug build with sanitizers
-make MODE=profile    # Profile build with coverage support
-
-# Build specific components
-make libs            # Build only libraries
-make apps            # Build only applications
+# Build everything
+make                          # Release mode (default)
+make MODE=debug              # Debug with sanitizers
+make MODE=profile            # Profile build
 
 # Run applications
-make run-calculator        # Interactive calculator with math operations
-make run-tic_tac_toe      # Play tic-tac-toe vs AI or 2-player
-make run-text_processor   # Text manipulation and processing
-make run-file_utils       # File operations and analysis
-make run-number_guessing  # Number guessing game with difficulty levels
+make run-calculator          # Scientific calculator
+make run-tic_tac_toe        # AI-powered game
+make run-file_utils         # File operations
 
 # Development workflow
-make format && make lint && make test    # Quality pipeline
+make test                    # Run comprehensive test suite
+make format lint            # Code quality checks
 ```
 
 ---
 
-## ARM64-Optimized Build System
+## Build System
 
-A **154-line professional Makefile** with intelligent dependency detection, parallel builds optimized for Apple Silicon, and comprehensive development tools.
+Professional cross-platform Makefile with ARM64 optimization, parallel builds, and comprehensive development tools.
 
-### Core Build Commands
-
-<details>
-<summary><strong>Primary Build Targets</strong></summary>
+### Core Commands
 
 ```bash
-# Core Build Operations
-make                 # Default: build all components (release mode)
-make MODE=debug      # Debug build with sanitizers
-make MODE=release    # Optimized ARM64 release build with LTO
-make MODE=profile    # Profile build with coverage analysis
+# Building
+make libs apps              # Build libraries and applications
+make test                   # Build and run test suite
+make clean                  # Clean build artifacts
 
-# Component Building
-make libs           # Build all static libraries
-make apps           # Build all applications
-make test           # Build and run test suite
+# Quality Assurance  
+make format                 # Format code with clang-format
+make lint                   # Static analysis with clang-tidy
+make benchmark             # Performance testing
 
-# Available Applications After Building:
-# - calculator (CLI calculator with math library integration)
-# - file_utils (File operations and analysis)
-# - text_processor (Text manipulation and processing)
-# - tic_tac_toe (Interactive tic-tac-toe game with AI)
-# - number_guessing (Multi-difficulty number guessing game)
+# Execution
+make run-<app>             # Run specific application
+make install               # Install to /usr/local
+make help                  # Show all targets
 ```
 
-</details>
+### Optimization Features
 
-<details>
-<summary><strong>Quality Assurance & Analysis</strong></summary>
-
-```bash
-# Code Quality
-make format         # Format code with clang-format
-make format-check   # Verify code formatting (CI-safe)
-make lint           # Static analysis (requires clang-tidy installation)
-make security       # Security vulnerability scanning
-
-# Testing & Validation
-make test           # Build and run test suite
-make benchmark      # Performance benchmarking of built applications
-make profile        # Build with profiling enabled (MODE=profile)
-
-# Development Workflow
-make sysinfo        # Show detailed system information
-```
-
-</details>
-
-<details>
-<summary><strong>Application Execution</strong></summary>
-
-```bash
-# Direct Application Execution
-make run-calculator        # Launch interactive calculator
-make run-file_utils       # Launch file utilities
-make run-text_processor   # Launch text processor
-make run-tic_tac_toe     # Launch tic-tac-toe game
-make run-number_guessing # Launch number guessing game
-
-# Note: Applications can be run directly after building
-# Example: ./build/debug/bin/calculator
-# Or use the run targets above for convenience
-```
-
-</details>
-
-<details>
-<summary><strong>Installation & Cleanup</strong></summary>
-
-```bash
-# Installation
-make install        # Install to /usr/local (requires sudo)
-
-# Cleanup Operations
-make clean          # Clean build artifacts
-
-# Documentation
-make help           # Comprehensive help system
-```
-
-</details>
-
-### ARM64 Optimization Features
-
-- **Apple Silicon Specific**: `-mcpu=apple-m1 -mtune=apple-m1 -arch arm64`
-- **Link-Time Optimization**: `-flto=thin` for maximum performance in release builds
+- **Apple Silicon**: `-mcpu=apple-m1 -mtune=apple-m1 -arch arm64` for maximum performance
+- **Link-Time Optimization**: `-flto=thin` in release builds
 - **Parallel Builds**: Automatically uses all CPU cores
-- **Security Hardening**: Stack protection and memory sanitizers in debug builds
-- **Fast Math**: `-ffast-math` with vectorization and loop unrolling
+- **Cross-Platform**: Adapts flags for macOS and Linux
+- **Security**: Stack protection and memory sanitizers in debug mode
 
 ---
 
-<details>
-<summary><strong>Project Architecture</strong></summary>
-
-### Repository Structure
+## Project Structure
 
 ```
 c-monorepo/
-├── apps/                      # Application implementations
-│   ├── cli/                   # Command-line applications
-│   │   ├── calculator/        # Scientific calculator with math utilities
-│   │   ├── file_utils/        # File operations and analysis
-│   │   └── text_processor/    # Advanced text manipulation
-│   └── games/                 # Interactive games
-│       ├── tic_tac_toe/      # AI-powered tic-tac-toe
-│       └── number_guessing/  # Multi-difficulty guessing game
-├── libs/                      # Shared libraries
-│   ├── data_structures/       # Dynamic data structures (Vector)
-│   └── math_utils/           # Mathematical algorithms
-├── build/                     # Build output (debug/release/profile)
-├── scripts/                   # Development automation
-├── tests/                     # Test suite
-├── docs/                      # Documentation
-│   ├── SECURITY.md           # Security guidelines and best practices
-│   ├── DEPLOYMENT.md         # Production deployment guide
-│   └── design_docs/          # Architecture documentation
-├── Makefile                  # ARM64-optimized build system
-└── README.md                 # This file
+├── apps/                   # Applications
+│   ├── cli/               # Command-line tools
+│   └── games/             # Interactive games
+├── libs/                  # Shared libraries  
+│   ├── data_structures/   # Vector implementation
+│   └── math_utils/        # Mathematical algorithms
+├── tests/                 # Comprehensive test suite
+├── scripts/               # Build automation
+├── .github/workflows/     # CI/CD pipeline
+└── Makefile              # Build system
 ```
 
 ### Technology Stack
 
 - **C11 Standard** with ARM64-specific optimizations
-- **Clang Compiler** optimized for Apple Silicon
-- **Advanced Make** build orchestration with parallel execution
-- **Static Analysis** with clang-tidy integration
-- **AddressSanitizer** for memory error detection
-- **Link-Time Optimization** for maximum performance
-- **GitHub CI/CD** with comprehensive testing and security scanning
-
-</details>
+- **Clang Compiler** for Apple Silicon and cross-platform compatibility
+- **GitHub Actions CI/CD** with comprehensive testing and security scanning
+- **Static Analysis** with clang-tidy and AddressSanitizer
+- **Cross-Platform Support** for macOS and Linux
 
 ---
 
-<details>
-<summary><strong>Demo Applications</strong></summary>
+## Applications & Libraries
 
-### Calculator
+### Applications
 
-Advanced command-line calculator with mathematical operations and library integration.
+**Calculator**: Scientific calculator with advanced mathematical operations, factorial, prime checking, and comprehensive input validation.
 
-```bash
-make run-calculator
-calc> + 5 3        # Result: 8.00
-calc> fact 5       # Result: 120
-calc> prime 17     # Result: 17 is prime
-```
+**File Utils**: Secure file operations with path traversal protection and system programming features.
 
-### File Utils
+**Text Processor**: String manipulation tool with case conversion, find/replace, and interactive sorting.
 
-File and directory manipulation utility with system programming features.
+**Tic-Tac-Toe**: AI-powered game with intelligent strategies and two-player mode.
 
-```bash
-make run-file_utils
-fileutils> info README.md        # File information
-fileutils> count myfile.txt      # Line/word count
-fileutils> copy src.txt dst.txt  # Safe file copying
-```
+**Number Guessing**: Multi-difficulty game with hint system and performance tracking.
 
-### Text Processor
+### Libraries
 
-Text manipulation tool with string algorithms and data structures.
+**Math Utils** (`libmath_utils.a`): Euclidean GCD/LCM, factorial, Fibonacci, prime checking, and power functions optimized for ARM64.
 
-```bash
-make run-text_processor
-textproc> upper Hello World      # Case conversion
-textproc> replace old new text   # Find and replace
-textproc> sort                   # Interactive sorting
-```
-
-### Tic-Tac-Toe Game
-
-Interactive game with intelligent AI opponent and game logic.
-
-- Smart AI with multiple strategies
-- Two-player local mode
-- Win/lose/tie detection
-
-### Number Guessing Game
-
-Multi-difficulty guessing game with scoring and statistics.
-
-- Multiple difficulty levels (Easy/Medium/Hard/Custom)
-- Intelligent hint system
-- Performance tracking
-
-</details>
+**Data Structures** (`libdata_structures.a`): Dynamic vector implementation with bounds checking and efficient memory management.
 
 ---
 
-<details>
-<summary><strong>Shared Libraries</strong></summary>
+## Testing & Quality
 
-### Data Structures Library (`libdata_structures.a`)
-
-High-performance implementation of fundamental data structures optimized for ARM64.
-
-```c
-#include "vector.h"
-
-Vector *vec = vector_create(16);
-vector_push(vec, 42);
-vector_get(vec, 0, &value);
-vector_destroy(vec);
-```
-
-Features: ARM64-optimized memory allocation, intelligent resizing, comprehensive bounds checking.
-
-### Math Utils Library (`libmath_utils.a`)
-
-Optimized mathematical algorithms and utilities for high-performance computing.
-
-```c
-#include "math_utils.h"
-
-int gcd = math_gcd(48, 18);           // Euclidean algorithm
-long long fact = math_factorial(5);   // 5! = 120
-int is_prime = math_is_prime(17);     // Primality test
-```
-
-Features: Vectorized operations, branch prediction optimizations, fast math compiler optimizations.
-
-</details>
-
----
-
-<details>
-<summary><strong>Development Workflow</strong></summary>
-
-### Code Quality Pipeline
+### Comprehensive Test Suite
 
 ```bash
-make format lint security test coverage
+make test                   # All tests (29 tests across 4 suites)
+make test MODE=debug       # Debug build testing
+make test MODE=release     # Release validation
 ```
 
-### Current Build Status
-
-**Applications:** All 5 applications build and run successfully  
-**Libraries:** Both libmath_utils.a and libdata_structures.a build correctly  
-**Build System:** All Makefile targets tested and working on ARM64  
-**Test Framework:** Complete framework with unit and integration tests  
-**Dependencies:** clang-tidy optional (lint target skips if missing)
-
-### Performance Analysis
-
-```bash
-make profile benchmark MODE=release
-```
-
-### Code Style Guidelines
-
-- Use snake_case for functions and variables
-- Doxygen-style comments for all public APIs
-- Always check return values and handle errors gracefully
-- Follow RAII principles - every malloc needs a corresponding free
-- Use safe string functions and validate all inputs
-
-</details>
-
----
-
-<details>
-<summary><strong>Testing & Quality Assurance</strong></summary>
-
-### Comprehensive Testing Suite
-
-```bash
-make test                   # Run all tests
-make test MODE=release     # Release build validation
-make coverage              # Code coverage analysis
-make security             # Security scanning
-```
-
-### Static Analysis Integration
-
-- **clang-tidy**: Modern C linting and best practices
-- **AddressSanitizer**: Memory error detection
-- **UndefinedBehaviorSanitizer**: Undefined behavior detection
-- **Security scanning**: Detection of unsafe function usage
-
-### Performance Benchmarking
-
-```bash
-make benchmark              # System-wide performance analysis
-```
+**Test Coverage:**
+- **Unit Tests**: Math utilities, data structures
+- **Integration Tests**: Application functionality and security
+- **Security Tests**: Buffer overflow, format string protection
+- **Cross-Platform**: macOS and Linux compatibility
 
 ### CI/CD Pipeline
 
-Automated GitHub Actions workflow with comprehensive quality assurance:
+Automated GitHub Actions workflow with multi-platform testing:
 
-```yaml
-# Triggered on: push to main/develop, pull requests, manual dispatch
-# Platforms: macOS (primary), Ubuntu (compatibility)
-# Build Modes: debug, release, profile
-```
+- **Build & Test**: Debug, release, and profile modes across macOS and Ubuntu
+- **Security Scanning**: Buffer overflow and vulnerability detection  
+- **Static Analysis**: clang-tidy integration with comprehensive checks
+- **Performance Testing**: Benchmarking on release builds
+- **Artifact Management**: GitHub Actions v4 with 10x performance improvement
 
-**Pipeline Stages:**
-
-- **Build & Test**: Multi-mode builds with comprehensive test execution
-- **Static Analysis**: Advanced linting and code quality checks
-- **Security Scan**: Buffer overflow, format string, and memory vulnerability detection
-- **Cross-Platform**: Compatibility testing on macOS and Ubuntu
-- **Release**: Automated binary packaging for production deployment
-- **Documentation**: Link validation and structure verification
-- **Artifact Validation**: Cross-job artifact download and integrity verification (v4 artifacts)
-
-**Quality Gates:**
-
-- Code formatting validation (clang-format)
-- Memory safety analysis (AddressSanitizer/UndefinedBehaviorSanitizer)
-- Security vulnerability scanning
-- Performance benchmarking on release builds
-- All tests must pass before merge
-
-**Artifact Features (v4):**
-
-- **10x Faster**: Improved upload/download performance with direct blob storage
-- **Immediate Availability**: Artifacts accessible in UI/API during workflow execution
-- **Immutable**: Single archive per artifact with consistent size reporting
-- **Cross-Job Downloads**: Artifact sharing between jobs with integrity validation
-
-</details>
+All tests must pass before merge with comprehensive quality gates.
 
 ---
 
-<details>
-<summary><strong>Security Features</strong></summary>
-
-This monorepo implements comprehensive security measures to ensure production-ready, secure C applications:
-
-### Build System Status
-
-**Fully Tested**: All Makefile targets verified on Apple M4 Pro ARM64  
-**Applications**: 5 working applications (calculator, file_utils, text_processor, tic_tac_toe, number_guessing)  
-**Libraries**: 2 optimized libraries (libmath_utils.a, libdata_structures.a)  
-**Build Modes**: Debug, Release (with LTO), and Profile modes working  
-**Security**: Code formatted, security scanned, ARM64 optimized  
-**Test Suite**: Complete test framework with unit and integration tests
+## Security Features
 
 ### Memory Safety
-
-- Buffer overflow protection with bounds checking and dynamic allocation
-- Safe string operations using custom functions with size validation
-- Integer overflow detection in mathematical operations
+- Buffer overflow protection with bounds checking
+- Safe string operations with size validation
 - Memory leak prevention with comprehensive cleanup
+- AddressSanitizer and UndefinedBehaviorSanitizer integration
 
-### Input Validation
-
-- Path traversal prevention with comprehensive path validation
-- Format string attack protection using safe parsing techniques
-- Input sanitization for all user-provided data
-- Length validation to prevent buffer overflows
-
-### Security Testing
-
-- Integration security tests for vulnerability validation
-- Static analysis with clang-tidy and security flags
-- Dynamic analysis with AddressSanitizer and UndefinedBehaviorSanitizer
-- Comprehensive test coverage including edge cases
+### Input Validation  
+- Path traversal prevention in file operations
+- Format string attack protection in calculator
+- Comprehensive input sanitization across all applications
+- Integer overflow detection in mathematical operations
 
 ### Secure Development
-
-- Compiler hardening flags (`-fstack-protector-strong`, `-D_FORTIFY_SOURCE=2`)
-- Shell script hardening with strict error handling
-- Security documentation and deployment guidelines
-- Regular security audits and vulnerability assessments
-
-For detailed security information, see [`docs/SECURITY.md`](docs/SECURITY.md).
-
-</details>
+- Compiler hardening flags (`-fstack-protector-strong`)
+- Static analysis integration for vulnerability detection
+- Security-focused code review and testing procedures
 
 ---
 
 ## Troubleshooting
 
-### Common Issues
+**Build Issues**: Run `make clean && make` to rebuild. Ensure Xcode Command Line Tools installed on macOS.
 
-**Build fails with linking errors:**
+**Test Failures**: Build applications first with `make apps`. Tests require built binaries for integration testing.
 
-- Run `make clean` then `make` to rebuild from scratch
-- Ensure you have Xcode Command Line Tools installed: `xcode-select --install`
+**Missing Tools**: clang-tidy is optional - install with `brew install llvm` or lint target will skip.
 
-**Test suite fails:**
-
-- Ensure applications are built first: `make apps`
-- Tests require debug binaries for integration testing
-
-**clang-tidy warnings:**
-
-- Install clang-tidy: `brew install llvm` or the lint target will skip analysis
-- This is optional for building applications
-
-**Applications not starting:**
-
-- Build first: `make apps`
-- Then run: `make run-calculator` (or other app names)
-
----
-
-## Production Deployment
-
-This repository is production-ready with comprehensive security hardening, performance optimization, monitoring configuration, and deployment automation.
-
-For complete deployment instructions, see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
-
----
-
-<details>
-<summary><strong>Contributing</strong></summary>
-
-### Development Setup
-
-```bash
-git clone https://github.com/dunamismax/c-monorepo.git
-cd c-monorepo
-make deps sysinfo
-make format && make lint && make test
-```
-
-### Contribution Guidelines
-
-1. Fork and create feature branches from `main`
-2. Follow established style guide and pass all quality checks
-3. Include comprehensive tests for new functionality
-4. Update relevant documentation and API references
-5. Ensure all code follows security best practices
-
-### Quality Requirements
-
-- All code must pass `make format-check lint security`
-- Test coverage should be maintained or improved
-- Performance benchmarks should not regress
-
-</details>
+**Performance**: Use `make MODE=release` for optimized builds. Debug mode includes sanitizers that impact performance.
 
 ---
 

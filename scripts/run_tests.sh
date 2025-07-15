@@ -176,7 +176,7 @@ run_tests() {
     log_info "Running test suite..."
     echo ""
     
-    local all_passed=1
+    local all_passed=0  # 0 = success in bash
     
     for test in "${TESTS[@]}"; do
         if [ "$INDIVIDUAL" = "1" ]; then
@@ -184,7 +184,7 @@ run_tests() {
         fi
         
         if ! run_single_test "$test"; then
-            all_passed=0
+            all_passed=1  # 1 = failure in bash
             FAILED_TESTS=$((FAILED_TESTS + 1))
         fi
         
