@@ -464,18 +464,22 @@ For detailed security information, see [`docs/SECURITY.md`](docs/SECURITY.md).
 ### Common Issues
 
 **Build fails with linking errors:**
+
 - Run `make clean` then `make` to rebuild from scratch
 - Ensure you have Xcode Command Line Tools installed: `xcode-select --install`
 
 **Test suite fails:**
+
 - Ensure applications are built first: `make apps`
 - Tests require debug binaries for integration testing
 
 **clang-tidy warnings:**
+
 - Install clang-tidy: `brew install llvm` or the lint target will skip analysis
 - This is optional for building applications
 
 **Applications not starting:**
+
 - Build first: `make apps`
 - Then run: `make run-calculator` (or other app names)
 
