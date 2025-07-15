@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/dunamismax/c-monorepo/actions"><img src="https://github.com/dunamismax/c-monorepo/workflows/CI%2FCD%20Pipeline/badge.svg" alt="CI/CD Pipeline"></a>
   <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-15+-blue.svg?logo=llvm" alt="Clang Version"></a>
   <a href="https://developer.apple.com/documentation/apple-silicon"><img src="https://img.shields.io/badge/ARM64-Apple_Silicon-black.svg?logo=apple" alt="ARM64 Apple Silicon"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>

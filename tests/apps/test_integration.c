@@ -16,6 +16,26 @@
 
 #define TEST(name) run_test(name, #name)
 
+// Global variable to store the correct build path
+static char build_path[256] = "build/debug";
+
+/**
+ * Find the correct build directory
+ */
+void find_build_path() {
+  const char* paths[] = {"build/release", "build/debug", "build/profile", NULL};
+  
+  for (int i = 0; paths[i] != NULL; i++) {
+    char test_path[512];
+    snprintf(test_path, sizeof(test_path), "%s/bin/calculator", paths[i]);
+    if (access(test_path, X_OK) == 0) {
+      strncpy(build_path, paths[i], sizeof(build_path) - 1);
+      build_path[sizeof(build_path) - 1] = '\0';
+      return;
+    }
+  }
+}
+
 /**
  * Run application with input and capture output
  */
@@ -76,9 +96,10 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
 static int test_calculator_basic(void) {
   char output[1024];
   const char *input = "+ 5 3\nquit\n";
-
-  int result = run_app_with_input("build/debug/bin/calculator", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  
+  snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   return (result == 0 && strstr(output, "8.00") != NULL);
 }
@@ -87,9 +108,10 @@ static int test_calculator_basic(void) {
 static int test_calculator_security(void) {
   char output[1024];
   const char *input = "%s %p %n\nquit\n";
-
-  int result = run_app_with_input("build/debug/bin/calculator", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  
+  snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   // Should not crash and should show error message
   return (result == 0 && strstr(output, "Error") != NULL);
@@ -100,10 +122,11 @@ static int test_calculator_factorial_overflow(void) {
   char output[1024];
   const char *input = "fact 25\nquit\n"; // Should trigger overflow protection
 
-  int result = run_app_with_input("build/debug/bin/calculator", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
-  return (result == 0 && strstr(output, "-1") != NULL);
+  return (result == 0 && strstr(output, "Error") != NULL);
 }
 
 // Test file_utils security (path traversal protection)
@@ -111,8 +134,9 @@ static int test_file_utils_security(void) {
   char output[1024];
   const char *input = "info ../../../etc/passwd\nquit\n";
 
-  int result = run_app_with_input("build/debug/bin/file_utils", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/file_utils", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   // Should reject dangerous path
   return (result == 0 && strstr(output, "Invalid or dangerous path") != NULL);
@@ -130,8 +154,9 @@ static int test_file_utils_basic(void) {
   fclose(test_file);
 
   const char *input = "info test_file.txt\nquit\n";
-  int result = run_app_with_input("build/debug/bin/file_utils", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/file_utils", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   // Clean up
   unlink("test_file.txt");
@@ -148,8 +173,9 @@ static int test_text_processor_security(void) {
   memset(long_input, 'A', sizeof(long_input) - 20);
   strcpy(long_input + sizeof(long_input) - 20, "\nquit\n");
 
-  int result = run_app_with_input("build/debug/bin/text_processor", long_input,
-                                  output, sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/text_processor", build_path);
+  int result = run_app_with_input(app_path, long_input, output, sizeof(output));
 
   // Should not crash
   return (result == 0);
@@ -160,8 +186,9 @@ static int test_text_processor_basic(void) {
   char output[1024];
   const char *input = "upper hello world\nquit\n";
 
-  int result = run_app_with_input("build/debug/bin/text_processor", input,
-                                  output, sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/text_processor", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   return (result == 0 && strstr(output, "HELLO WORLD") != NULL);
 }
@@ -171,8 +198,9 @@ static int test_tic_tac_toe_basic(void) {
   char output[1024];
   const char *input = "3\n"; // Exit option
 
-  int result = run_app_with_input("build/debug/bin/tic_tac_toe", input, output,
-                                  sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/tic_tac_toe", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   return (result == 0);
 }
@@ -182,8 +210,9 @@ static int test_number_guessing_basic(void) {
   char output[1024];
   const char *input = "3\n"; // Exit option
 
-  int result = run_app_with_input("build/debug/bin/number_guessing", input,
-                                  output, sizeof(output));
+  char app_path[512];
+  snprintf(app_path, sizeof(app_path), "%s/bin/number_guessing", build_path);
+  int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   return (result == 0);
 }
@@ -192,10 +221,14 @@ int main(void) {
   printf("Integration Test Suite\n");
   printf("======================\n\n");
 
-  // Check if applications exist
-  if (access("build/debug/bin/calculator", X_OK) != 0) {
-    printf(
-        "Calculator not found or not executable. Build the project first.\n");
+  // Find the correct build path
+  find_build_path();
+  
+  // Check if calculator exists
+  char calc_path[512];
+  snprintf(calc_path, sizeof(calc_path), "%s/bin/calculator", build_path);
+  if (access(calc_path, X_OK) != 0) {
+    printf("Calculator not found or not executable. Build the project first.\n");
     return 1;
   }
 

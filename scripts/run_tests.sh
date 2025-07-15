@@ -121,10 +121,10 @@ build_tests() {
     # Build applications first (needed for integration tests)
     if [ "$VERBOSE" = "1" ]; then
         make MODE="$BUILD_MODE" apps
-        make MODE="$BUILD_MODE" test VERBOSE=1
+        make MODE="$BUILD_MODE" build-tests
     else
         make MODE="$BUILD_MODE" apps >/dev/null 2>&1
-        make MODE="$BUILD_MODE" test >/dev/null 2>&1
+        make MODE="$BUILD_MODE" build-tests >/dev/null 2>&1
     fi
     
     if [ $? -eq 0 ]; then

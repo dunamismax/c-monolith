@@ -9,7 +9,6 @@ on:
 
 env:
   CC: clang
-  MAKEFLAGS: -j4
 
 jobs:
   test:

@@ -10,8 +10,28 @@ CC := clang
 AR := ar
 MODE ?= release
 
-# M-series specific optimizations for absolute maximum performance
-ARM64_OPTS := -mcpu=apple-m1 -mtune=apple-m1 -arch arm64
+# Platform-specific optimizations
+UNAME_S := $(shell uname -s)
+UNAME_M := $(shell uname -m)
+
+ifeq ($(UNAME_S),Darwin)
+  # Apple Silicon optimizations for macOS
+  ifeq ($(UNAME_M),arm64)
+    ARM64_OPTS := -mcpu=apple-m1 -mtune=apple-m1 -arch arm64
+  else
+    ARM64_OPTS := -march=native
+  endif
+else
+  # Linux/other platforms
+  ifeq ($(UNAME_M),aarch64)
+    ARM64_OPTS := -march=native -mtune=native
+  else ifeq ($(UNAME_M),x86_64)
+    ARM64_OPTS := -march=native -mtune=native
+  else
+    ARM64_OPTS := -march=native
+  endif
+endif
+
 FAST_MATH := -ffast-math -fno-math-errno -ffinite-math-only
 VECTORIZE := -fvectorize -fslp-vectorize
 UNROLL := -funroll-loops
@@ -47,17 +67,31 @@ INCLUDES := $(shell find libs -name include -type d | sed 's/^/-I/')
 # TARGETS
 # =============================================================================
 
-.PHONY: all libs apps tests clean install help
+.PHONY: all libs apps tests build-tests clean install help
 .DEFAULT_GOAL := all
 
 # Parallel builds enabled by default
-MAKEFLAGS += -j$(shell sysctl -n hw.ncpu)
+ifeq ($(UNAME_S),Darwin)
+  MAKEFLAGS += -j$(shell sysctl -n hw.ncpu)
+else
+  MAKEFLAGS += -j$(shell nproc)
+endif
 
 all: libs apps
-	@echo "✓ Build completed ($(MODE) mode) - Optimized for Apple Silicon"
+	@echo "✓ Build completed ($(MODE) mode) - Optimized for $(UNAME_S) $(UNAME_M)"
 
 libs: $(LIB_TARGETS)
 apps: $(APP_TARGETS)
+
+build-tests: libs
+	@echo "Building test suite..."
+	@mkdir -p $(BUILD_DIR)/bin
+	@for test_file in $$(find tests -name "*.c" -not -name "test_framework.c"); do \
+		test_name=$$(basename $$test_file .c); \
+		echo "Building test: $$test_name"; \
+		$(CC) $(CFLAGS) $(INCLUDES) -Itests $$test_file tests/test_framework.c $(LIB_TARGETS) -o $(BUILD_DIR)/bin/$$test_name; \
+	done
+	@echo "✓ Test suite built"
 
 # Smart library building
 $(BUILD_DIR)/lib/lib%.a: libs/%
@@ -80,6 +114,7 @@ $(BUILD_DIR)/bin/%: $(LIB_TARGETS)
 	else \
 		$(CC) $(CFLAGS) $(INCLUDES) $$(find $$app_dir -name "*.c") $(LIB_TARGETS) -o $@; \
 	fi
+
 
 
 # =============================================================================
@@ -121,9 +156,15 @@ run-%: $(BUILD_DIR)/bin/%
 
 sysinfo:
 	@echo "System: $$(uname -srm)"
-	@echo "CPU: $$(sysctl -n machdep.cpu.brand_string)"
-	@echo "Cores: $$(sysctl -n hw.ncpu) ($$(sysctl -n hw.perflevel0.physicalcpu) P + $$(sysctl -n hw.perflevel1.physicalcpu) E)"
-	@echo "Memory: $$(($$(sysctl -n hw.memsize) / 1024 / 1024 / 1024))GB"
+ifeq ($(UNAME_S),Darwin)
+	@echo "CPU: $$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo 'Unknown')"
+	@echo "Cores: $$(sysctl -n hw.ncpu 2>/dev/null || echo 'Unknown') ($$(sysctl -n hw.perflevel0.physicalcpu 2>/dev/null || echo '?') P + $$(sysctl -n hw.perflevel1.physicalcpu 2>/dev/null || echo '?') E)"
+	@echo "Memory: $$(($$(sysctl -n hw.memsize 2>/dev/null || echo 0) / 1024 / 1024 / 1024))GB"
+else
+	@echo "CPU: $$(grep 'model name' /proc/cpuinfo 2>/dev/null | head -n1 | cut -d: -f2 | sed 's/^[ ]*//' || echo 'Unknown')"
+	@echo "Cores: $$(nproc 2>/dev/null || echo 'Unknown')"
+	@echo "Memory: $$(free -h 2>/dev/null | awk '/^Mem:/ {print $$2}' || echo 'Unknown')"
+endif
 	@echo "Compiler: $$($(CC) --version | head -n1)"
 	@echo "Mode: $(MODE)"
 
