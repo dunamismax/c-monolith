@@ -119,15 +119,21 @@ build_tests() {
     cd "$PROJECT_ROOT"
     
     # Build applications first (needed for integration tests)
+    local build_exit_code=0
+    
     if [ "$VERBOSE" = "1" ]; then
-        make MODE="$BUILD_MODE" apps
-        make MODE="$BUILD_MODE" build-tests
+        make MODE="$BUILD_MODE" apps || build_exit_code=$?
+        if [ $build_exit_code -eq 0 ]; then
+            make MODE="$BUILD_MODE" build-tests || build_exit_code=$?
+        fi
     else
-        make MODE="$BUILD_MODE" apps >/dev/null 2>&1
-        make MODE="$BUILD_MODE" build-tests >/dev/null 2>&1
+        make MODE="$BUILD_MODE" apps >/dev/null 2>&1 || build_exit_code=$?
+        if [ $build_exit_code -eq 0 ]; then
+            make MODE="$BUILD_MODE" build-tests >/dev/null 2>&1 || build_exit_code=$?
+        fi
     fi
     
-    if [ $? -eq 0 ]; then
+    if [ $build_exit_code -eq 0 ]; then
         log_success "Applications and tests built successfully"
     else
         log_error "Failed to build applications and tests"
@@ -151,12 +157,17 @@ run_single_test() {
         local exit_code=$?
     else
         local output
-        output=$("$test_path" 2>&1)
+        output=$("$test_path" 2>&1) || true
         local exit_code=$?
         
         if [ $exit_code -eq 0 ]; then
-            local passed=$(echo "$output" | grep -o 'Tests passed: [0-9]*' | grep -o '[0-9]*')
-            local total=$(echo "$output" | grep -o 'Tests run: [0-9]*' | grep -o '[0-9]*')
+            local passed=$(echo "$output" | grep -o 'Tests passed: [0-9]*' | grep -o '[0-9]*' | head -1 || echo "")
+            local total=$(echo "$output" | grep -o 'Tests run: [0-9]*' | grep -o '[0-9]*' | head -1 || echo "")
+            
+            # Default to 0 if parsing fails
+            passed=${passed:-0}
+            total=${total:-0}
+            
             echo -e "${GREEN}✓ $test_name: $passed/$total tests passed${NC}"
             TOTAL_TESTS=$((TOTAL_TESTS + total))
             PASSED_TESTS=$((PASSED_TESTS + passed))
