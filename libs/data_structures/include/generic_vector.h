@@ -4,7 +4,7 @@
  * @author dunamismax <dunamismax@tutamail.com>
  * @version 2.0.0
  * @date 2024
- * 
+ *
  * Production-ready generic vector implementation in C
  * Supports any data type through void pointers and element size specification
  */
@@ -16,14 +16,15 @@
 
 /**
  * @brief Generic dynamic array implementation
- * 
+ *
  * Stores elements of any type using void pointers and element size.
  * Provides type safety through size validation and safe memory operations.
  */
-typedef struct {
-    void *data;         // Pointer to the array data
-    size_t size;        // Current number of elements
-    size_t capacity;    // Maximum capacity before reallocation
+typedef struct
+{
+    void *data;          // Pointer to the array data
+    size_t size;         // Current number of elements
+    size_t capacity;     // Maximum capacity before reallocation
     size_t element_size; // Size of each element in bytes
 } GenericVector;
 
@@ -48,7 +49,7 @@ typedef void (*ProcessFunc)(void *element, void *user_data);
  * @param element_size Size of each element in bytes
  * @return Pointer to new vector or NULL on failure
  */
-GenericVector* gvector_create(size_t initial_capacity, size_t element_size);
+GenericVector *gvector_create(size_t initial_capacity, size_t element_size);
 
 /**
  * Destroy a vector and free all memory
@@ -180,7 +181,7 @@ void gvector_foreach(GenericVector *vec, ProcessFunc process, void *user_data);
  * @param vec Vector to copy
  * @return New vector copy or NULL on failure
  */
-GenericVector* gvector_copy(const GenericVector *vec);
+GenericVector *gvector_copy(const GenericVector *vec);
 
 /**
  * Get pointer to element at index (direct access)
@@ -189,21 +190,21 @@ GenericVector* gvector_copy(const GenericVector *vec);
  * @param index Index of element
  * @return Pointer to element or NULL on invalid index
  */
-void* gvector_at(const GenericVector *vec, size_t index);
+void *gvector_at(const GenericVector *vec, size_t index);
 
 /**
  * Get pointer to first element
  * @param vec Vector to access
  * @return Pointer to first element or NULL if empty
  */
-void* gvector_front(const GenericVector *vec);
+void *gvector_front(const GenericVector *vec);
 
 /**
  * Get pointer to last element
  * @param vec Vector to access
  * @return Pointer to last element or NULL if empty
  */
-void* gvector_back(const GenericVector *vec);
+void *gvector_back(const GenericVector *vec);
 
 /**
  * Get pointer to internal data array
@@ -211,6 +212,6 @@ void* gvector_back(const GenericVector *vec);
  * @param vec Vector to access
  * @return Pointer to internal data array
  */
-void* gvector_data(const GenericVector *vec);
+void *gvector_data(const GenericVector *vec);
 
 #endif /* GENERIC_VECTOR_H */

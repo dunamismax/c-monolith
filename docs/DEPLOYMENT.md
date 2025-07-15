@@ -7,6 +7,7 @@ This guide provides comprehensive instructions for deploying the C monorepo appl
 ## Pre-Deployment Checklist
 
 ### 1. Security Verification
+
 - [ ] All security patches applied
 - [ ] Security tests pass
 - [ ] No hardcoded credentials
@@ -15,6 +16,7 @@ This guide provides comprehensive instructions for deploying the C monorepo appl
 - [ ] Logging configured securely
 
 ### 2. Performance Testing
+
 - [ ] Load testing completed
 - [ ] Memory usage profiled
 - [ ] Resource limits defined
@@ -22,6 +24,7 @@ This guide provides comprehensive instructions for deploying the C monorepo appl
 - [ ] Performance benchmarks met
 
 ### 3. Quality Assurance
+
 - [ ] All unit tests pass
 - [ ] Integration tests pass
 - [ ] Code review completed
@@ -31,6 +34,7 @@ This guide provides comprehensive instructions for deploying the C monorepo appl
 ## Build Configuration
 
 ### Production Build
+
 ```bash
 # Clean build with optimizations
 make clean
@@ -42,6 +46,7 @@ make security
 ```
 
 ### Compiler Optimizations
+
 ```makefile
 # Production flags (already configured)
 RELEASE_FLAGS := -O3 -DNDEBUG -flto -ffast-math -funroll-loops -fomit-frame-pointer
@@ -51,6 +56,7 @@ SECURITY_FLAGS := -fstack-protector-strong -D_FORTIFY_SOURCE=2
 ```
 
 ### Strip Debug Symbols
+
 ```bash
 # Reduce binary size for production
 strip build/release/bin/*
@@ -59,6 +65,7 @@ strip build/release/bin/*
 ## System Requirements
 
 ### Minimum Requirements
+
 - **OS**: Linux, macOS, or Unix-like system
 - **Architecture**: ARM64 (Apple Silicon) or x86_64
 - **Memory**: 512MB RAM minimum
@@ -66,6 +73,7 @@ strip build/release/bin/*
 - **Compiler**: Clang 15+ or GCC 11+
 
 ### Recommended Requirements
+
 - **Memory**: 2GB RAM for optimal performance
 - **Storage**: 1GB available space
 - **CPU**: Multi-core processor for parallel operations
@@ -73,6 +81,7 @@ strip build/release/bin/*
 ## Installation Methods
 
 ### 1. System-Wide Installation
+
 ```bash
 # Install to /usr/local (requires sudo)
 make install
@@ -83,6 +92,7 @@ calculator --help
 ```
 
 ### 2. User-Local Installation
+
 ```bash
 # Install to ~/local
 make install-local
@@ -93,6 +103,7 @@ source ~/.bashrc
 ```
 
 ### 3. Container Deployment
+
 ```dockerfile
 FROM alpine:latest
 
@@ -117,6 +128,7 @@ CMD ["calculator"]
 ```
 
 ### 4. Package Distribution
+
 ```bash
 # Create distribution package
 make clean
@@ -130,6 +142,7 @@ sha256sum c-monorepo-v1.0.tar.gz > c-monorepo-v1.0.tar.gz.sha256
 ## Configuration Management
 
 ### Environment Variables
+
 ```bash
 # Application configuration
 export CALC_PRECISION=10
@@ -143,7 +156,9 @@ export MAX_INPUT_SIZE=1024
 ```
 
 ### Configuration Files
+
 Create `/etc/c-monorepo/config.conf`:
+
 ```ini
 [security]
 safe_mode=true
@@ -164,6 +179,7 @@ rotate=daily
 ## Security Hardening
 
 ### 1. File Permissions
+
 ```bash
 # Set secure permissions
 chmod 755 /usr/local/bin/calculator
@@ -175,6 +191,7 @@ chmod 750 /usr/local/bin/*
 ```
 
 ### 2. SELinux/AppArmor
+
 ```bash
 # SELinux context (RHEL/CentOS)
 setsebool -P allow_execheap=0
@@ -186,6 +203,7 @@ aa-enforce /etc/apparmor.d/calculator
 ```
 
 ### 3. Resource Limits
+
 ```bash
 # Set ulimits for security
 ulimit -f 10240      # File size limit (10MB)
@@ -226,6 +244,7 @@ EOF
 ## Monitoring and Logging
 
 ### 1. Application Monitoring
+
 ```bash
 # Monitor resource usage
 watch -n 5 'ps aux | grep -E "(calculator|file_utils|text_processor)"'
@@ -239,6 +258,7 @@ perf report
 ```
 
 ### 2. Log Configuration
+
 ```c
 // Application logging (example)
 #ifdef PRODUCTION
@@ -248,6 +268,7 @@ perf report
 ```
 
 ### 3. Log Rotation
+
 ```bash
 # Configure logrotate
 cat > /etc/logrotate.d/c-monorepo << EOF
@@ -268,6 +289,7 @@ EOF
 ## Performance Tuning
 
 ### 1. Compiler Optimizations
+
 ```bash
 # Profile-guided optimization
 make MODE=profile
@@ -278,6 +300,7 @@ make MODE=release EXTRA_FLAGS="-fprofile-use"
 ```
 
 ### 2. System Tuning
+
 ```bash
 # Increase file descriptor limits
 echo "* soft nofile 65536" >> /etc/security/limits.conf
@@ -289,6 +312,7 @@ echo "net.core.wmem_default = 262144" >> /etc/sysctl.conf
 ```
 
 ### 3. Memory Optimization
+
 ```c
 // Compile-time memory optimization
 #ifdef PRODUCTION
@@ -303,6 +327,7 @@ echo "net.core.wmem_default = 262144" >> /etc/sysctl.conf
 ## Backup and Recovery
 
 ### 1. Data Backup
+
 ```bash
 # Backup configuration
 tar -czf config-backup-$(date +%Y%m%d).tar.gz /etc/c-monorepo/
@@ -312,6 +337,7 @@ rsync -av /var/log/c-monorepo.log* backup-server:/backups/logs/
 ```
 
 ### 2. Recovery Procedures
+
 ```bash
 # Restore from backup
 tar -xzf config-backup-20240101.tar.gz -C /
@@ -326,6 +352,7 @@ systemctl status calculator
 ### Common Issues
 
 #### 1. Permission Denied
+
 ```bash
 # Check file permissions
 ls -la /usr/local/bin/calculator
@@ -334,6 +361,7 @@ chmod +x /usr/local/bin/calculator
 ```
 
 #### 2. Library Not Found
+
 ```bash
 # Check library paths
 ldd /usr/local/bin/calculator
@@ -342,6 +370,7 @@ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 ```
 
 #### 3. Memory Issues
+
 ```bash
 # Check memory usage
 free -h
@@ -350,6 +379,7 @@ valgrind --leak-check=full ./calculator
 ```
 
 ### Debug Mode
+
 ```bash
 # Enable debug mode
 make MODE=debug
@@ -360,12 +390,14 @@ export DEBUG=1
 ## Maintenance
 
 ### Regular Tasks
+
 - **Daily**: Monitor logs and resource usage
 - **Weekly**: Update security patches
 - **Monthly**: Performance review and optimization
 - **Quarterly**: Full security audit
 
 ### Update Procedures
+
 ```bash
 # 1. Backup current installation
 cp -r /usr/local/bin/calculator /backup/
@@ -386,11 +418,13 @@ systemctl restart calculator
 ## Support and Documentation
 
 ### Resources
+
 - **Documentation**: `/usr/local/share/doc/c-monorepo/`
 - **Configuration Examples**: `/usr/local/share/c-monorepo/examples/`
 - **Troubleshooting**: This guide and `docs/TROUBLESHOOTING.md`
 
 ### Contact
+
 - **Technical Support**: `support@[domain]`
 - **Security Issues**: `security@[domain]`
 - **Bug Reports**: GitHub Issues

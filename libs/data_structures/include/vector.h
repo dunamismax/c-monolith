@@ -4,7 +4,7 @@
  * @author dunamismax <dunamismax@tutamail.com>
  * @version 1.0.0
  * @date 2024
- * 
+ *
  * High-performance dynamic array (vector) implementation in C
  * Optimized for Apple Silicon (ARM64) architecture
  */
@@ -16,14 +16,15 @@
 
 /**
  * @brief Dynamic array implementation in C
- * 
+ *
  * Demonstrates modern C memory management and data structures.
  * Features automatic resizing, bounds checking, and ARM64 optimizations.
  */
-typedef struct {
-    int *data;        // Pointer to the array data
-    size_t size;      // Current number of elements
-    size_t capacity;  // Maximum capacity before reallocation
+typedef struct
+{
+    int *data;       // Pointer to the array data
+    size_t size;     // Current number of elements
+    size_t capacity; // Maximum capacity before reallocation
 } Vector;
 
 /**
@@ -31,7 +32,7 @@ typedef struct {
  * @param initial_capacity Initial capacity of the vector
  * @return Pointer to new vector or NULL on failure
  */
-Vector* vector_create(size_t initial_capacity);
+Vector *vector_create(size_t initial_capacity);
 
 /**
  * Destroy a vector and free all memory

@@ -4,7 +4,7 @@
  * @author dunamismax <dunamismax@tutamail.com>
  * @version 1.0.0
  * @date 2024
- * 
+ *
  * High-performance mathematical algorithms and utilities
  * Optimized for Apple Silicon (ARM64) architecture
  */
@@ -14,7 +14,7 @@
 
 /**
  * @brief Mathematical utility functions library
- * 
+ *
  * Educational examples of numerical algorithms with ARM64 optimizations.
  * Includes number theory, sequences, and common mathematical operations.
  */
