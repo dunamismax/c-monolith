@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="c.png" alt="C Monorepo Logo" width="300" />
+  <img src="c.png" alt="C Monorepo Logo" width="200" />
 </p>
 
 <p align="center">
