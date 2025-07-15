@@ -5,31 +5,22 @@
 // Include the vector library
 #include "../../libs/data_structures/include/vector.h"
 
-/**
- * Simple test framework for the vector library
- */
-
 int tests_run = 0;
 int tests_passed = 0;
 
-#define TEST(name)                             \
-    do                                         \
-    {                                          \
-        printf("Running test: %s ... ", name); \
-        tests_run++;                           \
-        if (test_##name())                     \
-        {                                      \
-            printf("PASS\n");                  \
-            tests_passed++;                    \
-        }                                      \
-        else                                   \
-        {                                      \
-            printf("FAIL\n");                  \
-        }                                      \
-    } while (0)
+void run_test(int (*test_function)(void), const char* test_name) {
+    tests_run++;
+    printf("Running test: %s ... ", test_name);
+    if (test_function()) {
+        printf("PASS\n");
+        tests_passed++;
+    } else {
+        printf("FAIL\n");
+    }
+}
 
 // Test vector creation and destruction
-int test_create_destroy()
+int test_create_destroy(void)
 {
     Vector *vec = vector_create(5);
     if (!vec)
@@ -46,7 +37,7 @@ int test_create_destroy()
 }
 
 // Test push and size operations
-int test_push_and_size()
+int test_push_and_size(void)
 {
     Vector *vec = vector_create(2);
     if (!vec)
@@ -95,7 +86,7 @@ int test_push_and_size()
 }
 
 // Test get and set operations
-int test_get_set()
+int test_get_set(void)
 {
     Vector *vec = vector_create(3);
     if (!vec)
@@ -157,7 +148,7 @@ int test_get_set()
 }
 
 // Test pop operation
-int test_pop()
+int test_pop(void)
 {
     Vector *vec = vector_create(3);
     if (!vec)
@@ -212,7 +203,7 @@ int test_pop()
 }
 
 // Test edge cases
-int test_edge_cases()
+int test_edge_cases(void)
 {
     // Test NULL vector
     if (vector_size(NULL) != 0)
@@ -234,16 +225,16 @@ int test_edge_cases()
     return 1;
 }
 
-int main()
+int main(void)
 {
     printf("Vector Library Test Suite\n");
     printf("========================\n\n");
 
-    TEST(create_destroy);
-    TEST(push_and_size);
-    TEST(get_set);
-    TEST(pop);
-    TEST(edge_cases);
+    run_test(test_create_destroy, "test_create_destroy");
+    run_test(test_push_and_size, "test_push_and_size");
+    run_test(test_get_set, "test_get_set");
+    run_test(test_pop, "test_pop");
+    run_test(test_edge_cases, "test_edge_cases");
 
     printf("\nTest Results:\n");
     printf("Tests run: %d\n", tests_run);
@@ -252,12 +243,12 @@ int main()
 
     if (tests_passed == tests_run)
     {
-        printf("\nAll tests passed! ✓\n");
+        printf("\nAll tests passed! \u2713\n");
         return 0;
     }
     else
     {
-        printf("\nSome tests failed! ✗\n");
+        printf("\nSome tests failed! \u2717\n");
         return 1;
     }
 }

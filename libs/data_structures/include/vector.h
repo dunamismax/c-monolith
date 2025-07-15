@@ -20,8 +20,7 @@
  * Demonstrates modern C memory management and data structures.
  * Features automatic resizing, bounds checking, and ARM64 optimizations.
  */
-typedef struct
-{
+typedef struct {
     int *data;       // Pointer to the array data
     size_t size;     // Current number of elements
     size_t capacity; // Maximum capacity before reallocation

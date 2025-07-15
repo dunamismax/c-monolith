@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
 #include <errno.h>
 #include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Include our math utilities library
 #include "../../../../libs/math_utils/include/math_utils.h"
@@ -22,10 +22,9 @@
 /**
  * Safe input parsing with bounds checking
  */
-static int safe_parse_input(const char *input, char *op_str, size_t op_size, double *num1, double *num2)
-{
-    if (!input || !op_str || !num1 || !num2 || op_size == 0)
-    {
+static int safe_parse_input(const char *input, char *op_str, size_t op_size, double *num1,
+                            double *num2) {
+    if (!input || !op_str || !num1 || !num2 || op_size == 0) {
         return -1;
     }
 
@@ -36,8 +35,7 @@ static int safe_parse_input(const char *input, char *op_str, size_t op_size, dou
 
     // Create a local copy to avoid modifying input
     char input_copy[MAX_INPUT_LENGTH];
-    if (strlen(input) >= sizeof(input_copy))
-    {
+    if (strlen(input) >= sizeof(input_copy)) {
         return -1; // Input too long
     }
 
@@ -45,38 +43,32 @@ static int safe_parse_input(const char *input, char *op_str, size_t op_size, dou
 
     // Parse components safely
     char *token = strtok(input_copy, " \t\n");
-    if (!token)
-    {
+    if (!token) {
         return 0; // No tokens
     }
 
     // Copy operation string with bounds checking
-    if (strlen(token) >= op_size)
-    {
+    if (strlen(token) >= op_size) {
         return -1; // Operation string too long
     }
     strcpy(op_str, token);
 
     // Parse first number if present
     token = strtok(NULL, " \t\n");
-    if (token)
-    {
+    if (token) {
         char *endptr;
         errno = 0;
         *num1 = strtod(token, &endptr);
-        if (errno != 0 || *endptr != '\0')
-        {
+        if (errno != 0 || *endptr != '\0') {
             return -1; // Invalid number
         }
 
         // Parse second number if present
         token = strtok(NULL, " \t\n");
-        if (token)
-        {
+        if (token) {
             errno = 0;
             *num2 = strtod(token, &endptr);
-            if (errno != 0 || *endptr != '\0')
-            {
+            if (errno != 0 || *endptr != '\0') {
                 return -1; // Invalid number
             }
             return 3; // Operation + two numbers
@@ -90,30 +82,24 @@ static int safe_parse_input(const char *input, char *op_str, size_t op_size, dou
 /**
  * Validate operation string to prevent format string attacks
  */
-static int validate_operation_string(const char *op_str)
-{
-    if (!op_str)
-    {
+static int validate_operation_string(const char *op_str) {
+    if (!op_str) {
         return -1;
     }
 
     // Check for format string specifiers
-    if (strchr(op_str, '%') != NULL)
-    {
+    if (strchr(op_str, '%') != NULL) {
         return -1;
     }
 
     // Check for null bytes
-    if (strlen(op_str) != strcspn(op_str, "\0"))
-    {
+    if (strlen(op_str) != strcspn(op_str, "\0")) {
         return -1;
     }
 
     // Check for control characters
-    for (const char *p = op_str; *p; p++)
-    {
-        if (*p < 32 && *p != '\t')
-        {
+    for (const char *p = op_str; *p; p++) {
+        if (*p < 32 && *p != '\t') {
             return -1;
         }
     }
@@ -121,8 +107,7 @@ static int validate_operation_string(const char *op_str)
     return 0;
 }
 
-typedef enum
-{
+typedef enum {
     OP_ADD,
     OP_SUB,
     OP_MUL,
@@ -143,8 +128,7 @@ typedef enum
 /**
  * Parse operation from string
  */
-Operation parse_operation(const char *op)
-{
+Operation parse_operation(const char *op) {
     if (strcmp(op, "+") == 0 || strcmp(op, "add") == 0)
         return OP_ADD;
     if (strcmp(op, "-") == 0 || strcmp(op, "sub") == 0)
@@ -179,8 +163,7 @@ Operation parse_operation(const char *op)
 /**
  * Display help information
  */
-void show_help()
-{
+void show_help() {
     printf("\n=== Calculator Help ===\n");
     printf("Basic Operations:\n");
     printf("  +, add      - Addition (a + b)\n");
@@ -207,10 +190,8 @@ void show_help()
 /**
  * Process calculator operation
  */
-void process_operation(Operation op, double a, double b)
-{
-    switch (op)
-    {
+void process_operation(Operation op, double a, double b) {
+    switch (op) {
     case OP_ADD:
         printf("Result: %.2f\n", a + b);
         break;
@@ -221,22 +202,16 @@ void process_operation(Operation op, double a, double b)
         printf("Result: %.2f\n", a * b);
         break;
     case OP_DIV:
-        if (b == 0)
-        {
+        if (b == 0) {
             printf("Error: Division by zero!\n");
-        }
-        else
-        {
+        } else {
             printf("Result: %.2f\n", a / b);
         }
         break;
     case OP_MOD:
-        if (b == 0)
-        {
+        if (b == 0) {
             printf("Error: Modulo by zero!\n");
-        }
-        else
-        {
+        } else {
             printf("Result: %d\n", (int)a % (int)b);
         }
         break;
@@ -249,63 +224,44 @@ void process_operation(Operation op, double a, double b)
     case OP_LCM:
         printf("Result: %d\n", math_lcm((int)a, (int)b));
         break;
-    case OP_FACTORIAL:
-    {
+    case OP_FACTORIAL: {
         long long result = math_factorial((int)a);
-        if (result == -1)
-        {
+        if (result == -1) {
             printf("Error: Factorial undefined for negative numbers!\n");
-        }
-        else
-        {
+        } else {
             printf("Result: %lld\n", result);
         }
-    }
-    break;
-    case OP_FIBONACCI:
-    {
+    } break;
+    case OP_FIBONACCI: {
         long long result = math_fibonacci((int)a);
-        if (result == -1)
-        {
+        if (result == -1) {
             printf("Error: Invalid input for Fibonacci!\n");
-        }
-        else
-        {
+        } else {
             printf("Result: %lld\n", result);
         }
-    }
-    break;
+    } break;
     case OP_ISPRIME:
-        if (math_is_prime((int)a))
-        {
+        if (math_is_prime((int)a)) {
             printf("Result: %d is prime\n", (int)a);
-        }
-        else
-        {
+        } else {
             printf("Result: %d is not prime\n", (int)a);
         }
         break;
-    case OP_SQRT:
-    {
+    case OP_SQRT: {
         double result = math_sqrt(a);
-        if (result == -1)
-        {
+        if (result == -1) {
             printf("Error: Square root of negative number!\n");
-        }
-        else
-        {
+        } else {
             printf("Result: %.6f\n", result);
         }
-    }
-    break;
+    } break;
     default:
         printf("Error: Unknown operation!\n");
         break;
     }
 }
 
-int main()
-{
+int main() {
     char input[MAX_INPUT_LENGTH];
     char op_str[MAX_OP_LENGTH];
     double num1, num2;
@@ -313,13 +269,11 @@ int main()
     printf("=== C Programming Calculator ===\n");
     printf("Type 'help' for instructions or 'quit' to exit\n\n");
 
-    while (1)
-    {
+    while (1) {
         printf("calc> ");
 
         // Read input line
-        if (!fgets(input, sizeof(input), stdin))
-        {
+        if (!fgets(input, sizeof(input), stdin)) {
             break;
         }
 
@@ -327,63 +281,54 @@ int main()
         input[strcspn(input, "\n")] = 0;
 
         // Skip empty lines
-        if (strlen(input) == 0)
-        {
+        if (strlen(input) == 0) {
             continue;
         }
 
         // Parse input safely
         int parsed = safe_parse_input(input, op_str, sizeof(op_str), &num1, &num2);
 
-        if (parsed < 0)
-        {
+        if (parsed < 0) {
             printf("Error: Invalid input format. Type 'help' for instructions.\n");
             continue;
         }
 
-        if (parsed < 1)
-        {
+        if (parsed < 1) {
             printf("Error: Invalid input. Type 'help' for instructions.\n");
             continue;
         }
 
         Operation op = parse_operation(op_str);
 
-        if (op == OP_QUIT)
-        {
+        if (op == OP_QUIT) {
             printf("Goodbye!\n");
             break;
         }
 
-        if (op == OP_HELP)
-        {
+        if (op == OP_HELP) {
             show_help();
             continue;
         }
 
-        if (op == OP_INVALID)
-        {
+        if (op == OP_INVALID) {
             // Validate operation string before printing to prevent format string attacks
-            if (validate_operation_string(op_str) == 0)
-            {
+            if (validate_operation_string(op_str) == 0) {
                 printf("Error: Unknown operation. Type 'help' for list.\n");
-            }
-            else
-            {
+            } else {
                 printf("Error: Invalid operation format. Type 'help' for list.\n");
             }
             continue;
         }
 
         // Check if we have enough operands
-        if ((op == OP_FACTORIAL || op == OP_FIBONACCI || op == OP_ISPRIME || op == OP_SQRT) && parsed < 2)
-        {
+        if ((op == OP_FACTORIAL || op == OP_FIBONACCI || op == OP_ISPRIME || op == OP_SQRT) &&
+            parsed < 2) {
             printf("Error: Missing operand. Single-operand operations require one number.\n");
             continue;
         }
 
-        if ((op != OP_FACTORIAL && op != OP_FIBONACCI && op != OP_ISPRIME && op != OP_SQRT) && parsed < 3)
-        {
+        if ((op != OP_FACTORIAL && op != OP_FIBONACCI && op != OP_ISPRIME && op != OP_SQRT) &&
+            parsed < 3) {
             printf("Error: Missing operand. Two-operand operations require two numbers.\n");
             continue;
         }

@@ -1,9 +1,9 @@
+#include <ctype.h>
+#include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include <limits.h>
-#include <errno.h>
 
 // Include our data structures library
 #include "../../../../libs/data_structures/include/vector.h"
@@ -24,16 +24,13 @@
 /**
  * Safe string copy with bounds checking
  */
-static int safe_strcpy(char *dest, size_t dest_size, const char *src)
-{
-    if (!dest || !src || dest_size == 0)
-    {
+static int safe_strcpy(char *dest, size_t dest_size, const char *src) {
+    if (!dest || !src || dest_size == 0) {
         return -1;
     }
 
     size_t src_len = strlen(src);
-    if (src_len >= dest_size)
-    {
+    if (src_len >= dest_size) {
         return -1; // Not enough space
     }
 
@@ -44,22 +41,18 @@ static int safe_strcpy(char *dest, size_t dest_size, const char *src)
 /**
  * Safe string concatenation with bounds checking
  */
-static int safe_strcat(char *dest, size_t dest_size, const char *src)
-{
-    if (!dest || !src || dest_size == 0)
-    {
+static int safe_strcat(char *dest, size_t dest_size, const char *src) {
+    if (!dest || !src || dest_size == 0) {
         return -1;
     }
 
     size_t dest_len = strnlen(dest, dest_size);
-    if (dest_len >= dest_size)
-    {
+    if (dest_len >= dest_size) {
         return -1; // Destination not null-terminated or too long
     }
 
     size_t src_len = strlen(src);
-    if (dest_len + src_len >= dest_size)
-    {
+    if (dest_len + src_len >= dest_size) {
         return -1; // Not enough space
     }
 
@@ -70,10 +63,8 @@ static int safe_strcat(char *dest, size_t dest_size, const char *src)
 /**
  * Convert string to uppercase
  */
-void to_uppercase(char *str)
-{
-    for (int i = 0; str[i]; i++)
-    {
+void to_uppercase(char *str) {
+    for (int i = 0; str[i]; i++) {
         str[i] = toupper(str[i]);
     }
 }
@@ -81,10 +72,8 @@ void to_uppercase(char *str)
 /**
  * Convert string to lowercase
  */
-void to_lowercase(char *str)
-{
-    for (int i = 0; str[i]; i++)
-    {
+void to_lowercase(char *str) {
+    for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
     }
 }
@@ -92,11 +81,9 @@ void to_lowercase(char *str)
 /**
  * Reverse a string in place
  */
-void reverse_string(char *str)
-{
+void reverse_string(char *str) {
     int len = strlen(str);
-    for (int i = 0; i < len / 2; i++)
-    {
+    for (int i = 0; i < len / 2; i++) {
         char temp = str[i];
         str[i] = str[len - 1 - i];
         str[len - 1 - i] = temp;
@@ -106,13 +93,10 @@ void reverse_string(char *str)
 /**
  * Count occurrences of a character in a string
  */
-int count_char(const char *str, char c)
-{
+int count_char(const char *str, char c) {
     int count = 0;
-    for (int i = 0; str[i]; i++)
-    {
-        if (str[i] == c)
-        {
+    for (int i = 0; str[i]; i++) {
+        if (str[i] == c) {
             count++;
         }
     }
@@ -122,12 +106,10 @@ int count_char(const char *str, char c)
 /**
  * Remove extra whitespace from string
  */
-void trim_whitespace(char *str)
-{
+void trim_whitespace(char *str) {
     // Remove leading whitespace
     int start = 0;
-    while (str[start] && isspace(str[start]))
-    {
+    while (str[start] && isspace(str[start])) {
         start++;
     }
 
@@ -136,8 +118,7 @@ void trim_whitespace(char *str)
 
     // Remove trailing whitespace
     int end = strlen(str) - 1;
-    while (end >= 0 && isspace(str[end]))
-    {
+    while (end >= 0 && isspace(str[end])) {
         str[end] = '\0';
         end--;
     }
@@ -146,18 +127,13 @@ void trim_whitespace(char *str)
     int read = 0, write = 0;
     int in_space = 0;
 
-    while (str[read])
-    {
-        if (isspace(str[read]))
-        {
-            if (!in_space)
-            {
+    while (str[read]) {
+        if (isspace(str[read])) {
+            if (!in_space) {
                 str[write++] = ' ';
                 in_space = 1;
             }
-        }
-        else
-        {
+        } else {
             str[write++] = str[read];
             in_space = 0;
         }
@@ -169,10 +145,8 @@ void trim_whitespace(char *str)
 /**
  * Find and replace substring in text
  */
-char *find_replace(const char *text, const char *find, const char *replace)
-{
-    if (!text || !find || !replace)
-    {
+char *find_replace(const char *text, const char *find, const char *replace) {
+    if (!text || !find || !replace) {
         return NULL;
     }
 
@@ -183,8 +157,7 @@ char *find_replace(const char *text, const char *find, const char *replace)
     // Count occurrences
     int count = 0;
     const char *pos = text;
-    while ((pos = strstr(pos, find)) != NULL)
-    {
+    while ((pos = strstr(pos, find)) != NULL) {
         count++;
         pos += find_len;
     }
@@ -192,8 +165,7 @@ char *find_replace(const char *text, const char *find, const char *replace)
     // Calculate new string size
     size_t new_size = text_len + count * (replace_len - find_len) + 1;
     char *result = malloc(new_size);
-    if (!result)
-    {
+    if (!result) {
         return NULL;
     }
 
@@ -201,8 +173,7 @@ char *find_replace(const char *text, const char *find, const char *replace)
     const char *src = text;
     char *dst = result;
 
-    while ((pos = strstr(src, find)) != NULL)
-    {
+    while ((pos = strstr(src, find)) != NULL) {
         // Copy text before match
         size_t prefix_len = pos - src;
         memcpy(dst, src, prefix_len);
@@ -225,23 +196,18 @@ char *find_replace(const char *text, const char *find, const char *replace)
 /**
  * Safe swap of two strings with bounds checking
  */
-static int safe_string_swap(char *str1, char *str2, size_t max_len)
-{
-    if (!str1 || !str2 || max_len == 0)
-    {
+static int safe_string_swap(char *str1, char *str2, size_t max_len) {
+    if (!str1 || !str2 || max_len == 0) {
         return -1;
     }
 
     char *temp = malloc(max_len);
-    if (!temp)
-    {
+    if (!temp) {
         return -1;
     }
 
-    if (safe_strcpy(temp, max_len, str1) != 0 ||
-        safe_strcpy(str1, max_len, str2) != 0 ||
-        safe_strcpy(str2, max_len, temp) != 0)
-    {
+    if (safe_strcpy(temp, max_len, str1) != 0 || safe_strcpy(str1, max_len, str2) != 0 ||
+        safe_strcpy(str2, max_len, temp) != 0) {
         free(temp);
         return -1;
     }
@@ -253,21 +219,15 @@ static int safe_string_swap(char *str1, char *str2, size_t max_len)
 /**
  * Sort lines alphabetically (safe bubble sort with bounds checking)
  */
-int sort_lines(char **lines, int count, size_t max_line_len)
-{
-    if (!lines || count <= 0 || max_line_len == 0)
-    {
+int sort_lines(char **lines, int count, size_t max_line_len) {
+    if (!lines || count <= 0 || max_line_len == 0) {
         return -1;
     }
 
-    for (int i = 0; i < count - 1; i++)
-    {
-        for (int j = 0; j < count - 1 - i; j++)
-        {
-            if (strcmp(lines[j], lines[j + 1]) > 0)
-            {
-                if (safe_string_swap(lines[j], lines[j + 1], max_line_len) != 0)
-                {
+    for (int i = 0; i < count - 1; i++) {
+        for (int j = 0; j < count - 1 - i; j++) {
+            if (strcmp(lines[j], lines[j + 1]) > 0) {
+                if (safe_string_swap(lines[j], lines[j + 1], max_line_len) != 0) {
                     return -1; // Swap failed
                 }
             }
@@ -279,8 +239,7 @@ int sort_lines(char **lines, int count, size_t max_line_len)
 /**
  * Display help information
  */
-void show_help()
-{
+void show_help() {
     printf("\n=== Text Processor Help ===\n");
     printf("Commands:\n");
     printf("  upper <text>         - Convert to uppercase\n");
@@ -300,34 +259,29 @@ void show_help()
 /**
  * Interactive sorting mode with dynamic memory allocation
  */
-void sort_mode()
-{
+void sort_mode() {
     printf("\n=== Sort Mode ===\n");
     printf("Enter lines of text (empty line to finish, max %d lines):\n", MAX_LINES);
 
     // Allocate memory for line pointers
     char **lines = malloc(MAX_LINES * sizeof(char *));
-    if (!lines)
-    {
+    if (!lines) {
         printf("Error: Memory allocation failed\n");
         return;
     }
 
     // Initialize all pointers to NULL
-    for (int i = 0; i < MAX_LINES; i++)
-    {
+    for (int i = 0; i < MAX_LINES; i++) {
         lines[i] = NULL;
     }
 
     int count = 0;
     char input_buffer[MAX_LINE_LENGTH];
 
-    while (count < MAX_LINES)
-    {
+    while (count < MAX_LINES) {
         printf("%d> ", count + 1);
 
-        if (!fgets(input_buffer, sizeof(input_buffer), stdin))
-        {
+        if (!fgets(input_buffer, sizeof(input_buffer), stdin)) {
             break;
         }
 
@@ -335,23 +289,20 @@ void sort_mode()
         input_buffer[strcspn(input_buffer, "\n")] = 0;
 
         // Empty line signals end
-        if (strlen(input_buffer) == 0)
-        {
+        if (strlen(input_buffer) == 0) {
             break;
         }
 
         // Allocate memory for this line
         size_t line_len = strlen(input_buffer) + 1;
         lines[count] = malloc(line_len);
-        if (!lines[count])
-        {
+        if (!lines[count]) {
             printf("Error: Memory allocation failed for line %d\n", count + 1);
             break;
         }
 
         // Safe copy
-        if (safe_strcpy(lines[count], line_len, input_buffer) != 0)
-        {
+        if (safe_strcpy(lines[count], line_len, input_buffer) != 0) {
             printf("Error: Failed to copy line %d\n", count + 1);
             free(lines[count]);
             lines[count] = NULL;
@@ -361,48 +312,39 @@ void sort_mode()
         count++;
     }
 
-    if (count == 0)
-    {
+    if (count == 0) {
         printf("No lines to sort.\n");
         free(lines);
         return;
     }
 
-    if (count >= MAX_LINES)
-    {
+    if (count >= MAX_LINES) {
         printf("Warning: Maximum number of lines (%d) reached\n", MAX_LINES);
     }
 
     printf("\nOriginal lines:\n");
-    for (int i = 0; i < count; i++)
-    {
+    for (int i = 0; i < count; i++) {
         printf("%d: %s\n", i + 1, lines[i]);
     }
 
     // Sort with error checking
-    if (sort_lines(lines, count, MAX_LINE_LENGTH) != 0)
-    {
+    if (sort_lines(lines, count, MAX_LINE_LENGTH) != 0) {
         printf("Error: Sorting failed\n");
-    }
-    else
-    {
+    } else {
         printf("\nSorted lines:\n");
-        for (int i = 0; i < count; i++)
-        {
+        for (int i = 0; i < count; i++) {
             printf("%d: %s\n", i + 1, lines[i]);
         }
     }
 
     // Clean up memory
-    for (int i = 0; i < count; i++)
-    {
+    for (int i = 0; i < count; i++) {
         free(lines[i]);
     }
     free(lines);
 }
 
-int main()
-{
+int main() {
     char input[MAX_LINE_LENGTH];
     char command[64];
     char text[MAX_LINE_LENGTH];
@@ -410,13 +352,11 @@ int main()
     printf("=== Text Processor ===\n");
     printf("Type 'help' for commands or 'quit' to exit\n\n");
 
-    while (1)
-    {
+    while (1) {
         printf("textproc> ");
 
         // Read input line
-        if (!fgets(input, sizeof(input), stdin))
-        {
+        if (!fgets(input, sizeof(input), stdin)) {
             break;
         }
 
@@ -424,174 +364,114 @@ int main()
         input[strcspn(input, "\n")] = 0;
 
         // Skip empty lines
-        if (strlen(input) == 0)
-        {
+        if (strlen(input) == 0) {
             continue;
         }
 
         // Parse command
         int parsed = sscanf(input, "%s", command);
-        if (parsed < 1)
-        {
+        if (parsed < 1) {
             continue;
         }
 
-        if (strcmp(command, "quit") == 0 || strcmp(command, "exit") == 0)
-        {
+        if (strcmp(command, "quit") == 0 || strcmp(command, "exit") == 0) {
             printf("Goodbye!\n");
             break;
-        }
-        else if (strcmp(command, "help") == 0)
-        {
+        } else if (strcmp(command, "help") == 0) {
             show_help();
-        }
-        else if (strcmp(command, "sort") == 0)
-        {
+        } else if (strcmp(command, "sort") == 0) {
             sort_mode();
-        }
-        else if (strcmp(command, "upper") == 0)
-        {
+        } else if (strcmp(command, "upper") == 0) {
             // Extract text after command
             char *text_start = input + strlen(command);
             while (*text_start && isspace(*text_start))
                 text_start++;
 
-            if (strlen(text_start) == 0)
-            {
+            if (strlen(text_start) == 0) {
                 printf("Usage: upper <text>\n");
-            }
-            else if (strlen(text_start) >= sizeof(text))
-            {
+            } else if (strlen(text_start) >= sizeof(text)) {
                 printf("Error: Text too long (max %zu characters)\n", sizeof(text) - 1);
-            }
-            else
-            {
-                if (safe_strcpy(text, sizeof(text), text_start) == 0)
-                {
+            } else {
+                if (safe_strcpy(text, sizeof(text), text_start) == 0) {
                     to_uppercase(text);
                     printf("Result: %s\n", text);
-                }
-                else
-                {
+                } else {
                     printf("Error: Failed to process text\n");
                 }
             }
-        }
-        else if (strcmp(command, "lower") == 0)
-        {
+        } else if (strcmp(command, "lower") == 0) {
             char *text_start = input + strlen(command);
             while (*text_start && isspace(*text_start))
                 text_start++;
 
-            if (strlen(text_start) == 0)
-            {
+            if (strlen(text_start) == 0) {
                 printf("Usage: lower <text>\n");
-            }
-            else if (strlen(text_start) >= sizeof(text))
-            {
+            } else if (strlen(text_start) >= sizeof(text)) {
                 printf("Error: Text too long (max %zu characters)\n", sizeof(text) - 1);
-            }
-            else
-            {
-                if (safe_strcpy(text, sizeof(text), text_start) == 0)
-                {
+            } else {
+                if (safe_strcpy(text, sizeof(text), text_start) == 0) {
                     to_lowercase(text);
                     printf("Result: %s\n", text);
-                }
-                else
-                {
+                } else {
                     printf("Error: Failed to process text\n");
                 }
             }
-        }
-        else if (strcmp(command, "reverse") == 0)
-        {
+        } else if (strcmp(command, "reverse") == 0) {
             char *text_start = input + strlen(command);
             while (*text_start && isspace(*text_start))
                 text_start++;
 
-            if (strlen(text_start) == 0)
-            {
+            if (strlen(text_start) == 0) {
                 printf("Usage: reverse <text>\n");
-            }
-            else if (strlen(text_start) >= sizeof(text))
-            {
+            } else if (strlen(text_start) >= sizeof(text)) {
                 printf("Error: Text too long (max %zu characters)\n", sizeof(text) - 1);
-            }
-            else
-            {
-                if (safe_strcpy(text, sizeof(text), text_start) == 0)
-                {
+            } else {
+                if (safe_strcpy(text, sizeof(text), text_start) == 0) {
                     reverse_string(text);
                     printf("Result: %s\n", text);
-                }
-                else
-                {
+                } else {
                     printf("Error: Failed to process text\n");
                 }
             }
-        }
-        else if (strcmp(command, "count") == 0)
-        {
+        } else if (strcmp(command, "count") == 0) {
             char target_char;
             char *text_start = strchr(input + strlen(command), ' ');
-            if (text_start)
-            {
+            if (text_start) {
                 text_start++;
-                if (*text_start)
-                {
+                if (*text_start) {
                     target_char = *text_start;
                     text_start += 2; // Skip char and space
 
-                    if (*text_start)
-                    {
+                    if (*text_start) {
                         int count = count_char(text_start, target_char);
                         printf("Character '%c' appears %d times\n", target_char, count);
-                    }
-                    else
-                    {
+                    } else {
                         printf("Usage: count <char> <text>\n");
                     }
-                }
-                else
-                {
+                } else {
                     printf("Usage: count <char> <text>\n");
                 }
-            }
-            else
-            {
+            } else {
                 printf("Usage: count <char> <text>\n");
             }
-        }
-        else if (strcmp(command, "trim") == 0)
-        {
+        } else if (strcmp(command, "trim") == 0) {
             char *text_start = input + strlen(command);
             while (*text_start && isspace(*text_start))
                 text_start++;
 
-            if (strlen(text_start) == 0)
-            {
+            if (strlen(text_start) == 0) {
                 printf("Usage: trim <text>\n");
-            }
-            else if (strlen(text_start) >= sizeof(text))
-            {
+            } else if (strlen(text_start) >= sizeof(text)) {
                 printf("Error: Text too long (max %zu characters)\n", sizeof(text) - 1);
-            }
-            else
-            {
-                if (safe_strcpy(text, sizeof(text), text_start) == 0)
-                {
+            } else {
+                if (safe_strcpy(text, sizeof(text), text_start) == 0) {
                     trim_whitespace(text);
                     printf("Result: '%s'\n", text);
-                }
-                else
-                {
+                } else {
                     printf("Error: Failed to process text\n");
                 }
             }
-        }
-        else if (strcmp(command, "replace") == 0)
-        {
+        } else if (strcmp(command, "replace") == 0) {
             char find[256], replace[256], source[512];
 
             // Clear buffers for security
@@ -601,26 +481,18 @@ int main()
 
             int args = sscanf(input, "%*s %255s %255s %511[^\n]", find, replace, source);
 
-            if (args < 3)
-            {
+            if (args < 3) {
                 printf("Usage: replace <find> <replace> <text>\n");
-            }
-            else
-            {
+            } else {
                 char *result = find_replace(source, find, replace);
-                if (result)
-                {
+                if (result) {
                     printf("Result: %s\n", result);
                     free(result);
-                }
-                else
-                {
+                } else {
                     printf("Error: Memory allocation failed\n");
                 }
             }
-        }
-        else
-        {
+        } else {
             printf("Unknown command: %s\n", command);
             printf("Type 'help' for available commands.\n");
         }

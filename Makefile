@@ -63,17 +63,22 @@ DOCS_OUT_DIR := $(BUILD_DIR)/docs
 # PROJECT DISCOVERY
 # =============================================================================
 
-# Automatically discover all libraries and applications
-LIB_DIRS := $(shell find $(LIBS_DIR) -maxdepth 1 -type d ! -path $(LIBS_DIR))
-CLI_DIRS := $(shell find $(APPS_DIR)/cli -maxdepth 1 -type d ! -path $(APPS_DIR)/cli 2>/dev/null || true)
-GUI_DIRS := $(shell find $(APPS_DIR)/gui -maxdepth 1 -type d ! -path $(APPS_DIR)/gui 2>/dev/null || true)
-GAME_DIRS := $(shell find $(APPS_DIR)/games -maxdepth 1 -type d ! -path $(APPS_DIR)/games 2>/dev/null || true)
+# Automatically discover all source files
+LIB_SRCS := $(shell find $(LIBS_DIR) -name "*.c")
+APP_SRCS := $(shell find $(APPS_DIR) -name "*.c")
+TEST_SRCS := $(shell find $(TESTS_DIR) -name "*.c")
 
-ALL_APP_DIRS := $(CLI_DIRS) $(GUI_DIRS) $(GAME_DIRS)
+# Define object files
+ALL_SRCS := $(LIB_SRCS) $(APP_SRCS) $(TEST_SRCS)
+OBJ_FILES := $(patsubst %.c,$(OBJ_DIR)/%.o,$(ALL_SRCS))
 
-# Extract project names for individual targets
-LIB_NAMES := $(notdir $(LIB_DIRS))
-APP_NAMES := $(notdir $(ALL_APP_DIRS))
+# Define library targets
+LIB_NAMES := $(notdir $(shell find $(LIBS_DIR) -maxdepth 1 -type d ! -path $(LIBS_DIR)))
+LIB_TARGETS := $(addprefix $(LIB_DIR)/lib,$(addsuffix .a,$(LIB_NAMES)))
+
+# Define application targets
+APP_NAMES := $(notdir $(shell find $(APPS_DIR)/* -mindepth 1 -maxdepth 1 -type d))
+APP_TARGETS := $(addprefix $(BIN_DIR)/,$(APP_NAMES))
 
 # =============================================================================
 # BUILD TARGETS
@@ -87,36 +92,68 @@ all: banner system-check libs apps tests
 	@ls -la $(BIN_DIR)/ 2>/dev/null | grep -E '^-.*x.*' | awk '{print "  " $$9}' || echo "  No executables found"
 
 # Build libraries
-.PHONY: libs $(LIB_NAMES)
-libs: $(LIB_NAMES)
+.PHONY: libs
+libs: $(LIB_TARGETS)
 
-$(LIB_NAMES):
+# Build data_structures library
+$(LIB_DIR)/libdata_structures.a: $(OBJ_DIR)/libs/data_structures/src/vector.o
 	@echo "$(YELLOW)Building library: $@$(NC)"
-	@$(MAKE) -C $(LIBS_DIR)/$@ MODE=$(MODE) --no-print-directory
+	@mkdir -p $(LIB_DIR)
+	$(AR) rcs $@ $^
+
+# Build math_utils library
+$(LIB_DIR)/libmath_utils.a: $(OBJ_DIR)/libs/math_utils/src/math_utils.o
+	@echo "$(YELLOW)Building library: $@$(NC)"
+	@mkdir -p $(LIB_DIR)
+	$(AR) rcs $@ $^
 
 # Build applications
-.PHONY: apps $(APP_NAMES)
-apps: libs $(APP_NAMES)
+.PHONY: apps
+apps: $(APP_TARGETS)
 
-$(APP_NAMES): libs
-	@echo "$(CYAN)Building application: $@$(NC)"
-	@if [ -d "$(APPS_DIR)/cli/$@" ]; then \
-		$(MAKE) -C $(APPS_DIR)/cli/$@ MODE=$(MODE) --no-print-directory; \
-	elif [ -d "$(APPS_DIR)/gui/$@" ]; then \
-		$(MAKE) -C $(APPS_DIR)/gui/$@ MODE=$(MODE) --no-print-directory; \
-	elif [ -d "$(APPS_DIR)/games/$@" ]; then \
-		$(MAKE) -C $(APPS_DIR)/games/$@ MODE=$(MODE) --no-print-directory; \
-	fi
+# Build calculator application
+$(BIN_DIR)/calculator: $(OBJ_DIR)/apps/cli/calculator/src/calculator.o $(LIB_TARGETS)
+	@echo "$(CYAN)Building application: calculator$(NC)"
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $@
+
+# Build text_processor application
+$(BIN_DIR)/text_processor: $(OBJ_DIR)/apps/cli/text_processor/src/text_processor.o $(LIB_TARGETS)
+	@echo "$(CYAN)Building application: text_processor$(NC)"
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $@
+
+# Build file_utils application
+$(BIN_DIR)/file_utils: $(OBJ_DIR)/apps/cli/file_utils/src/file_utils.o $(LIB_TARGETS)
+	@echo "$(CYAN)Building application: file_utils$(NC)"
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $@
+
+# Build tic_tac_toe application
+$(BIN_DIR)/tic_tac_toe: $(OBJ_DIR)/apps/games/tic_tac_toe/src/tic_tac_toe.o $(LIB_TARGETS)
+	@echo "$(CYAN)Building application: tic_tac_toe$(NC)"
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $@
+
+# Build number_guessing application
+$(BIN_DIR)/number_guessing: $(OBJ_DIR)/apps/games/number_guessing/src/number_guessing.o $(LIB_TARGETS)
+	@echo "$(CYAN)Building application: number_guessing$(NC)"
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $@
 
 # Build and run tests
 .PHONY: tests test check
-tests test check: libs
+tests test check: $(OBJ_DIR)/tests/libs/test_math_utils.o $(OBJ_DIR)/tests/libs/test_vector.o $(OBJ_DIR)/tests/apps/test_calculator.o $(OBJ_DIR)/tests/apps/test_integration.o $(LIB_TARGETS)
 	@echo "$(MAGENTA)Running test suite...$(NC)"
-	@if [ -f $(TESTS_DIR)/Makefile ]; then \
-		$(MAKE) -C $(TESTS_DIR) MODE=$(MODE) run --no-print-directory; \
-	else \
-		echo "$(YELLOW)No tests found$(NC)"; \
-	fi
+	@mkdir -p $(BIN_DIR)
+	$(CC) $(CFLAGS) $^ -L$(LIB_DIR) -lmath_utils -ldata_structures -o $(BIN_DIR)/tests
+	@$(BIN_DIR)/tests
+
+# Generic rule for building object files
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@echo "  [CC]  $@"
+	@$(CC) $(CFLAGS) -I$(LIBS_DIR)/data_structures/include -I$(LIBS_DIR)/math_utils/include -c $< -o $@
 
 # =============================================================================
 # DEVELOPMENT TARGETS
@@ -262,30 +299,11 @@ $(addprefix run-, $(APP_NAMES)): run-%: %
 # =============================================================================
 
 # Clean build artifacts
-.PHONY: clean clean-libs clean-apps clean-tests
-clean: clean-libs clean-apps clean-tests
+.PHONY: clean
+clean:
 	@echo "$(YELLOW)Cleaning build artifacts...$(NC)"
 	@rm -rf $(BUILD_DIR)
 	@echo "$(GREEN)✓ Cleanup completed$(NC)"
-
-clean-libs:
-	@for lib in $(LIB_DIRS); do \
-		if [ -f "$$lib/Makefile" ]; then \
-			$(MAKE) -C "$$lib" clean --no-print-directory; \
-		fi; \
-	done
-
-clean-apps:
-	@for app in $(ALL_APP_DIRS); do \
-		if [ -f "$$app/Makefile" ]; then \
-			$(MAKE) -C "$$app" clean --no-print-directory; \
-		fi; \
-	done
-
-clean-tests:
-	@if [ -f $(TESTS_DIR)/Makefile ]; then \
-		$(MAKE) -C $(TESTS_DIR) clean --no-print-directory; \
-	fi
 
 # Deep clean
 .PHONY: distclean

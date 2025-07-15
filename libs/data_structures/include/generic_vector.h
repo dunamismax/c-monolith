@@ -20,8 +20,7 @@
  * Stores elements of any type using void pointers and element size.
  * Provides type safety through size validation and safe memory operations.
  */
-typedef struct
-{
+typedef struct {
     void *data;          // Pointer to the array data
     size_t size;         // Current number of elements
     size_t capacity;     // Maximum capacity before reallocation

@@ -1,7 +1,7 @@
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
 /**
  * Tic-Tac-Toe Game
@@ -13,8 +13,7 @@
 #define PLAYER_X 'X'
 #define PLAYER_O 'O'
 
-typedef struct
-{
+typedef struct {
     char board[BOARD_SIZE][BOARD_SIZE];
     char current_player;
     int moves_made;
@@ -25,12 +24,9 @@ typedef struct
 /**
  * Initialize the game
  */
-void init_game(Game *game)
-{
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE; j++)
-        {
+void init_game(Game *game) {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
             game->board[i][j] = EMPTY;
         }
     }
@@ -43,17 +39,14 @@ void init_game(Game *game)
 /**
  * Display the game board
  */
-void display_board(const Game *game)
-{
+void display_board(const Game *game) {
     printf("\n  Current Board:\n");
     printf("     1   2   3\n");
     printf("   +---+---+---+\n");
 
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
+    for (int i = 0; i < BOARD_SIZE; i++) {
         printf(" %c ", 'A' + i);
-        for (int j = 0; j < BOARD_SIZE; j++)
-        {
+        for (int j = 0; j < BOARD_SIZE; j++) {
             printf("| %c ", game->board[i][j]);
         }
         printf("|\n");
@@ -65,20 +58,16 @@ void display_board(const Game *game)
 /**
  * Check if a position is valid and empty
  */
-int is_valid_move(const Game *game, int row, int col)
-{
-    return (row >= 0 && row < BOARD_SIZE &&
-            col >= 0 && col < BOARD_SIZE &&
+int is_valid_move(const Game *game, int row, int col) {
+    return (row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE &&
             game->board[row][col] == EMPTY);
 }
 
 /**
  * Make a move on the board
  */
-int make_move(Game *game, int row, int col, char player)
-{
-    if (!is_valid_move(game, row, col))
-    {
+int make_move(Game *game, int row, int col, char player) {
+    if (!is_valid_move(game, row, col)) {
         return 0; // Invalid move
     }
 
@@ -90,10 +79,8 @@ int make_move(Game *game, int row, int col, char player)
 /**
  * Check for three in a row
  */
-char check_line(char a, char b, char c)
-{
-    if (a == b && b == c && a != EMPTY)
-    {
+char check_line(char a, char b, char c) {
+    if (a == b && b == c && a != EMPTY) {
         return a;
     }
     return EMPTY;
@@ -102,19 +89,16 @@ char check_line(char a, char b, char c)
 /**
  * Check if the game is won
  */
-char check_winner(const Game *game)
-{
+char check_winner(const Game *game) {
     // Check rows
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
+    for (int i = 0; i < BOARD_SIZE; i++) {
         char winner = check_line(game->board[i][0], game->board[i][1], game->board[i][2]);
         if (winner != EMPTY)
             return winner;
     }
 
     // Check columns
-    for (int j = 0; j < BOARD_SIZE; j++)
-    {
+    for (int j = 0; j < BOARD_SIZE; j++) {
         char winner = check_line(game->board[0][j], game->board[1][j], game->board[2][j]);
         if (winner != EMPTY)
             return winner;
@@ -135,24 +119,17 @@ char check_winner(const Game *game)
 /**
  * Check if the board is full
  */
-int is_board_full(const Game *game)
-{
-    return game->moves_made >= BOARD_SIZE * BOARD_SIZE;
-}
+int is_board_full(const Game *game) { return game->moves_made >= BOARD_SIZE * BOARD_SIZE; }
 
 /**
  * Update game state
  */
-void update_game_state(Game *game)
-{
+void update_game_state(Game *game) {
     game->winner = check_winner(game);
 
-    if (game->winner != EMPTY)
-    {
+    if (game->winner != EMPTY) {
         game->game_over = 1;
-    }
-    else if (is_board_full(game))
-    {
+    } else if (is_board_full(game)) {
         game->game_over = 1;
         game->winner = 'T'; // Tie
     }
@@ -161,31 +138,26 @@ void update_game_state(Game *game)
 /**
  * Switch to the other player
  */
-void switch_player(Game *game)
-{
+void switch_player(Game *game) {
     game->current_player = (game->current_player == PLAYER_X) ? PLAYER_O : PLAYER_X;
 }
 
 /**
  * Parse move from user input (e.g., "A1", "B2", "C3")
  */
-int parse_move(const char *input, int *row, int *col)
-{
-    if (strlen(input) != 2)
-    {
+int parse_move(const char *input, int *row, int *col) {
+    if (strlen(input) != 2) {
         return 0;
     }
 
     char row_char = toupper(input[0]);
     char col_char = input[1];
 
-    if (row_char < 'A' || row_char > 'C')
-    {
+    if (row_char < 'A' || row_char > 'C') {
         return 0;
     }
 
-    if (col_char < '1' || col_char > '3')
-    {
+    if (col_char < '1' || col_char > '3') {
         return 0;
     }
 
@@ -198,18 +170,13 @@ int parse_move(const char *input, int *row, int *col)
 /**
  * Simple AI: find winning move, block opponent, or pick center/corner
  */
-int ai_move(Game *game, int *row, int *col)
-{
+int ai_move(Game *game, int *row, int *col) {
     // Try to win
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE; j++)
-        {
-            if (is_valid_move(game, i, j))
-            {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (is_valid_move(game, i, j)) {
                 game->board[i][j] = PLAYER_O;
-                if (check_winner(game) == PLAYER_O)
-                {
+                if (check_winner(game) == PLAYER_O) {
                     game->board[i][j] = EMPTY; // Undo
                     *row = i;
                     *col = j;
@@ -221,15 +188,11 @@ int ai_move(Game *game, int *row, int *col)
     }
 
     // Block opponent from winning
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE; j++)
-        {
-            if (is_valid_move(game, i, j))
-            {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (is_valid_move(game, i, j)) {
                 game->board[i][j] = PLAYER_X;
-                if (check_winner(game) == PLAYER_X)
-                {
+                if (check_winner(game) == PLAYER_X) {
                     game->board[i][j] = EMPTY; // Undo
                     *row = i;
                     *col = j;
@@ -241,8 +204,7 @@ int ai_move(Game *game, int *row, int *col)
     }
 
     // Take center if available
-    if (is_valid_move(game, 1, 1))
-    {
+    if (is_valid_move(game, 1, 1)) {
         *row = 1;
         *col = 1;
         return 1;
@@ -250,10 +212,8 @@ int ai_move(Game *game, int *row, int *col)
 
     // Take a corner
     int corners[][2] = {{0, 0}, {0, 2}, {2, 0}, {2, 2}};
-    for (int i = 0; i < 4; i++)
-    {
-        if (is_valid_move(game, corners[i][0], corners[i][1]))
-        {
+    for (int i = 0; i < 4; i++) {
+        if (is_valid_move(game, corners[i][0], corners[i][1])) {
             *row = corners[i][0];
             *col = corners[i][1];
             return 1;
@@ -261,12 +221,9 @@ int ai_move(Game *game, int *row, int *col)
     }
 
     // Take any available move
-    for (int i = 0; i < BOARD_SIZE; i++)
-    {
-        for (int j = 0; j < BOARD_SIZE; j++)
-        {
-            if (is_valid_move(game, i, j))
-            {
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            if (is_valid_move(game, i, j)) {
                 *row = i;
                 *col = j;
                 return 1;
@@ -280,15 +237,11 @@ int ai_move(Game *game, int *row, int *col)
 /**
  * Display game result
  */
-void display_result(const Game *game)
-{
+void display_result(const Game *game) {
     printf("\n=== Game Over ===\n");
-    if (game->winner == 'T')
-    {
+    if (game->winner == 'T') {
         printf("It's a tie!\n");
-    }
-    else
-    {
+    } else {
         printf("Player %c wins!\n", game->winner);
     }
 }
@@ -296,8 +249,7 @@ void display_result(const Game *game)
 /**
  * Play against AI
  */
-void play_vs_ai()
-{
+void play_vs_ai() {
     Game game;
     init_game(&game);
 
@@ -305,18 +257,15 @@ void play_vs_ai()
     printf("You are X, AI is O\n");
     printf("Enter moves as row-column (e.g., A1, B2, C3)\n");
 
-    while (!game.game_over)
-    {
+    while (!game.game_over) {
         display_board(&game);
 
-        if (game.current_player == PLAYER_X)
-        {
+        if (game.current_player == PLAYER_X) {
             // Human player
             printf("Your move (X): ");
             char input[10];
 
-            if (!fgets(input, sizeof(input), stdin))
-            {
+            if (!fgets(input, sizeof(input), stdin)) {
                 break;
             }
 
@@ -324,25 +273,20 @@ void play_vs_ai()
             input[strcspn(input, "\n")] = 0;
 
             int row, col;
-            if (!parse_move(input, &row, &col))
-            {
+            if (!parse_move(input, &row, &col)) {
                 printf("Invalid input! Use format like A1, B2, C3\n");
                 continue;
             }
 
-            if (!make_move(&game, row, col, PLAYER_X))
-            {
+            if (!make_move(&game, row, col, PLAYER_X)) {
                 printf("Invalid move! Position already taken.\n");
                 continue;
             }
-        }
-        else
-        {
+        } else {
             // AI player
             printf("AI is thinking...\n");
             int row, col;
-            if (ai_move(&game, &row, &col))
-            {
+            if (ai_move(&game, &row, &col)) {
                 make_move(&game, row, col, PLAYER_O);
                 printf("AI plays: %c%d\n", 'A' + row, col + 1);
             }
@@ -350,8 +294,7 @@ void play_vs_ai()
 
         update_game_state(&game);
 
-        if (!game.game_over)
-        {
+        if (!game.game_over) {
             switch_player(&game);
         }
     }
@@ -363,8 +306,7 @@ void play_vs_ai()
 /**
  * Play two-player mode
  */
-void play_two_player()
-{
+void play_two_player() {
     Game game;
     init_game(&game);
 
@@ -372,15 +314,13 @@ void play_two_player()
     printf("Player 1 is X, Player 2 is O\n");
     printf("Enter moves as row-column (e.g., A1, B2, C3)\n");
 
-    while (!game.game_over)
-    {
+    while (!game.game_over) {
         display_board(&game);
 
         printf("Player %c's turn: ", game.current_player);
         char input[10];
 
-        if (!fgets(input, sizeof(input), stdin))
-        {
+        if (!fgets(input, sizeof(input), stdin)) {
             break;
         }
 
@@ -388,22 +328,19 @@ void play_two_player()
         input[strcspn(input, "\n")] = 0;
 
         int row, col;
-        if (!parse_move(input, &row, &col))
-        {
+        if (!parse_move(input, &row, &col)) {
             printf("Invalid input! Use format like A1, B2, C3\n");
             continue;
         }
 
-        if (!make_move(&game, row, col, game.current_player))
-        {
+        if (!make_move(&game, row, col, game.current_player)) {
             printf("Invalid move! Position already taken.\n");
             continue;
         }
 
         update_game_state(&game);
 
-        if (!game.game_over)
-        {
+        if (!game.game_over) {
             switch_player(&game);
         }
     }
@@ -415,8 +352,7 @@ void play_two_player()
 /**
  * Main menu
  */
-void show_menu()
-{
+void show_menu() {
     printf("\n=== Tic-Tac-Toe ===\n");
     printf("1. Play vs AI\n");
     printf("2. Two Player Mode\n");
@@ -424,18 +360,15 @@ void show_menu()
     printf("Choose an option: ");
 }
 
-int main()
-{
+int main() {
     int choice;
 
     printf("Welcome to Tic-Tac-Toe!\n");
 
-    while (1)
-    {
+    while (1) {
         show_menu();
 
-        if (scanf("%d", &choice) != 1)
-        {
+        if (scanf("%d", &choice) != 1) {
             // Clear invalid input
             while (getchar() != '\n')
                 ;
@@ -447,8 +380,7 @@ int main()
         while (getchar() != '\n')
             ;
 
-        switch (choice)
-        {
+        switch (choice) {
         case 1:
             play_vs_ai();
             break;
