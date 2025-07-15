@@ -24,14 +24,14 @@ A **production-ready**, security-hardened monorepo for pure C development optimi
 
 **Key Features:**
 
-- **🔒 Security Hardened**: Protection against buffer overflows, path traversal, format string attacks, and integer overflows
-- **🚀 ARM64 Optimized**: Built specifically for Apple Silicon (M1/M2/M3/M4) with aggressive compiler optimizations
-- **🛡️ Production Ready**: Memory-safe code with comprehensive input validation, error handling, and security controls
-- **🏗️ Professional Build System**: Advanced Makefile with 65+ targets orchestrating parallel builds, dependency management, and complete development workflows
-- **🧪 Comprehensive Testing**: Unit tests, integration tests, security tests, and static analysis
-- **📚 Educational Excellence**: Working demo applications showcasing modern C programming techniques and security best practices
-- **🔧 Developer Tools**: Comprehensive scripts for building, testing, formatting, deployment automation, and security scanning
-- **📖 Enterprise Documentation**: Complete security guidelines, deployment guides, and maintenance procedures
+- **Security Hardened**: Protection against buffer overflows, path traversal, format string attacks, and integer overflows
+- **ARM64 Optimized**: Built specifically for Apple Silicon with aggressive compiler optimizations
+- **Production Ready**: Memory-safe code with comprehensive input validation, error handling, and security controls
+- **Professional Build System**: Advanced Makefile with 65+ targets orchestrating parallel builds and dependency management
+- **Comprehensive Testing**: Unit tests, integration tests, security tests, and static analysis
+- **Educational Excellence**: Working demo applications showcasing modern C programming techniques and security best practices
+- **Developer Tools**: Complete scripts for building, testing, formatting, deployment automation, and security scanning
+- **Enterprise Documentation**: Security guidelines, deployment guides, and maintenance procedures
 
 ---
 
@@ -240,7 +240,8 @@ make install PREFIX=/opt/local
 
 ---
 
-## Project Architecture
+<details>
+<summary><strong>Project Architecture</strong></summary>
 
 ### Repository Structure
 
@@ -258,16 +259,8 @@ c-monorepo/
 │   ├── data_structures/       # Dynamic data structures (Vector)
 │   └── math_utils/           # Mathematical algorithms
 ├── build/                     # Build output (debug/release/profile)
-│   ├── debug/bin/            # Debug executables
-│   ├── release/bin/          # Optimized release executables
-│   └── profile/bin/          # Profile executables
 ├── scripts/                   # Development automation
-│   ├── build.sh              # Enhanced build script
-│   ├── test.sh              # Comprehensive test runner
-│   └── clean.sh             # Cleanup utility
 ├── tests/                     # Test suite
-│   ├── libs/                 # Library unit tests
-│   └── apps/                 # Application tests
 ├── docs/                      # Documentation
 │   ├── SECURITY.md           # Security guidelines and best practices
 │   ├── DEPLOYMENT.md         # Production deployment guide
@@ -278,403 +271,244 @@ c-monorepo/
 
 ### Technology Stack
 
-**Core Development:**
+- **C11 Standard** with ARM64-specific optimizations
+- **Clang Compiler** optimized for Apple Silicon
+- **Advanced Make** build orchestration with parallel execution
+- **Static Analysis** with clang-tidy integration
+- **AddressSanitizer** for memory error detection
+- **Link-Time Optimization** for maximum performance
 
-- **C11 Standard**: Modern C with ARM64-specific optimizations
-- **Clang Compiler**: Apple's optimized compiler for Apple Silicon
-- **Make**: Advanced build orchestration with parallel execution
-- **Static Analysis**: clang-tidy integration for code quality
-
-**Development Tools:**
-
-- **clang-format**: Consistent code formatting
-- **AddressSanitizer**: Memory error detection in debug builds
-- **Link-Time Optimization**: Maximum performance in release builds
-- **Code Coverage**: Comprehensive test coverage analysis
+</details>
 
 ---
 
-## Demo Applications
+<details>
+<summary><strong>Demo Applications</strong></summary>
 
-### Calculator (`calculator`)
-
-Advanced command-line calculator demonstrating mathematical operations and library integration.
-
+### Calculator
+Advanced command-line calculator with mathematical operations and library integration.
 ```bash
-# Build and run
 make run-calculator
-
-# Example session
-calc> + 5 3        # Addition: Result: 8.00
-calc> fact 5       # Factorial: Result: 120
-calc> sqrt 16      # Square root: Result: 4.000000
-calc> prime 17     # Prime check: Result: 17 is prime
-calc> gcd 48 18    # Greatest common divisor: Result: 6
-calc> help         # Show all available commands
-calc> quit         # Exit calculator
+calc> + 5 3        # Result: 8.00
+calc> fact 5       # Result: 120
+calc> prime 17     # Result: 17 is prime
 ```
 
-**Features:**
-- Basic arithmetic operations with ARM64-optimized math library
-- Advanced mathematical functions (factorial, Fibonacci, GCD, LCM)
-- Prime number checking with optimized algorithms
-- Interactive help system and command validation
-- Memory-safe input handling
-
-### File Utils (`file_utils`)
-
-Comprehensive file and directory manipulation utility showcasing system programming.
-
+### File Utils
+File and directory manipulation utility with system programming features.
 ```bash
-# Build and run
 make run-file_utils
-
-# Example commands
-fileutils> info README.md        # Detailed file information
-fileutils> count myfile.txt      # Count lines, words, characters
-fileutils> list /usr/local       # Directory listing with sizes
+fileutils> info README.md        # File information
+fileutils> count myfile.txt      # Line/word count
 fileutils> copy src.txt dst.txt  # Safe file copying
-fileutils> help                  # Command reference
 ```
 
-**Features:**
-- File metadata analysis (size, permissions, timestamps)
-- Text content analysis with word/line counting
-- Directory traversal and listing
-- Safe file operations with error handling
-- Cross-platform compatibility
-
-### Text Processor (`text_processor`)
-
-Advanced text manipulation tool demonstrating string algorithms and data structures.
-
+### Text Processor
+Text manipulation tool with string algorithms and data structures.
 ```bash
-# Build and run
 make run-text_processor
-
-# Example operations
-textproc> upper Hello World           # Case conversion
-textproc> reverse programming         # String reversal
-textproc> count a banana banana       # Character frequency
-textproc> replace old new "This is old text"  # Find and replace
-textproc> trim "  extra   spaces  "   # Whitespace normalization
-textproc> sort                        # Interactive line sorting
+textproc> upper Hello World      # Case conversion
+textproc> replace old new text   # Find and replace
+textproc> sort                   # Interactive sorting
 ```
 
-**Features:**
-- Case conversion and string manipulation
-- Pattern matching and replacement
-- Interactive line sorting with multiple algorithms
-- Character frequency analysis
-- Memory-efficient string processing
-
-### Tic-Tac-Toe Game (`tic_tac_toe`)
-
-Interactive game with intelligent AI opponent demonstrating game logic and algorithms.
-
-```bash
-# Build and run
-make run-tic_tac_toe
-
-# Game features:
-# 1. Play vs AI (multiple difficulty levels)
-# 2. Two Player Mode (local multiplayer)
-# 3. Intelligent move validation
-```
-
-**Features:**
-- Smart AI with multiple strategies (offensive, defensive, strategic)
-- Clean game state visualization
-- Robust input validation and error handling
-- Win/lose/tie detection with game statistics
+### Tic-Tac-Toe Game
+Interactive game with intelligent AI opponent and game logic.
+- Smart AI with multiple strategies
 - Two-player local mode
+- Win/lose/tie detection
 
-### Number Guessing Game (`number_guessing`)
+### Number Guessing Game
+Multi-difficulty guessing game with scoring and statistics.
+- Multiple difficulty levels (Easy/Medium/Hard/Custom)
+- Intelligent hint system
+- Performance tracking
 
-Multi-difficulty guessing game showcasing random number generation and game mechanics.
-
-```bash
-# Build and run
-make run-number_guessing
-
-# Difficulty levels:
-# - Easy: 1-50, 10 attempts
-# - Medium: 1-100, 8 attempts
-# - Hard: 1-200, 6 attempts
-# - Custom: User-defined parameters
-```
-
-**Features:**
-- Multiple difficulty levels with adaptive scoring
-- Intelligent hint system (proximity feedback)
-- Statistics tracking and performance analysis
-- Custom game configuration
-- Educational probability concepts
+</details>
 
 ---
 
-## Shared Libraries
+<details>
+<summary><strong>Shared Libraries</strong></summary>
 
 ### Data Structures Library (`libdatastructures.a`)
-
 High-performance implementation of fundamental data structures optimized for ARM64.
 
 ```c
 #include "vector.h"
 
-// Create and manipulate dynamic arrays
 Vector *vec = vector_create(16);
 vector_push(vec, 42);
-vector_push(vec, 24);
-
-int value;
-vector_get(vec, 0, &value);  // Retrieve elements
-vector_set(vec, 0, 100);     // Modify elements
-vector_pop(vec, &value);     // Remove elements
-
-vector_print(vec);           // Debug output
-vector_destroy(vec);         // Clean memory
+vector_get(vec, 0, &value);
+vector_destroy(vec);
 ```
 
-**Performance Features:**
-- ARM64-optimized memory allocation patterns
-- Intelligent resizing with configurable growth factors
-- Memory-efficient shrinking to prevent waste
-- Comprehensive bounds checking and error handling
+Features: ARM64-optimized memory allocation, intelligent resizing, comprehensive bounds checking.
 
 ### Math Utils Library (`libmathutils.a`)
-
 Optimized mathematical algorithms and utilities for high-performance computing.
 
 ```c
 #include "math_utils.h"
 
-// Number theory operations
 int gcd = math_gcd(48, 18);           // Euclidean algorithm
-int lcm = math_lcm(4, 6);             // Least common multiple
-int is_prime = math_is_prime(17);     // Optimized primality test
-
-// Sequence generation
-long long fact = math_factorial(5);    // 5! = 120
-long long fib = math_fibonacci(10);    // 10th Fibonacci number
-
-// ARM64-optimized operations
-long long power = math_power(2, 10);   // Fast exponentiation
-double sqrt_val = math_sqrt(16.0);     // Newton's method
-
-// Utility functions
-int minimum = math_min(a, b);
-int maximum = math_max(a, b);
-double absolute = math_abs(-5.5);
+long long fact = math_factorial(5);   // 5! = 120
+int is_prime = math_is_prime(17);     // Primality test
 ```
 
-**ARM64 Optimizations:**
-- Vectorized operations where applicable
-- Branch prediction optimizations
-- Cache-friendly algorithm implementations
-- Fast math compiler optimizations enabled
+Features: Vectorized operations, branch prediction optimizations, fast math compiler optimizations.
+
+</details>
 
 ---
 
-## Development Workflow
+<details>
+<summary><strong>Development Workflow</strong></summary>
 
 ### Code Quality Pipeline
-
 ```bash
-# Complete quality assurance workflow
-make format          # Standardize code formatting
-make lint           # Static analysis with clang-tidy
-make security       # Security vulnerability scanning
-make test           # Comprehensive test execution
-make coverage       # Generate coverage reports
+make format lint security test coverage
 ```
 
 ### Performance Analysis
-
 ```bash
-# Performance profiling and optimization
-make profile        # Build with profiling enabled
-make benchmark      # Run performance benchmarks
-make MODE=release   # Maximum optimization build
+make profile benchmark MODE=release
 ```
-
-### Adding New Components
-
-<details>
-<summary><strong>Creating New Applications</strong></summary>
-
-```bash
-# Create new CLI application
-mkdir -p apps/cli/my_new_app/src
-cp apps/cli/calculator/Makefile apps/cli/my_new_app/
-# Edit Makefile to change target name
-# Implement your application in src/
-
-# Create new game
-mkdir -p apps/games/my_new_game/src
-cp apps/games/tic_tac_toe/Makefile apps/games/my_new_game/
-# Edit Makefile and implement game logic
-
-# Build and test
-make my_new_app
-make run-my_new_app
-```
-
-</details>
-
-<details>
-<summary><strong>Creating New Libraries</strong></summary>
-
-```bash
-# Create new library
-mkdir -p libs/my_new_lib/{src,include}
-cp libs/math_utils/Makefile libs/my_new_lib/
-# Edit Makefile for new library name
-
-# Implement header files in include/
-# Implement source files in src/
-
-# Build and use in applications
-make my_new_lib
-# Link against -lmy_new_lib in application Makefiles
-```
-
-</details>
 
 ### Code Style Guidelines
+- Use snake_case for functions and variables
+- Doxygen-style comments for all public APIs
+- Always check return values and handle errors gracefully
+- Follow RAII principles - every malloc needs a corresponding free
+- Use safe string functions and validate all inputs
 
-- **Naming Convention**: Use snake_case for functions and variables
-- **Documentation**: Doxygen-style comments for all public APIs
-- **Error Handling**: Always check return values and handle errors gracefully
-- **Memory Management**: Follow RAII principles - every malloc needs a corresponding free
-- **ARM64 Optimization**: Leverage compiler intrinsics where beneficial
-- **Security**: Use safe string functions and validate all inputs
+</details>
 
 ---
 
-## Testing & Quality Assurance
+<details>
+<summary><strong>Testing & Quality Assurance</strong></summary>
 
 ### Comprehensive Testing Suite
-
 ```bash
-# Run all tests
-make test
-
-# Specific test categories
-make test MODE=debug     # Debug build testing
-make test MODE=release   # Release build validation
-make coverage           # Code coverage analysis
-make security          # Security scanning
+make test                   # Run all tests
+make test MODE=release     # Release build validation
+make coverage              # Code coverage analysis
+make security             # Security scanning
 ```
 
 ### Static Analysis Integration
-
-The build system includes comprehensive static analysis:
-
-- **clang-tidy**: Modern C++ linting and best practices
+- **clang-tidy**: Modern C linting and best practices
 - **AddressSanitizer**: Memory error detection
 - **UndefinedBehaviorSanitizer**: Undefined behavior detection
 - **Security scanning**: Detection of unsafe function usage
 
 ### Performance Benchmarking
-
 ```bash
-# Application-specific benchmarks
-make calculator benchmark    # Mathematical operation performance
-make vector benchmark       # Data structure performance
 make benchmark              # System-wide performance analysis
 ```
 
+</details>
+
 ---
 
-## Security Features
+<details>
+<summary><strong>Security Features</strong></summary>
 
 This monorepo implements comprehensive security measures to ensure production-ready, secure C applications:
 
-### 🛡️ **Memory Safety**
-- **Buffer overflow protection** with bounds checking and dynamic allocation
-- **Safe string operations** using custom functions with size validation
-- **Integer overflow detection** in mathematical operations
-- **Memory leak prevention** with comprehensive cleanup
+### Memory Safety
+- Buffer overflow protection with bounds checking and dynamic allocation
+- Safe string operations using custom functions with size validation
+- Integer overflow detection in mathematical operations
+- Memory leak prevention with comprehensive cleanup
 
-### 🔒 **Input Validation**
-- **Path traversal prevention** with comprehensive path validation
-- **Format string attack protection** using safe parsing techniques
-- **Input sanitization** for all user-provided data
-- **Length validation** to prevent buffer overflows
+### Input Validation
+- Path traversal prevention with comprehensive path validation
+- Format string attack protection using safe parsing techniques
+- Input sanitization for all user-provided data
+- Length validation to prevent buffer overflows
 
-### 🚨 **Security Testing**
-- **Integration security tests** for vulnerability validation
-- **Static analysis** with clang-tidy and security flags
-- **Dynamic analysis** with AddressSanitizer and UndefinedBehaviorSanitizer
-- **Comprehensive test coverage** including edge cases
+### Security Testing
+- Integration security tests for vulnerability validation
+- Static analysis with clang-tidy and security flags
+- Dynamic analysis with AddressSanitizer and UndefinedBehaviorSanitizer
+- Comprehensive test coverage including edge cases
 
-### 📋 **Secure Development**
-- **Compiler hardening flags** (`-fstack-protector-strong`, `-D_FORTIFY_SOURCE=2`)
-- **Shell script hardening** with strict error handling
-- **Security documentation** and deployment guidelines
-- **Regular security audits** and vulnerability assessments
+### Secure Development
+- Compiler hardening flags (`-fstack-protector-strong`, `-D_FORTIFY_SOURCE=2`)
+- Shell script hardening with strict error handling
+- Security documentation and deployment guidelines
+- Regular security audits and vulnerability assessments
 
 For detailed security information, see [`docs/SECURITY.md`](docs/SECURITY.md).
+
+</details>
 
 ---
 
 ## Production Deployment
 
-This repository is production-ready with comprehensive deployment documentation:
-
-- **Security hardening** guidelines and checklists
-- **Performance optimization** and tuning recommendations
-- **Monitoring and logging** configuration
-- **Container deployment** examples and best practices
-- **Maintenance procedures** and update protocols
+This repository is production-ready with comprehensive security hardening, performance optimization, monitoring configuration, and deployment automation.
 
 For complete deployment instructions, see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 ---
 
-## Contributing
+<details>
+<summary><strong>Contributing</strong></summary>
 
 ### Development Setup
-
 ```bash
 git clone https://github.com/dunamismax/c-monorepo.git
 cd c-monorepo
-make deps           # Verify dependencies
-make sysinfo        # Check system compatibility
-make format && make lint && make test  # Verify development environment
+make deps sysinfo
+make format && make lint && make test
 ```
 
 ### Contribution Guidelines
-
-1. **Fork and Branch**: Create feature branches from `main`
-2. **Code Quality**: Follow the established style guide and pass all quality checks
-3. **Testing**: Include comprehensive tests for new functionality
-4. **Documentation**: Update relevant documentation and API references
-5. **ARM64 Optimization**: Consider ARM64-specific optimizations where applicable
-6. **Security**: Ensure all code follows security best practices
+1. Fork and create feature branches from `main`
+2. Follow established style guide and pass all quality checks
+3. Include comprehensive tests for new functionality
+4. Update relevant documentation and API references
+5. Ensure all code follows security best practices
 
 ### Quality Requirements
-
-- All code must pass `make format-check`
-- Static analysis with `make lint` must show no errors
-- Security scan with `make security` must pass
+- All code must pass `make format-check lint security`
 - Test coverage should be maintained or improved
 - Performance benchmarks should not regress
+
+</details>
+
+---
+
+## Support This Project
+
+If you find this project valuable for your C development journey, consider supporting its continued development:
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/dunamismax" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" />
+  </a>
+</p>
+
+---
+
+## Let's Connect
+
+<p align="center">
+  <a href="https://twitter.com/dunamismax" target="_blank"><img src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?&style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter"></a>
+  <a href="https://bsky.app/profile/dunamismax.bsky.social" target="_blank"><img src="https://img.shields.io/badge/Bluesky-blue?style=for-the-badge&logo=bluesky&logoColor=white" alt="Bluesky"></a>
+  <a href="https://reddit.com/user/dunamismax" target="_blank"><img src="https://img.shields.io/badge/Reddit-%23FF4500.svg?&style=for-the-badge&logo=reddit&logoColor=white" alt="Reddit"></a>
+  <a href="https://discord.com/users/dunamismax" target="_blank"><img src="https://img.shields.io/badge/Discord-dunamismax-7289DA.svg?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
+  <a href="https://signal.me/#p/+dunamismax.66" target="_blank"><img src="https://img.shields.io/badge/Signal-dunamismax.66-3A76F0.svg?style=for-the-badge&logo=signal&logoColor=white" alt="Signal"></a>
+</p>
 
 ---
 
 ## License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Author
-
-**dunamismax**
-- Email: dunamismax@tutamail.com
-- GitHub: [@dunamismax](https://github.com/dunamismax)
 
 ---
 
