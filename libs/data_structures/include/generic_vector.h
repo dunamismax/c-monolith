@@ -21,10 +21,10 @@
  * Provides type safety through size validation and safe memory operations.
  */
 typedef struct {
-    void *data;          // Pointer to the array data
-    size_t size;         // Current number of elements
-    size_t capacity;     // Maximum capacity before reallocation
-    size_t element_size; // Size of each element in bytes
+  void *data;          // Pointer to the array data
+  size_t size;         // Current number of elements
+  size_t capacity;     // Maximum capacity before reallocation
+  size_t element_size; // Size of each element in bytes
 } GenericVector;
 
 /**
@@ -157,7 +157,8 @@ int gvector_shrink_to_fit(GenericVector *vec);
  * @param compare Comparison function
  * @return Index of element or SIZE_MAX if not found
  */
-size_t gvector_find(const GenericVector *vec, const void *element, CompareFunc compare);
+size_t gvector_find(const GenericVector *vec, const void *element,
+                    CompareFunc compare);
 
 /**
  * Sort vector elements using comparison function
