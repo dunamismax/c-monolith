@@ -4,7 +4,8 @@
 # Author: dunamismax <dunamismax@tutamail.com>
 # Runs comprehensive tests for ARM64-optimized libraries and applications
 
-set -e  # Exit on error
+set -euo pipefail  # Exit on error, undefined variables, pipe failures
+IFS=$'\n\t'        # Secure Internal Field Separator
 
 # Colors for output
 RED='\033[0;31m'
@@ -174,7 +175,7 @@ if [[ "$LIBS_ONLY" != true ]]; then
     # Test calculator
     run_test "Calculator Build" "make -C apps/cli/calculator clean && make -C apps/cli/calculator"
     if test_executable "calculator"; then
-        run_test "Calculator Basic Test" "echo 'help\nquit' | timeout 5 build/bin/calculator"
+        run_test "Calculator Basic Test" "echo 'help\nquit' | timeout 5 '$PROJECT_ROOT/build/bin/calculator'"
     fi
     
     # Test file_utils

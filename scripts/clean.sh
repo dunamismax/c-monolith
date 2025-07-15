@@ -4,7 +4,8 @@
 # Author: dunamismax <dunamismax@tutamail.com>
 # Comprehensive cleanup of ARM64-optimized build artifacts
 
-set -e  # Exit on error
+set -euo pipefail  # Exit on error, undefined variables, pipe failures
+IFS=$'\n\t'        # Secure Internal Field Separator
 
 # Colors for output
 RED='\033[0;31m'
@@ -116,7 +117,7 @@ clean_path() {
         fi
         
         if [[ "$DRY_RUN" != true ]]; then
-            rm -rf "$path"
+            rm -rf -- "$path"
         fi
         
         return 0

@@ -4,7 +4,8 @@
 # Author: dunamismax <dunamismax@tutamail.com>
 # Provides convenient interface to the ARM64-optimized build system
 
-set -e  # Exit on error
+set -euo pipefail  # Exit on error, undefined variables, pipe failures
+IFS=$'\n\t'        # Secure Internal Field Separator
 
 # Colors for output
 RED='\033[0;31m'
@@ -136,11 +137,17 @@ if [[ "$VERBOSE" == true ]]; then
     MAKE_ARGS="$MAKE_ARGS V=1"
 fi
 
+# Validate make arguments
+if [[ ! "$MODE" =~ ^(debug|release)$ ]]; then
+    print_error "Invalid mode: $MODE"
+    exit 1
+fi
+
 # Build the target
 print_info "Building target: $TARGET"
 start_time=$(date +%s)
 
-if make $TARGET $MAKE_ARGS; then
+if make "$TARGET" $MAKE_ARGS; then
     end_time=$(date +%s)
     duration=$((end_time - start_time))
     print_success "Build completed successfully in ${duration}s"
@@ -149,7 +156,7 @@ if make $TARGET $MAKE_ARGS; then
     if [[ "$TARGET" == "all" || "$TARGET" == "apps" ]]; then
         print_info "Available executables in build/bin/:"
         if [[ -d "build/bin" ]]; then
-            ls -la build/bin/ | tail -n +2 | while read -r line; do
+            ls -la "$PROJECT_ROOT/build/bin/" | tail -n +2 | while IFS= read -r line; do
                 echo "  $line"
             done
         fi
