@@ -23,8 +23,8 @@ static char build_path[256] = "build/debug";
  * Find the correct build directory
  */
 void find_build_path() {
-  const char* paths[] = {"build/release", "build/debug", "build/profile", NULL};
-  
+  const char *paths[] = {"build/release", "build/debug", "build/profile", NULL};
+
   for (int i = 0; paths[i] != NULL; i++) {
     char test_path[512];
     snprintf(test_path, sizeof(test_path), "%s/bin/calculator", paths[i]);
@@ -97,7 +97,7 @@ static int test_calculator_basic(void) {
   char output[1024];
   const char *input = "+ 5 3\nquit\n";
   char app_path[512];
-  
+
   snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
   int result = run_app_with_input(app_path, input, output, sizeof(output));
 
@@ -109,7 +109,7 @@ static int test_calculator_security(void) {
   char output[1024];
   const char *input = "%s %p %n\nquit\n";
   char app_path[512];
-  
+
   snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
   int result = run_app_with_input(app_path, input, output, sizeof(output));
 
@@ -223,12 +223,13 @@ int main(void) {
 
   // Find the correct build path
   find_build_path();
-  
+
   // Check if calculator exists
   char calc_path[512];
   snprintf(calc_path, sizeof(calc_path), "%s/bin/calculator", build_path);
   if (access(calc_path, X_OK) != 0) {
-    printf("Calculator not found or not executable. Build the project first.\n");
+    printf(
+        "Calculator not found or not executable. Build the project first.\n");
     return 1;
   }
 
