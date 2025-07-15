@@ -136,7 +136,7 @@ make quick          # Fast incremental build
 
 # Component Building
 make libs           # Build all shared libraries
-make apps           # Build all applications  
+make apps           # Build all applications
 make tests          # Build and run comprehensive test suite
 
 # Individual Component Targets
@@ -286,7 +286,9 @@ c-monorepo/
 <summary><strong>Demo Applications</strong></summary>
 
 ### Calculator
+
 Advanced command-line calculator with mathematical operations and library integration.
+
 ```bash
 make run-calculator
 calc> + 5 3        # Result: 8.00
@@ -295,7 +297,9 @@ calc> prime 17     # Result: 17 is prime
 ```
 
 ### File Utils
+
 File and directory manipulation utility with system programming features.
+
 ```bash
 make run-file_utils
 fileutils> info README.md        # File information
@@ -304,7 +308,9 @@ fileutils> copy src.txt dst.txt  # Safe file copying
 ```
 
 ### Text Processor
+
 Text manipulation tool with string algorithms and data structures.
+
 ```bash
 make run-text_processor
 textproc> upper Hello World      # Case conversion
@@ -313,13 +319,17 @@ textproc> sort                   # Interactive sorting
 ```
 
 ### Tic-Tac-Toe Game
+
 Interactive game with intelligent AI opponent and game logic.
+
 - Smart AI with multiple strategies
 - Two-player local mode
 - Win/lose/tie detection
 
 ### Number Guessing Game
+
 Multi-difficulty guessing game with scoring and statistics.
+
 - Multiple difficulty levels (Easy/Medium/Hard/Custom)
 - Intelligent hint system
 - Performance tracking
@@ -332,6 +342,7 @@ Multi-difficulty guessing game with scoring and statistics.
 <summary><strong>Shared Libraries</strong></summary>
 
 ### Data Structures Library (`libdatastructures.a`)
+
 High-performance implementation of fundamental data structures optimized for ARM64.
 
 ```c
@@ -346,6 +357,7 @@ vector_destroy(vec);
 Features: ARM64-optimized memory allocation, intelligent resizing, comprehensive bounds checking.
 
 ### Math Utils Library (`libmathutils.a`)
+
 Optimized mathematical algorithms and utilities for high-performance computing.
 
 ```c
@@ -366,16 +378,19 @@ Features: Vectorized operations, branch prediction optimizations, fast math comp
 <summary><strong>Development Workflow</strong></summary>
 
 ### Code Quality Pipeline
+
 ```bash
 make format lint security test coverage
 ```
 
 ### Performance Analysis
+
 ```bash
 make profile benchmark MODE=release
 ```
 
 ### Code Style Guidelines
+
 - Use snake_case for functions and variables
 - Doxygen-style comments for all public APIs
 - Always check return values and handle errors gracefully
@@ -390,6 +405,7 @@ make profile benchmark MODE=release
 <summary><strong>Testing & Quality Assurance</strong></summary>
 
 ### Comprehensive Testing Suite
+
 ```bash
 make test                   # Run all tests
 make test MODE=release     # Release build validation
@@ -398,12 +414,14 @@ make security             # Security scanning
 ```
 
 ### Static Analysis Integration
+
 - **clang-tidy**: Modern C linting and best practices
 - **AddressSanitizer**: Memory error detection
 - **UndefinedBehaviorSanitizer**: Undefined behavior detection
 - **Security scanning**: Detection of unsafe function usage
 
 ### Performance Benchmarking
+
 ```bash
 make benchmark              # System-wide performance analysis
 ```
@@ -418,24 +436,28 @@ make benchmark              # System-wide performance analysis
 This monorepo implements comprehensive security measures to ensure production-ready, secure C applications:
 
 ### Memory Safety
+
 - Buffer overflow protection with bounds checking and dynamic allocation
 - Safe string operations using custom functions with size validation
 - Integer overflow detection in mathematical operations
 - Memory leak prevention with comprehensive cleanup
 
 ### Input Validation
+
 - Path traversal prevention with comprehensive path validation
 - Format string attack protection using safe parsing techniques
 - Input sanitization for all user-provided data
 - Length validation to prevent buffer overflows
 
 ### Security Testing
+
 - Integration security tests for vulnerability validation
 - Static analysis with clang-tidy and security flags
 - Dynamic analysis with AddressSanitizer and UndefinedBehaviorSanitizer
 - Comprehensive test coverage including edge cases
 
 ### Secure Development
+
 - Compiler hardening flags (`-fstack-protector-strong`, `-D_FORTIFY_SOURCE=2`)
 - Shell script hardening with strict error handling
 - Security documentation and deployment guidelines
@@ -459,6 +481,7 @@ For complete deployment instructions, see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT
 <summary><strong>Contributing</strong></summary>
 
 ### Development Setup
+
 ```bash
 git clone https://github.com/dunamismax/c-monorepo.git
 cd c-monorepo
@@ -467,6 +490,7 @@ make format && make lint && make test
 ```
 
 ### Contribution Guidelines
+
 1. Fork and create feature branches from `main`
 2. Follow established style guide and pass all quality checks
 3. Include comprehensive tests for new functionality
@@ -474,6 +498,7 @@ make format && make lint && make test
 5. Ensure all code follows security best practices
 
 ### Quality Requirements
+
 - All code must pass `make format-check lint security`
 - Test coverage should be maintained or improved
 - Performance benchmarks should not regress
