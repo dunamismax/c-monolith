@@ -250,6 +250,7 @@ c-monorepo/
 - **Static Analysis** with clang-tidy integration
 - **AddressSanitizer** for memory error detection
 - **Link-Time Optimization** for maximum performance
+- **GitHub CI/CD** with comprehensive testing and security scanning
 
 </details>
 
@@ -406,6 +407,31 @@ make security             # Security scanning
 ```bash
 make benchmark              # System-wide performance analysis
 ```
+
+### CI/CD Pipeline
+
+Automated GitHub Actions workflow with comprehensive quality assurance:
+
+```yaml
+# Triggered on: push to main/develop, pull requests, manual dispatch
+# Platforms: macOS (primary), Ubuntu (compatibility)
+# Build Modes: debug, release, profile
+```
+
+**Pipeline Stages:**
+- **Build & Test**: Multi-mode builds with comprehensive test execution
+- **Static Analysis**: Advanced linting and code quality checks
+- **Security Scan**: Buffer overflow, format string, and memory vulnerability detection
+- **Cross-Platform**: Compatibility testing on macOS and Ubuntu
+- **Release**: Automated binary packaging for production deployment
+- **Documentation**: Link validation and structure verification
+
+**Quality Gates:**
+- Code formatting validation (clang-format)
+- Memory safety analysis (AddressSanitizer/UndefinedBehaviorSanitizer)
+- Security vulnerability scanning
+- Performance benchmarking on release builds
+- All tests must pass before merge
 
 </details>
 

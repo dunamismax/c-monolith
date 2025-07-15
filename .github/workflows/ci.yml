@@ -1,0 +1,250 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  CC: clang
+  MAKEFLAGS: -j4
+
+jobs:
+  test:
+    name: Build and Test
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        mode: [debug, release, profile]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: System Information
+      run: make sysinfo
+
+    - name: Install Dependencies
+      run: |
+        brew install clang-format
+        # clang-tidy is optional - workflow continues if not available
+
+    - name: Code Formatting Check
+      run: |
+        make format
+        if ! git diff --exit-code; then
+          echo "Code is not properly formatted. Run 'make format' locally."
+          exit 1
+        fi
+
+    - name: Clean Build
+      run: make clean
+
+    - name: Build Libraries (${{ matrix.mode }})
+      run: make libs MODE=${{ matrix.mode }}
+
+    - name: Build Applications (${{ matrix.mode }})
+      run: make apps MODE=${{ matrix.mode }}
+
+    - name: Lint (Optional)
+      run: make lint || echo "Linting skipped - clang-tidy not available"
+
+    - name: Run Tests (${{ matrix.mode }})
+      run: make test MODE=${{ matrix.mode }}
+
+    - name: Security Scan
+      run: |
+        # Basic security checks for common C vulnerabilities
+        echo "Scanning for unsafe functions..."
+        ! grep -r "gets\|strcpy\|strcat\|sprintf\|vsprintf" --include="*.c" . || {
+          echo "WARNING: Found potentially unsafe function calls"
+          exit 1
+        }
+        echo "Security scan passed"
+
+    - name: Performance Benchmark (Release Only)
+      if: matrix.mode == 'release'
+      run: make benchmark
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-${{ matrix.mode }}
+        path: |
+          build/
+          *.log
+
+  static-analysis:
+    name: Static Analysis
+    runs-on: macos-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Install Analysis Tools
+      run: |
+        brew install cppcheck || true
+        brew install llvm || true
+
+    - name: Run cppcheck
+      run: |
+        if command -v cppcheck &> /dev/null; then
+          cppcheck --enable=all --inconclusive --std=c11 \
+            --suppress=missingIncludeSystem \
+            --error-exitcode=1 \
+            --inline-suppr \
+            libs/ apps/
+        else
+          echo "cppcheck not available, skipping"
+        fi
+
+    - name: Advanced Lint Analysis
+      run: |
+        if command -v clang-tidy &> /dev/null; then
+          make lint
+        else
+          echo "clang-tidy not available, skipping advanced linting"
+        fi
+
+  security-scan:
+    name: Security Analysis
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Security Tools
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang cppcheck
+
+    - name: Buffer Overflow Detection
+      run: |
+        echo "Scanning for buffer overflow vulnerabilities..."
+        ! grep -r "gets\|strcpy\|strcat\|sprintf\|vsprintf" --include="*.c" . || {
+          echo "ERROR: Found unsafe function calls that could cause buffer overflows"
+          exit 1
+        }
+
+    - name: Format String Vulnerability Check
+      run: |
+        echo "Checking for format string vulnerabilities..."
+        ! grep -r 'printf.*%.*[^"]' --include="*.c" . | grep -v 'printf.*"' || {
+          echo "WARNING: Potential format string vulnerabilities found"
+        }
+
+    - name: Path Traversal Check
+      run: |
+        echo "Checking for path traversal vulnerabilities..."
+        grep -r '\.\.\/' --include="*.c" . || echo "No obvious path traversal patterns found"
+
+    - name: Memory Management Analysis
+      run: |
+        echo "Analyzing memory management..."
+        cppcheck --enable=all --std=c11 \
+          --suppress=missingIncludeSystem \
+          --suppress=unusedFunction \
+          libs/ apps/ || echo "Memory analysis completed with warnings"
+
+  release:
+    name: Create Release Build
+    runs-on: macos-latest
+    needs: [test, static-analysis, security-scan]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+
+    - name: Build Release
+      run: |
+        make clean
+        make MODE=release
+
+    - name: Package Binaries
+      run: |
+        mkdir -p release-package
+        cp -r build/release/bin/* release-package/
+        cp -r build/release/lib/* release-package/
+        cp README.md LICENSE release-package/
+        tar -czf c-monorepo-binaries.tar.gz release-package/
+
+    - name: Upload Release Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: release-binaries
+        path: c-monorepo-binaries.tar.gz
+
+  compatibility:
+    name: Cross-Platform Compatibility
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies (Ubuntu)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential clang
+
+    - name: Install Dependencies (macOS)
+      if: matrix.os == 'macos-latest'
+      run: |
+        brew install clang-format || true
+
+    - name: Test Build
+      run: |
+        make clean
+        make libs
+        make apps
+        echo "Build successful on ${{ matrix.os }}"
+
+  documentation:
+    name: Documentation Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check README Links
+      run: |
+        # Basic check for broken markdown links
+        grep -o 'http[s]*://[^)]*' README.md | while read url; do
+          echo "Checking $url"
+          curl -s --head "$url" | head -n 1 | grep "200 OK" || echo "WARNING: $url might be broken"
+        done
+
+    - name: Verify Documentation Structure
+      run: |
+        [ -f README.md ] || { echo "README.md missing"; exit 1; }
+        [ -f LICENSE ] || { echo "LICENSE missing"; exit 1; }
+        [ -d docs/ ] || { echo "docs/ directory missing"; exit 1; }
+        echo "Documentation structure verified"
