@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/dunamismax/c-monolith">
-    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=C+Programming+Monolith;ARM64+Apple+Silicon+Optimized;Production+Ready+Build+System;Memory+Safe+Security+Hardened;Zero+Runtime+Dependencies;High+Performance+Applications;LLVM+Clang+Optimizations;Comprehensive+Test+Suite;Professional+Development+Tools;Cross+Platform+Compatibility;Make+Based+Build+System;Educational+and+Production+Ready;CLI+Tools+and+Interactive+Games;Static+Libraries+and+Applications;Security+Focused+Development;Modern+C11+Standards;Parallel+Build+Optimization;Link+Time+Optimization;Buffer+Overflow+Protection;MIT+Licensed+Open+Source" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=Production+Ready+C+Programming+Monolith;ARM64+Apple+Silicon+Performance+Optimized;Zero+Runtime+Dependencies+Architecture;Memory+Safe+with+AddressSanitizer+Protection;Comprehensive+Test+Suite+All+Passing;Generic+Vector+Data+Structures+Library;Integer+Overflow+Protection+Built+In;Thread+Safe+Testing+Framework;LLVM+Clang+Link+Time+Optimization;Cross+Platform+Parallel+Build+System;Professional+Grade+Security+Hardening;Modern+C11+Standards+Compliance;Buffer+Overflow+and+Path+Traversal+Protection;Format+String+Vulnerability+Prevention;Educational+and+Enterprise+Ready;Scientific+Calculator+and+Interactive+Games;Advanced+Mathematical+Operations+Library;Type+Safe+Generic+Programming+in+C;Instant+Startup+Minimal+Binary+Footprint;MIT+Licensed+Open+Source+Excellence" alt="Typing SVG" />
   </a>
 </p>
 
@@ -15,8 +15,8 @@
   <a href="https://www.gnu.org/software/make/"><img src="https://img.shields.io/badge/Make-Build_System-3071A4.svg" alt="Make Build System"></a>
   <a href="https://en.wikipedia.org/wiki/Link-time_optimization"><img src="https://img.shields.io/badge/LTO-Optimized-FF6B35.svg" alt="Link Time Optimization"></a>
   <a href="https://clang.llvm.org/docs/AddressSanitizer.html"><img src="https://img.shields.io/badge/ASAN-Memory_Safety-FF0000.svg" alt="AddressSanitizer"></a>
-  <a href="https://github.com/dunamismax/c-monolith/actions"><img src="https://img.shields.io/badge/Tests-Passing-28A745.svg" alt="Test Suite"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
+  <a href="https://github.com/dunamismax/c-monolith/actions"><img src="https://img.shields.io/badge/Tests-Passing-28A745.svg" alt="Test Suite"></a>
   <a href="https://github.com/dunamismax/c-monolith/actions/workflows/c.yml"><img src="https://github.com/dunamismax/c-monolith/actions/workflows/c.yml/badge.svg" alt="CI"></a>
 </p>
 
