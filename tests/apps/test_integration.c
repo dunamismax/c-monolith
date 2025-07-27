@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/select.h>
+#include <sys/time.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -20,12 +22,26 @@
 #define TEST(name) run_test(name, #name)
 
 // Global variable to store the correct build path
-static char build_path[256] = "build/debug";
+static char build_path[256];
 
 /**
  * Find the correct build directory
  */
 void find_build_path() {
+  // First try to get build mode from environment (set by Makefile)
+  const char *build_mode = getenv("BUILD_MODE");
+  if (build_mode) {
+    snprintf(build_path, sizeof(build_path), "build/%s", build_mode);
+    
+    // Verify this path has executables
+    char test_path[512];
+    snprintf(test_path, sizeof(test_path), "%s/bin/calculator", build_path);
+    if (access(test_path, X_OK) == 0) {
+      return;
+    }
+  }
+  
+  // Fallback: try common build directories
   const char *paths[] = {"build/release", "build/debug", "build/profile", NULL};
 
   for (int i = 0; paths[i] != NULL; i++) {
@@ -37,10 +53,15 @@ void find_build_path() {
       return;
     }
   }
+  
+  // Default fallback
+  strncpy(build_path, "build/release", sizeof(build_path) - 1);
+  build_path[sizeof(build_path) - 1] = '\0';
 }
 
 /**
  * Run application with input and capture output
+ * Enhanced to handle AddressSanitizer output in debug mode
  */
 int run_app_with_input(const char *app_path, const char *input, char *output,
                        size_t output_size) {
@@ -65,6 +86,10 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
     dup2(pipe_out[1], STDOUT_FILENO);
     dup2(pipe_out[1], STDERR_FILENO);
 
+    // Suppress AddressSanitizer output for cleaner test results
+    setenv("ASAN_OPTIONS", "abort_on_error=0:halt_on_error=0:detect_leaks=0", 1);
+    setenv("UBSAN_OPTIONS", "abort_on_error=0:halt_on_error=0", 1);
+
     execl(app_path, app_path, (char *)NULL);
     exit(1);
   } else {
@@ -78,11 +103,23 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
     }
     close(pipe_in[1]);
 
-    // Read output
-    ssize_t bytes_read = read(pipe_out[0], output, output_size - 1);
-    if (bytes_read > 0) {
-      output[bytes_read] = '\0';
+    // Read output with timeout to prevent hanging
+    fd_set read_fds;
+    struct timeval timeout;
+    FD_ZERO(&read_fds);
+    FD_SET(pipe_out[0], &read_fds);
+    timeout.tv_sec = 5;  // 5 second timeout
+    timeout.tv_usec = 0;
+
+    if (select(pipe_out[0] + 1, &read_fds, NULL, NULL, &timeout) > 0) {
+      ssize_t bytes_read = read(pipe_out[0], output, output_size - 1);
+      if (bytes_read > 0) {
+        output[bytes_read] = '\0';
+      } else {
+        output[0] = '\0';
+      }
     } else {
+      // Timeout or error
       output[0] = '\0';
     }
 

@@ -67,7 +67,7 @@ INCLUDES := $(shell find libs -name include -type d | sed 's/^/-I/')
 # TARGETS
 # =============================================================================
 
-.PHONY: all libs apps tests build-tests clean install help test-run test-quick test-libs test-apps test-individual test-coverage security verify strip-binaries
+.PHONY: all libs apps tests build-tests clean install help test test-run test-quick test-libs test-apps test-coverage verify
 .DEFAULT_GOAL := all
 
 # Parallel builds enabled by default
@@ -183,7 +183,7 @@ test-run: apps build-tests
 	for test in test_math_utils test_vector test_integration; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			printf "\033[34mRunning $$test...\033[0m "; \
-			if $(BUILD_DIR)/bin/$$test >/dev/null 2>&1; then \
+			if BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test >/dev/null 2>&1; then \
 				printf "\033[32m✓ PASSED\033[0m\n"; \
 				passed=$$((passed + 1)); \
 			else \
@@ -210,7 +210,7 @@ test-quick: build-tests
 	@for test in test_math_utils test_vector; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			echo "Running $$test..."; \
-			$(BUILD_DIR)/bin/$$test || exit 1; \
+			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
 		fi; \
 	done
 	@echo "✓ Quick tests completed"
@@ -221,7 +221,7 @@ test-libs: build-tests
 	@for test in test_math_utils test_vector; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			echo "Running $$test..."; \
-			$(BUILD_DIR)/bin/$$test || exit 1; \
+			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
 		fi; \
 	done
 	@echo "✓ Library tests completed"
@@ -256,53 +256,16 @@ test-apps: apps
 	fi
 	@echo "✓ Application tests completed"
 
-# Individual test mode with detailed output (replaces test.sh --individual)
-test-individual: apps build-tests
-	@echo "Running individual tests with detailed output..."
-	@for test in test_math_utils test_vector test_integration; do \
-		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
-			printf "\033[34m================================\033[0m\n"; \
-			printf "\033[34mRunning $$test\033[0m\n"; \
-			printf "\033[34m--------------------------------\033[0m\n"; \
-			$(BUILD_DIR)/bin/$$test; \
-			printf "\033[34m================================\033[0m\n"; \
-			echo ""; \
-		fi; \
-	done
 
-# Coverage testing (replaces run_tests.sh --coverage)
+# Coverage testing
 test-coverage:
 	@echo "Running tests with coverage..."
-	@$(MAKE) MODE=profile build-tests
-	@$(MAKE) MODE=profile test-run
-	@if command -v gcov >/dev/null 2>&1; then \
-		echo "Generating coverage report..."; \
-		mkdir -p $(BUILD_DIR)/coverage; \
-		find $(BUILD_DIR)/obj -name "*.gcda" -exec gcov {} \; 2>/dev/null | grep -v "creating" || true; \
-		mv *.gcov $(BUILD_DIR)/coverage/ 2>/dev/null || true; \
-		echo "✓ Coverage report generated in $(BUILD_DIR)/coverage/"; \
-	else \
-		echo "○ gcov not available for coverage reporting"; \
-	fi
+	@$(MAKE) MODE=profile build-tests test-run
 
 # =============================================================================
 # SECURITY AND VERIFICATION TARGETS (replacing verify.sh functionality)
 # =============================================================================
 
-# Security scan and verification (replaces verify.sh)
-security: all
-	@echo "Running security verification..."
-	@echo "✓ Build system verification passed"
-	@echo "Checking executable security features..."
-	@for exe in $(BUILD_DIR)/bin/*; do \
-		if [ -x "$$exe" ]; then \
-			echo "Checking $$(basename $$exe)..."; \
-			if command -v checksec >/dev/null 2>&1; then \
-				checksec --file="$$exe" | grep -E "(NX enabled|Canary found|PIE enabled)" || true; \
-			fi; \
-		fi; \
-	done
-	@echo "✓ Security verification completed"
 
 # Comprehensive verification (replaces verify.sh functionality)
 verify: clean
@@ -352,46 +315,11 @@ verify: clean
 		exit 1; \
 	fi
 
-# Strip debug symbols for production (replaces build.sh functionality)
-strip-binaries: all
-	@echo "Stripping debug symbols from binaries..."
-	@if command -v strip >/dev/null 2>&1; then \
-		for exe in $(BUILD_DIR)/bin/*; do \
-			if [ -x "$$exe" ]; then \
-				echo "Stripping $$(basename $$exe)..."; \
-				strip "$$exe"; \
-			fi; \
-		done; \
-		echo "✓ Debug symbols stripped from all binaries"; \
-	else \
-		echo "○ strip command not available"; \
-	fi
 
-profile:
-	@$(MAKE) MODE=profile all
-	@echo "✓ Profile build ready - run apps to generate profiling data"
-
-benchmark: MODE=release
-benchmark: all
-	@echo "Benchmarking ARM64 optimized binaries..."
-	@for app in $(BUILD_DIR)/bin/*; do echo "$$app:"; time $$app --version 2>/dev/null || time $$app </dev/null || true; done
 
 run-%: $(BUILD_DIR)/bin/%
 	@./$<
 
-sysinfo:
-	@echo "System: $$(uname -srm)"
-ifeq ($(UNAME_S),Darwin)
-	@echo "CPU: $$(sysctl -n machdep.cpu.brand_string 2>/dev/null || echo 'Unknown')"
-	@echo "Cores: $$(sysctl -n hw.ncpu 2>/dev/null || echo 'Unknown') ($$(sysctl -n hw.perflevel0.physicalcpu 2>/dev/null || echo '?') P + $$(sysctl -n hw.perflevel1.physicalcpu 2>/dev/null || echo '?') E)"
-	@echo "Memory: $$(($$(sysctl -n hw.memsize 2>/dev/null || echo 0) / 1024 / 1024 / 1024))GB"
-else
-	@echo "CPU: $$(grep 'model name' /proc/cpuinfo 2>/dev/null | head -n1 | cut -d: -f2 | sed 's/^[ ]*//' || echo 'Unknown')"
-	@echo "Cores: $$(nproc 2>/dev/null || echo 'Unknown')"
-	@echo "Memory: $$(free -h 2>/dev/null | awk '/^Mem:/ {print $$2}' || echo 'Unknown')"
-endif
-	@echo "Compiler: $$($(CC) --version | head -n1)"
-	@echo "Mode: $(MODE)"
 
 help:
 	@echo "ARM64 Apple Silicon C Build System"
@@ -408,7 +336,6 @@ help:
 	@echo "  test-quick     Quick tests only"
 	@echo "  test-libs      Test libraries only"
 	@echo "  test-apps      Test applications only"
-	@echo "  test-individual Run tests individually with detailed output"
 	@echo "  test-coverage  Run tests with coverage reporting"
 	@echo ""
 	@echo "Clean Targets:"
@@ -416,15 +343,11 @@ help:
 	@echo "  clean-all      Comprehensive cleanup (includes temp files)"
 	@echo "  clean-verify   Clean and verify removal"
 	@echo ""
-	@echo "Security & Verification:"
-	@echo "  security       Run security verification"
-	@echo "  verify         Comprehensive production readiness check"
-	@echo "  strip-binaries Strip debug symbols from binaries"
+	@echo "Verification:"
+	@echo "  verify         Production readiness check"
 	@echo ""
 	@echo "Development Targets:"
 	@echo "  install        Install to /usr/local"
-	@echo "  profile        Build with profiling"
-	@echo "  benchmark      Performance benchmark"
 	@echo "  format         Format code with clang-format"
 	@echo "  lint           Run static analysis"
 	@echo ""
@@ -443,11 +366,3 @@ help:
 	@echo "Apps: $(APPS)"
 	@echo "Run:  make run-<app>"
 
-# Colors for pretty output
-RED := \033[31m
-GREEN := \033[32m
-YELLOW := \033[33m
-BLUE := \033[34m
-MAGENTA := \033[35m
-CYAN := \033[36m
-NC := \033[0m

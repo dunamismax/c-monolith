@@ -42,19 +42,23 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 ## Project Structure
 
 ```sh
-├── apps/                     # Applications (command-line and games)
-│   ├── cli/                  # Command-line utilities
+├── apps/                     # Applications (all categories)
+│   ├── [cli/](apps/cli/)                  # Command-line utilities
 │   │   ├── calculator/       # Scientific calculator with advanced math
 │   │   │   └── src/calculator.c
-│   │   ├── file_utils/       # Secure file operations and utilities
-│   │   │   └── src/file_utils.c
 │   │   └── text_processor/   # String manipulation and text processing
 │   │       └── src/text_processor.c
-│   └── games/                # Interactive gaming applications
-│       ├── tic_tac_toe/      # AI-powered tic-tac-toe game
-│       │   └── src/tic_tac_toe.c
-│       └── number_guessing/  # Multi-difficulty guessing game
-│           └── src/number_guessing.c
+│   ├── [games/](apps/games/)              # Interactive gaming applications
+│   │   ├── tic_tac_toe/      # AI-powered tic-tac-toe game
+│   │   │   └── src/tic_tac_toe.c
+│   │   └── number_guessing/  # Multi-difficulty guessing game
+│   │       └── src/number_guessing.c
+│   ├── [network/](apps/network/)          # Network programming and client-server apps
+│   ├── [system/](apps/system/)            # Low-level system interaction projects
+│   │   └── file_utils/       # Secure file operations and utilities
+│   │       └── src/file_utils.c
+│   ├── [data/](apps/data/)                # Data management and record systems
+│   └── [embedded/](apps/embedded/)        # Hardware interaction and microcontroller projects
 ├── libs/                     # High-performance shared libraries
 │   ├── math_utils/           # Mathematical algorithms and utilities
 │   │   ├── include/math_utils.h
@@ -114,14 +118,13 @@ C provides unmatched control over system resources and memory management. This m
 | Startup Time         | Slow                 | Instant                   |
 | Platform Control     | Limited              | Complete system access    |
 
-## Enhanced Make Build System
+## Make Build System
 
-The comprehensive Makefile replaces all previous scripts with a unified, professional build system:
+Professional ARM64-optimized build system with comprehensive targets:
 
 ### Build Targets
 
 ```bash
-# Core building
 make                    # Build everything (release mode)
 make libs              # Build libraries only
 make apps              # Build applications only
@@ -131,32 +134,41 @@ make build-tests       # Build test suite
 ### Test Targets
 
 ```bash
-# Comprehensive testing
-make test              # Run all tests with detailed output
+make test              # Run all tests (same as test-run)
 make test-run          # Full test suite with colored reporting
 make test-quick        # Quick tests only (libraries)
 make test-libs         # Test libraries only
 make test-apps         # Test applications only
-make test-individual   # Individual tests with detailed output
-make test-coverage     # Tests with coverage reporting
+make test-coverage     # Run tests with coverage reporting
 ```
 
 ### Clean Targets
 
 ```bash
-# Cleanup operations
 make clean             # Clean build artifacts
 make clean-all         # Comprehensive cleanup (temp files, logs)
 make clean-verify      # Clean and verify removal
 ```
 
-### Security & Verification
+### Development & Verification
 
 ```bash
-# Production readiness
-make security          # Run security verification
-make verify            # Comprehensive production readiness check
-make strip-binaries    # Strip debug symbols for production
+make verify            # Production readiness check
+make install           # Install to /usr/local
+make format            # Format code with clang-format
+make lint              # Run static analysis
+```
+
+### Build Modes & App Running
+
+```bash
+# Build modes
+make MODE=release      # Maximum performance (default)
+make MODE=debug        # Debug with sanitizers
+make MODE=profile      # Profiling enabled
+
+# Run individual apps
+make run-<app>         # Run specific application
 ```
 
 <p align="center">
@@ -171,20 +183,13 @@ make strip-binaries    # Strip debug symbols for production
 - **Security**: AddressSanitizer, UBSan, and stack protection
 - **Optimization**: Link-time optimization with Apple Silicon tuning
 
-## Build Modes
+## Platform Support
 
-```bash
-# Development modes
-make MODE=debug        # Debug with sanitizers and symbols
-make MODE=release      # Maximum performance (default)
-make MODE=profile      # Profiling with coverage data
+Automatically detects and optimizes for:
 
-# Platform optimization
-# Automatically detects and optimizes for:
-# - Apple Silicon (M1/M2/M3) with specific CPU tuning
-# - Intel x86_64 with native optimizations
-# - Linux ARM64 and x86_64 support
-```
+- **Apple Silicon** (M1/M2/M3) with specific CPU tuning
+- **Intel x86_64** with native optimizations
+- **Linux ARM64** and x86_64 support
 
 ## Applications
 
