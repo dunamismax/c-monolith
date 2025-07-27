@@ -174,7 +174,7 @@ test: test-run
 # Full test suite with comprehensive output (replaces run_tests.sh)
 test-run: apps build-tests
 	@printf "\033[36m╔══════════════════════════════════════════════════════════════════════╗\033[0m\n"
-	@printf "\033[36m║                      C Monorepo Test Runner                         ║\033[0m\n"
+	@printf "\033[36m║                      C Monolith Test Runner                         ║\033[0m\n"
 	@printf "\033[36m║                                                                      ║\033[0m\n"
 	@printf "\033[36m║  Mode: $(MODE)%*s║\033[0m\n" $$(expr 56 - $$(echo $(MODE) | wc -c | tr -d ' ')) ""
 	@printf "\033[36m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n"

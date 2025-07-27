@@ -1,4 +1,4 @@
-name: C Monorepo CI/CD
+name: C Monolith CI/CD
 
 on:
   push:

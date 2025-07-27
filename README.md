@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/dunamismax/c-monorepo">
-    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=C+Programming+Monorepo;ARM64+Apple+Silicon+Optimized;Production+Ready+Build+System;Memory+Safe+Security+Hardened;Zero+Runtime+Dependencies;High+Performance+Applications;LLVM+Clang+Optimizations;Comprehensive+Test+Suite;Professional+Development+Tools;Cross+Platform+Compatibility;Make+Based+Build+System;Educational+and+Production+Ready;CLI+Tools+and+Interactive+Games;Static+Libraries+and+Applications;Security+Focused+Development;Modern+C11+Standards;Parallel+Build+Optimization;Link+Time+Optimization;Buffer+Overflow+Protection;MIT+Licensed+Open+Source" alt="Typing SVG" />
+  <a href="https://github.com/dunamismax/c-monolith">
+    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=C+Programming+Monolith;ARM64+Apple+Silicon+Optimized;Production+Ready+Build+System;Memory+Safe+Security+Hardened;Zero+Runtime+Dependencies;High+Performance+Applications;LLVM+Clang+Optimizations;Comprehensive+Test+Suite;Professional+Development+Tools;Cross+Platform+Compatibility;Make+Based+Build+System;Educational+and+Production+Ready;CLI+Tools+and+Interactive+Games;Static+Libraries+and+Applications;Security+Focused+Development;Modern+C11+Standards;Parallel+Build+Optimization;Link+Time+Optimization;Buffer+Overflow+Protection;MIT+Licensed+Open+Source" alt="Typing SVG" />
   </a>
 </p>
 
@@ -15,16 +15,16 @@
   <a href="https://www.gnu.org/software/make/"><img src="https://img.shields.io/badge/Make-Build_System-3071A4.svg" alt="Make Build System"></a>
   <a href="https://en.wikipedia.org/wiki/Link-time_optimization"><img src="https://img.shields.io/badge/LTO-Optimized-FF6B35.svg" alt="Link Time Optimization"></a>
   <a href="https://clang.llvm.org/docs/AddressSanitizer.html"><img src="https://img.shields.io/badge/ASAN-Memory_Safety-FF0000.svg" alt="AddressSanitizer"></a>
-  <a href="https://github.com/dunamismax/c-monorepo/actions"><img src="https://img.shields.io/badge/Tests-Passing-28A745.svg" alt="Test Suite"></a>
+  <a href="https://github.com/dunamismax/c-monolith/actions"><img src="https://img.shields.io/badge/Tests-Passing-28A745.svg" alt="Test Suite"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
-  <a href="https://github.com/dunamismax/c-monorepo/stargazers"><img src="https://github.com/dunamismax/c-monorepo/stargazers/badge.svg" alt="GitHub Stars"></a>
+  <a href="https://github.com/dunamismax/c-monolith/actions/workflows/c.yml"><img src="https://github.com/dunamismax/c-monolith/actions/workflows/c.yml/badge.svg" alt="CI"></a>
 </p>
 
 ---
 
-# C Programming Monorepo
+# C Programming Monolith
 
-A production-ready C monorepo featuring ARM64-optimized applications, comprehensive security hardening, and a professional build system. Demonstrates modern C development practices with **zero runtime dependencies**, **memory safety**, and **high-performance optimizations**.
+A production-ready C monolith featuring ARM64-optimized applications, comprehensive security hardening, and a professional build system. Demonstrates modern C development practices with **zero runtime dependencies**, **memory safety**, and **high-performance optimizations**.
 
 ## Core Features
 
@@ -84,8 +84,8 @@ A production-ready C monorepo featuring ARM64-optimized applications, comprehens
 
 ```bash
 # 1. Clone and navigate
-git clone https://github.com/dunamismax/c-monorepo.git
-cd c-monorepo
+git clone https://github.com/dunamismax/c-monolith.git
+cd c-monolith
 
 # 2. Build everything with optimizations
 make
@@ -103,9 +103,9 @@ The build system automatically detects your platform and applies optimal compile
 
 ## Why C for System Applications?
 
-C provides unmatched control over system resources and memory management. This monorepo demonstrates how modern C development can achieve both safety and performance through careful design and comprehensive testing.
+C provides unmatched control over system resources and memory management. This monolith demonstrates how modern C development can achieve both safety and performance through careful design and comprehensive testing.
 
-| Aspect               | High-Level Languages | This C Monorepo           |
+| Aspect               | High-Level Languages | This C Monolith           |
 | -------------------- | -------------------- | ------------------------- |
 | Runtime Dependencies | Heavy                | Zero dependencies         |
 | Memory Management    | Garbage collected    | Manual with safety checks |
@@ -358,7 +358,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ---
 
 <p align="center">
-  <strong>C Programming Monorepo</strong><br>
+  <strong>C Programming Monolith</strong><br>
   <sub>Memory Safe • High Performance • ARM64 Optimized • Production Ready • Zero Dependencies</sub>
 </p>
 

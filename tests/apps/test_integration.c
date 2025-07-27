@@ -13,7 +13,7 @@
 #include "../test_framework.h"
 
 /**
- * Integration tests for C Monorepo applications
+ * Integration tests for C Monolith applications
  * Tests real application behavior with input/output validation
  */
 
