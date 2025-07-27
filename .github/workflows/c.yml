@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: C Monorepo CI/CD
 
 on:
   push:
@@ -7,17 +7,45 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  test-and-build:
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y clang make
+        
+    - name: Build all applications and libraries
+      run: make MODE=release
+      
+    - name: Run comprehensive test suite
+      run: make test
+      
+    - name: Run security verification
+      run: make security
+      
+    - name: Verify production readiness
+      run: make verify
+      
+    - name: Test cleanup functionality
+      run: make clean-verify
+
+  cross-platform-test:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Build with ARM64 optimizations
+      run: make MODE=release
+      
+    - name: Run quick test suite
+      run: make test-quick
+      
+    - name: Verify all applications work
+      run: make test-apps
