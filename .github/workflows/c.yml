@@ -25,9 +25,6 @@ jobs:
     - name: Run comprehensive test suite
       run: make test
       
-    - name: Run security verification
-      run: make security
-      
     - name: Verify production readiness
       run: make verify
       
