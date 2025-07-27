@@ -179,7 +179,7 @@ make run-<app>         # Run specific application
 ```
 
 <p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/logo-logo-modern.png" alt="Modern C Logo" width="300" />
+  <img src="https://github.com/dunamismax/images/blob/main/c/logo-logo-modern.png" alt="Modern C Logo" width="250" />
 </p>
 
 ## Technology Stack
