@@ -1,234 +1,351 @@
 <p align="center">
-  <img src="c.png" alt="C Monorepo Logo" width="200" />
+  <img src="https://github.com/dunamismax/images/blob/main/c/LLVMWyvern.png" alt="LLVM Wyvern C Programming" width="200" />
 </p>
 
 <p align="center">
   <a href="https://github.com/dunamismax/c-monorepo">
-    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=800&lines=C+Programming+Monorepo;ARM64+Optimized+Build+System;Educational+%2B+Production+Ready;High-Performance+C+Development;From+CLI+Tools+to+Games." alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=C+Programming+Monorepo;ARM64+Apple+Silicon+Optimized;Production+Ready+Build+System;Memory+Safe+Security+Hardened;Zero+Runtime+Dependencies;High+Performance+Applications;LLVM+Clang+Optimizations;Comprehensive+Test+Suite;Professional+Development+Tools;Cross+Platform+Compatibility;Make+Based+Build+System;Educational+and+Production+Ready;CLI+Tools+and+Interactive+Games;Static+Libraries+and+Applications;Security+Focused+Development;Modern+C11+Standards;Parallel+Build+Optimization;Link+Time+Optimization;Buffer+Overflow+Protection;MIT+Licensed+Open+Source" alt="Typing SVG" />
   </a>
 </p>
 
 <p align="center">
-  <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-17+-blue.svg?logo=llvm" alt="Clang Version"></a>
-  <a href="https://developer.apple.com/documentation/apple-silicon"><img src="https://img.shields.io/badge/ARM64-Apple_Silicon-black.svg?logo=apple" alt="ARM64 Apple Silicon"></a>
+  <a href="https://clang.llvm.org/"><img src="https://img.shields.io/badge/Clang-17+-3071A4.svg?logo=llvm" alt="Clang Version"></a>
+  <a href="https://developer.apple.com/documentation/apple-silicon"><img src="https://img.shields.io/badge/ARM64-Apple_Silicon-000000.svg?logo=apple" alt="ARM64 Optimization"></a>
+  <a href="https://en.wikipedia.org/wiki/C11_(C_standard_revision)"><img src="https://img.shields.io/badge/C11-Standard-00599C.svg" alt="C11 Standard"></a>
+  <a href="https://www.gnu.org/software/make/"><img src="https://img.shields.io/badge/Make-Build_System-3071A4.svg" alt="Make Build System"></a>
+  <a href="https://en.wikipedia.org/wiki/Link-time_optimization"><img src="https://img.shields.io/badge/LTO-Optimized-FF6B35.svg" alt="Link Time Optimization"></a>
+  <a href="https://clang.llvm.org/docs/AddressSanitizer.html"><img src="https://img.shields.io/badge/ASAN-Memory_Safety-FF0000.svg" alt="AddressSanitizer"></a>
+  <a href="https://github.com/dunamismax/c-monorepo/actions"><img src="https://img.shields.io/badge/Tests-Passing-28A745.svg" alt="Test Suite"></a>
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-green.svg" alt="MIT License"></a>
-  <a href="https://github.com/dunamismax/c-monorepo/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs Welcome"></a>
-  <a href="https://github.com/dunamismax/c-monorepo/stargazers"><img src="https://img.shields.io/github/stars/dunamismax/c-monorepo" alt="GitHub Stars"></a>
+  <a href="https://github.com/dunamismax/c-monorepo/stargazers"><img src="https://github.com/dunamismax/c-monorepo/stargazers/badge.svg" alt="GitHub Stars"></a>
 </p>
 
 ---
 
-## About This Project
+# C Programming Monorepo
 
-A production-ready, security-hardened C monorepo optimized for ARM64 Apple Silicon. Features 5 working applications, 2 optimized libraries, and a comprehensive build system with advanced compiler optimizations and automated testing.
+A production-ready C monorepo featuring ARM64-optimized applications, comprehensive security hardening, and a professional build system. Demonstrates modern C development practices with **zero runtime dependencies**, **memory safety**, and **high-performance optimizations**.
 
-**Key Features:**
+## Core Features
 
-- **ARM64 Optimized**: Apple Silicon-specific optimizations with parallel builds and LTO
-- **Security Hardened**: Buffer overflow protection, input validation, memory safety
-- **Production Ready**: Comprehensive testing and quality assurance with automated test suite
-- **Professional Build System**: Cross-platform Makefile with intelligent dependency detection
-- **Complete Applications**: Calculator, file utilities, text processor, games with AI
-- **Optimized Libraries**: Math utilities and data structures for high-performance computing
+- **ARM64 Optimization**: Apple Silicon-specific compiler flags with LTO and vectorization
+- **Security Hardened**: Buffer overflow protection, input validation, and memory safety
+- **Professional Build System**: Enhanced Make-based system replacing all scripts
+- **Comprehensive Testing**: Unit, integration, and security tests with coverage reporting
+- **Production Ready**: Memory-safe applications with professional error handling
+- **Zero Dependencies**: Self-contained binaries requiring no external libraries
+
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/C-Logo.png" alt="C Programming Language Logo" width="150" />
+</p>
+
+## Project Structure
+
+```sh
+├── apps/                     # Applications (command-line and games)
+│   ├── cli/                  # Command-line utilities
+│   │   ├── calculator/       # Scientific calculator with advanced math
+│   │   │   └── src/calculator.c
+│   │   ├── file_utils/       # Secure file operations and utilities
+│   │   │   └── src/file_utils.c
+│   │   └── text_processor/   # String manipulation and text processing
+│   │       └── src/text_processor.c
+│   └── games/                # Interactive gaming applications
+│       ├── tic_tac_toe/      # AI-powered tic-tac-toe game
+│       │   └── src/tic_tac_toe.c
+│       └── number_guessing/  # Multi-difficulty guessing game
+│           └── src/number_guessing.c
+├── libs/                     # High-performance shared libraries
+│   ├── math_utils/           # Mathematical algorithms and utilities
+│   │   ├── include/math_utils.h
+│   │   └── src/math_utils.c
+│   └── data_structures/      # Dynamic data structures
+│       ├── include/          # Vector and generic data structures
+│       └── src/vector.c
+├── tests/                    # Comprehensive test suite
+│   ├── libs/                 # Library unit tests
+│   │   ├── test_math_utils.c
+│   │   └── test_vector.c
+│   ├── apps/                 # Application integration tests
+│   │   └── test_integration.c
+│   └── test_framework.h      # Custom testing framework
+├── Makefile                  # Professional build system
+├── LICENSE                   # MIT License
+└── README.md                 # This file
+```
 
 ---
 
 ## Quick Start
 
-### Prerequisites
+**Prerequisites:** LLVM/Clang 15+ or GCC 11+
+
+### Get Running in 3 Steps
 
 ```bash
-# macOS (Primary Platform)
-xcode-select --install
-
-# Ubuntu/Debian
-sudo apt-get install build-essential clang make
-
-# Optional tools
-brew install clang-format    # macOS
-```
-
-### Build & Run
-
-```bash
+# 1. Clone and navigate
 git clone https://github.com/dunamismax/c-monorepo.git
 cd c-monorepo
 
-# Build everything
-make                          # Release mode (default)
-make MODE=debug              # Debug with sanitizers
-make MODE=profile            # Profile build
+# 2. Build everything with optimizations
+make
 
-# Run applications
-make run-calculator          # Scientific calculator
-make run-tic_tac_toe        # AI-powered game
-make run-file_utils         # File operations
-
-# Development workflow
-make test                    # Run comprehensive test suite
-make format lint            # Code quality checks
+# 3. Run applications
+make run-calculator     # Scientific calculator
+make run-tic_tac_toe   # AI-powered game
 ```
 
----
+The build system automatically detects your platform and applies optimal compiler flags.
 
-## Build System
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/c-programming-typed.png" alt="C Programming Typed" width="300" />
+</p>
 
-Professional cross-platform Makefile with ARM64 optimization, parallel builds, and comprehensive development tools.
+## Why C for System Applications?
 
-### Core Commands
+C provides unmatched control over system resources and memory management. This monorepo demonstrates how modern C development can achieve both safety and performance through careful design and comprehensive testing.
+
+| Aspect               | High-Level Languages | This C Monorepo           |
+| -------------------- | -------------------- | ------------------------- |
+| Runtime Dependencies | Heavy                | Zero dependencies         |
+| Memory Management    | Garbage collected    | Manual with safety checks |
+| Performance          | Variable overhead    | Consistently optimal      |
+| Binary Size          | Large                | Minimal footprint         |
+| Startup Time         | Slow                 | Instant                   |
+| Platform Control     | Limited              | Complete system access    |
+
+## Enhanced Make Build System
+
+The comprehensive Makefile replaces all previous scripts with a unified, professional build system:
+
+### Build Targets
 
 ```bash
-# Building
-make libs apps              # Build libraries and applications
-make test                   # Build and run test suite
-make clean                  # Clean build artifacts
-
-# Quality Assurance
-make format                 # Format code with clang-format
-make lint                   # Static analysis with clang-tidy
-make benchmark             # Performance testing
-
-# Execution
-make run-<app>             # Run specific application
-make install               # Install to /usr/local
-make help                  # Show all targets
+# Core building
+make                    # Build everything (release mode)
+make libs              # Build libraries only
+make apps              # Build applications only
+make build-tests       # Build test suite
 ```
 
-### Optimization Features
+### Test Targets
 
-- **Apple Silicon**: `-mcpu=apple-m1 -mtune=apple-m1 -arch arm64` for maximum performance
-- **Link-Time Optimization**: `-flto=thin` in release builds
-- **Parallel Builds**: Automatically uses all CPU cores
-- **Cross-Platform**: Adapts flags for macOS and Linux
-- **Security**: Stack protection and memory sanitizers in debug mode
-
----
-
-## Project Structure
-
-```
-c-monorepo/
-├── apps/                   # Applications
-│   ├── cli/               # Command-line tools
-│   └── games/             # Interactive games
-├── libs/                  # Shared libraries
-│   ├── data_structures/   # Vector implementation
-│   └── math_utils/        # Mathematical algorithms
-├── tests/                 # Comprehensive test suite
-├── scripts/               # Build automation
-└── Makefile              # Build system
+```bash
+# Comprehensive testing
+make test              # Run all tests with detailed output
+make test-run          # Full test suite with colored reporting
+make test-quick        # Quick tests only (libraries)
+make test-libs         # Test libraries only
+make test-apps         # Test applications only
+make test-individual   # Individual tests with detailed output
+make test-coverage     # Tests with coverage reporting
 ```
 
-### Technology Stack
+### Clean Targets
 
-- **C11 Standard** with ARM64-specific optimizations
-- **Clang Compiler** for Apple Silicon and cross-platform compatibility
-- **Comprehensive Testing** with automated test suite and security scanning
-- **Static Analysis** with clang-tidy and AddressSanitizer
-- **Cross-Platform Support** for macOS and Linux
+```bash
+# Cleanup operations
+make clean             # Clean build artifacts
+make clean-all         # Comprehensive cleanup (temp files, logs)
+make clean-verify      # Clean and verify removal
+```
 
----
+### Security & Verification
 
-## Applications & Libraries
+```bash
+# Production readiness
+make security          # Run security verification
+make verify            # Comprehensive production readiness check
+make strip-binaries    # Strip debug symbols for production
+```
 
-### Applications
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/logo-logo-modern.png" alt="Modern C Logo" width="200" />
+</p>
 
-**Calculator**: Scientific calculator with advanced mathematical operations, factorial, prime checking, and comprehensive input validation.
+## Technology Stack
 
-**File Utils**: Secure file operations with path traversal protection and system programming features.
+- **Compiler**: LLVM Clang with ARM64-specific optimizations
+- **Build System**: Professional Makefile with parallel builds and LTO
+- **Testing**: Custom framework with comprehensive coverage
+- **Security**: AddressSanitizer, UBSan, and stack protection
+- **Optimization**: Link-time optimization with Apple Silicon tuning
 
-**Text Processor**: String manipulation tool with case conversion, find/replace, and interactive sorting.
+## Build Modes
 
-**Tic-Tac-Toe**: AI-powered game with intelligent strategies and two-player mode.
+```bash
+# Development modes
+make MODE=debug        # Debug with sanitizers and symbols
+make MODE=release      # Maximum performance (default)
+make MODE=profile      # Profiling with coverage data
 
-**Number Guessing**: Multi-difficulty game with hint system and performance tracking.
+# Platform optimization
+# Automatically detects and optimizes for:
+# - Apple Silicon (M1/M2/M3) with specific CPU tuning
+# - Intel x86_64 with native optimizations
+# - Linux ARM64 and x86_64 support
+```
 
-### Libraries
+## Applications
 
-**Math Utils** (`libmath_utils.a`): Euclidean GCD/LCM, factorial, Fibonacci, prime checking, and power functions optimized for ARM64.
+### Calculator (Scientific)
 
-**Data Structures** (`libdata_structures.a`): Dynamic vector implementation with bounds checking and efficient memory management.
+Advanced mathematical calculator with security hardening:
 
----
+- **Operations**: Basic arithmetic, advanced functions, factorial, power
+- **Security**: Buffer overflow protection, input validation
+- **Features**: Prime checking, mathematical constants, error handling
 
-## Testing & Quality
+```bash
+make run-calculator
+# Interactive calculator with help system
+```
+
+### File Utils (System Programming)
+
+Secure file operations with path traversal protection:
+
+- **Operations**: File info, statistics, secure path validation
+- **Security**: Path traversal prevention, canonical path resolution
+- **Features**: Cross-platform file operations, atomic operations
+
+```bash
+make run-file_utils
+# Secure file operations utility
+```
+
+### Text Processor (String Manipulation)
+
+Comprehensive text processing with memory safety:
+
+- **Operations**: Case conversion, find/replace, sorting
+- **Security**: Buffer overflow protection, safe string operations
+- **Features**: Interactive processing, multiple text operations
+
+```bash
+make run-text_processor
+# Text manipulation and processing tool
+```
+
+### Tic-Tac-Toe (AI Game)
+
+Intelligent game with strategic AI:
+
+- **AI**: Minimax algorithm with strategic positioning
+- **Modes**: Player vs AI, two-player mode
+- **Features**: Difficulty levels, game state management
+
+```bash
+make run-tic_tac_toe
+# Play against intelligent AI
+```
+
+### Number Guessing (Interactive Game)
+
+Multi-difficulty guessing game with hints:
+
+- **Modes**: Easy, medium, hard difficulty levels
+- **Features**: Hint system, attempt tracking, scoring
+- **Logic**: Adaptive difficulty, performance metrics
+
+```bash
+make run-number_guessing
+# Interactive number guessing with hints
+```
+
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/the-c-programming-language.png" alt="The C Programming Language" width="250" />
+</p>
+
+## Shared Libraries
+
+### Math Utils Library
+
+High-performance mathematical operations optimized for ARM64:
+
+- **Functions**: GCD/LCM, factorial, Fibonacci, prime checking, power
+- **Optimization**: ARM64 vectorization, overflow detection
+- **Safety**: Integer overflow protection, bounds checking
+
+### Data Structures Library
+
+Memory-safe dynamic data structures:
+
+- **Vector**: Dynamic arrays with automatic resizing
+- **Safety**: Bounds checking, null pointer validation
+- **Performance**: Efficient memory management, optimal growth
+
+## Testing & Quality Assurance
 
 ### Comprehensive Test Suite
 
 ```bash
-make test                   # All tests (29 tests across 4 suites)
-make test MODE=debug       # Debug build testing
-make test MODE=release     # Release validation
+# Test execution examples
+make test                    # All tests with colored output
+make test-coverage          # Generate coverage reports
+make test-individual        # Detailed test output
 ```
 
 **Test Coverage:**
 
-- **Unit Tests**: Math utilities, data structures
+- **Unit Tests**: Library functions with edge cases
 - **Integration Tests**: Application functionality and security
-- **Security Tests**: Buffer overflow, format string protection
-- **Cross-Platform**: macOS and Linux compatibility
+- **Security Tests**: Buffer overflow, path traversal protection
+- **Performance Tests**: Benchmarking and optimization validation
 
-### Automated Testing
+### Security Features
 
-Comprehensive test automation with multi-platform support:
+- **Memory Safety**: AddressSanitizer and UndefinedBehaviorSanitizer
+- **Buffer Protection**: Stack canaries and bounds checking
+- **Input Validation**: Comprehensive sanitization and validation
+- **Path Security**: Traversal protection and canonical paths
 
-- **Build & Test**: Debug, release, and profile modes across macOS and Linux
-- **Security Testing**: Buffer overflow and vulnerability detection
-- **Static Analysis**: clang-tidy integration with comprehensive checks
-- **Performance Testing**: Benchmarking on release builds
-- **Quality Assurance**: All tests must pass with comprehensive quality gates
+## Development Workflow
+
+```bash
+# Complete development cycle
+make clean-all              # Clean everything
+make MODE=debug test        # Debug build with testing
+make format lint           # Code formatting and analysis
+make verify                # Production readiness check
+make MODE=release          # Optimized production build
+```
+
+## Performance Optimization
+
+### ARM64 Apple Silicon Tuning
+
+```makefile
+# Automatic optimization flags
+-mcpu=apple-m1 -mtune=apple-m1 -arch arm64    # Apple Silicon
+-O3 -flto=thin -ffast-math                    # Maximum optimization
+-fvectorize -funroll-loops                    # Vectorization
+-falign-functions=32 -falign-loops=32         # Memory alignment
+```
+
+### Parallel Building
+
+- **Automatic Core Detection**: Uses all available CPU cores
+- **Dependency Management**: Smart rebuild only when necessary
+- **Link-Time Optimization**: Whole-program optimization
+
+## Cross-Platform Support
+
+- **macOS**: ARM64 and Intel with Apple-specific optimizations
+- **Linux**: ARM64 and x86_64 with GCC and Clang support
+- **Build System**: Automatic platform detection and flag adaptation
+
+## License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
-
-## Security Features
-
-### Memory Safety
-
-- Buffer overflow protection with bounds checking
-- Safe string operations with size validation
-- Memory leak prevention with comprehensive cleanup
-- AddressSanitizer and UndefinedBehaviorSanitizer integration
-
-### Input Validation
-
-- Path traversal prevention in file operations
-- Format string attack protection in calculator
-- Comprehensive input sanitization across all applications
-- Integer overflow detection in mathematical operations
-
-### Secure Development
-
-- Compiler hardening flags (`-fstack-protector-strong`)
-- Static analysis integration for vulnerability detection
-- Security-focused code review and testing procedures
-
----
-
-## Troubleshooting
-
-**Build Issues**: Run `make clean && make` to rebuild. Ensure Xcode Command Line Tools installed on macOS.
-
-**Test Failures**: Build applications first with `make apps`. Tests require built binaries for integration testing.
-
-**Missing Tools**: clang-tidy is optional - install with `brew install llvm` or lint target will skip.
-
-**Performance**: Use `make MODE=release` for optimized builds. Debug mode includes sanitizers that impact performance.
-
----
-
-## Support This Project
-
-If you find this project valuable for your C development journey, consider supporting its continued development:
 
 <p align="center">
-  <a href="https://www.buymeacoffee.com/dunamismax" target="_blank">
-    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" />
+  <a href="https://www.buymeacoffee.com/dunamismax">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" >
   </a>
 </p>
-
----
-
-## Let's Connect
 
 <p align="center">
   <a href="https://twitter.com/dunamismax" target="_blank"><img src="https://img.shields.io/badge/Twitter-%231DA1F2.svg?&style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter"></a>
@@ -240,13 +357,11 @@ If you find this project valuable for your C development journey, consider suppo
 
 ---
 
-## License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
----
+<p align="center">
+  <strong>C Programming Monorepo</strong><br>
+  <sub>Memory Safe • High Performance • ARM64 Optimized • Production Ready • Zero Dependencies</sub>
+</p>
 
 <p align="center">
-  <strong>Built with Pure C for ARM64</strong><br>
-  <sub>A comprehensive foundation for high-performance, Apple Silicon-optimized C development</sub>
+  <img src="https://github.com/dunamismax/images/blob/main/c/C-programming.png" alt="C Programming" width="400" />
 </p>
