@@ -200,27 +200,27 @@ Automatically detects and optimizes for:
 
 Explore comprehensive C programming projects organized by domain and complexity:
 
-### 🖥️ [CLI Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)
+### [CLI Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)
 
 Command-line utilities and tools for everyday system tasks and calculations.
 
-### 🎮 [Interactive Games](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)
+### [Interactive Games](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)
 
 Console-based games and interactive entertainment applications.
 
-### 🌐 [Network Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)
+### [Network Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)
 
 Network programming projects including client-server applications and protocols.
 
-### ⚙️ [System Programming](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)
+### [System Programming](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)
 
 Low-level system interaction projects including shells and system utilities.
 
-### 📊 [Data Management](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)
+### [Data Management](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)
 
 Database and record management systems for handling structured data.
 
-### 🔧 [Embedded & Hardware](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)
+### [Embedded & Hardware](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)
 
 Hardware interaction and microcontroller programming projects.
 
