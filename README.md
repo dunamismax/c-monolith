@@ -43,22 +43,22 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 
 ```sh
 ├── apps/                     # Applications (all categories)
-│   ├── [cli/](apps/cli/)                  # Command-line utilities
+│   ├── [cli/](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)                  # Command-line utilities
 │   │   ├── calculator/       # Scientific calculator with advanced math
 │   │   │   └── src/calculator.c
 │   │   └── text_processor/   # String manipulation and text processing
 │   │       └── src/text_processor.c
-│   ├── [games/](apps/games/)              # Interactive gaming applications
+│   ├── [games/](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)              # Interactive gaming applications
 │   │   ├── tic_tac_toe/      # AI-powered tic-tac-toe game
 │   │   │   └── src/tic_tac_toe.c
 │   │   └── number_guessing/  # Multi-difficulty guessing game
 │   │       └── src/number_guessing.c
-│   ├── [network/](apps/network/)          # Network programming and client-server apps
-│   ├── [system/](apps/system/)            # Low-level system interaction projects
+│   ├── [network/](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)          # Network programming and client-server apps
+│   ├── [system/](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)            # Low-level system interaction projects
 │   │   └── file_utils/       # Secure file operations and utilities
 │   │       └── src/file_utils.c
-│   ├── [data/](apps/data/)                # Data management and record systems
-│   └── [embedded/](apps/embedded/)        # Hardware interaction and microcontroller projects
+│   ├── [data/](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)                # Data management and record systems
+│   └── [embedded/](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)        # Hardware interaction and microcontroller projects
 ├── libs/                     # High-performance shared libraries
 │   ├── math_utils/           # Mathematical algorithms and utilities
 │   │   ├── include/math_utils.h
