@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/LLVMWyvern.png" alt="LLVM Wyvern C Programming" width="200" />
+  <img src="https://github.com/dunamismax/images/blob/main/c/LLVMWyvern.png" alt="LLVM Wyvern C Programming" width="400" />
 </p>
 
 <p align="center">
