@@ -43,22 +43,22 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 
 ```sh
 ├── apps/                     # Applications (all categories)
-│   ├── [cli/](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)                  # Command-line utilities
+│   ├── cli/                  # Command-line utilities
 │   │   ├── calculator/       # Scientific calculator with advanced math
 │   │   │   └── src/calculator.c
 │   │   └── text_processor/   # String manipulation and text processing
 │   │       └── src/text_processor.c
-│   ├── [games/](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)              # Interactive gaming applications
+│   ├── games/                # Interactive gaming applications
 │   │   ├── tic_tac_toe/      # AI-powered tic-tac-toe game
 │   │   │   └── src/tic_tac_toe.c
 │   │   └── number_guessing/  # Multi-difficulty guessing game
 │   │       └── src/number_guessing.c
-│   ├── [network/](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)          # Network programming and client-server apps
-│   ├── [system/](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)            # Low-level system interaction projects
+│   ├── network/              # Network programming and client-server apps
+│   ├── system/               # Low-level system interaction projects
 │   │   └── file_utils/       # Secure file operations and utilities
 │   │       └── src/file_utils.c
-│   ├── [data/](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)                # Data management and record systems
-│   └── [embedded/](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)        # Hardware interaction and microcontroller projects
+│   ├── data/                 # Data management and record systems
+│   └── embedded/             # Hardware interaction and microcontroller projects
 ├── libs/                     # High-performance shared libraries
 │   ├── math_utils/           # Mathematical algorithms and utilities
 │   │   ├── include/math_utils.h
@@ -191,76 +191,33 @@ Automatically detects and optimizes for:
 - **Intel x86_64** with native optimizations
 - **Linux ARM64** and x86_64 support
 
-## Applications
+## Application Categories
 
-### Calculator (Scientific)
+Explore comprehensive C programming projects organized by domain and complexity:
 
-Advanced mathematical calculator with security hardening:
+### 🖥️ [CLI Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)
 
-- **Operations**: Basic arithmetic, advanced functions, factorial, power
-- **Security**: Buffer overflow protection, input validation
-- **Features**: Prime checking, mathematical constants, error handling
+Command-line utilities and tools for everyday system tasks and calculations.
 
-```bash
-make run-calculator
-# Interactive calculator with help system
-```
+### 🎮 [Interactive Games](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)
 
-### File Utils (System Programming)
+Console-based games and interactive entertainment applications.
 
-Secure file operations with path traversal protection:
+### 🌐 [Network Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)
 
-- **Operations**: File info, statistics, secure path validation
-- **Security**: Path traversal prevention, canonical path resolution
-- **Features**: Cross-platform file operations, atomic operations
+Network programming projects including client-server applications and protocols.
 
-```bash
-make run-file_utils
-# Secure file operations utility
-```
+### ⚙️ [System Programming](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)
 
-### Text Processor (String Manipulation)
+Low-level system interaction projects including shells and system utilities.
 
-Comprehensive text processing with memory safety:
+### 📊 [Data Management](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)
 
-- **Operations**: Case conversion, find/replace, sorting
-- **Security**: Buffer overflow protection, safe string operations
-- **Features**: Interactive processing, multiple text operations
+Database and record management systems for handling structured data.
 
-```bash
-make run-text_processor
-# Text manipulation and processing tool
-```
+### 🔧 [Embedded & Hardware](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)
 
-### Tic-Tac-Toe (AI Game)
-
-Intelligent game with strategic AI:
-
-- **AI**: Minimax algorithm with strategic positioning
-- **Modes**: Player vs AI, two-player mode
-- **Features**: Difficulty levels, game state management
-
-```bash
-make run-tic_tac_toe
-# Play against intelligent AI
-```
-
-### Number Guessing (Interactive Game)
-
-Multi-difficulty guessing game with hints:
-
-- **Modes**: Easy, medium, hard difficulty levels
-- **Features**: Hint system, attempt tracking, scoring
-- **Logic**: Adaptive difficulty, performance metrics
-
-```bash
-make run-number_guessing
-# Interactive number guessing with hints
-```
-
-<p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/the-c-programming-language.png" alt="The C Programming Language" width="250" />
-</p>
+Hardware interaction and microcontroller programming projects.
 
 ## Shared Libraries
 
