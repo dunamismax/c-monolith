@@ -12,13 +12,18 @@ static int tests_passed = 0;
 void run_test(int (*test_func)(void), const char *test_name) {
   tests_run++;
   printf("Running %s... ", test_name);
+  fflush(stdout);
 
   if (test_func()) {
     printf("PASSED\n");
     tests_passed++;
   } else {
     printf("FAILED\n");
+    if (getenv("CI")) {
+      printf("  ^^^^ Test %s failed in CI environment\n", test_name);
+    }
   }
+  fflush(stdout);
 }
 
 // Function to print test summary and return appropriate exit code
