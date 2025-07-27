@@ -293,7 +293,7 @@ make MODE=release          # Optimized production build
 ```
 
 <p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/c-computerphile.png" alt="C Computerphile" width="250" />
+  <img src="https://github.com/dunamismax/images/blob/main/c/c-computerphile.png" alt="C Computerphile" width="300" />
 </p>
 
 ## Performance Optimization
