@@ -141,7 +141,6 @@ make build-tests       # Build test suite
 ```bash
 make test              # Run all tests (same as test-run)
 make test-run          # Full test suite with colored reporting (4 suites)
-make test-ci           # CI-friendly tests (excludes integration tests)
 make test-quick        # Quick tests only (math, vector, generic vector)
 make test-libs         # Test libraries only (all 3 library test suites)
 make test-apps         # Test applications only (integration tests)
