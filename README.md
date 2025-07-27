@@ -107,7 +107,7 @@ make run-tic_tac_toe   # AI-powered game
 The build system automatically detects your platform and applies optimal compiler flags.
 
 <p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/c-programming-typed.png" alt="C Programming Typed" width="300" />
+  <img src="https://github.com/dunamismax/images/blob/main/c/c-programming-typed.png" alt="C Programming Typed" width="400" />
 </p>
 
 ## Why C for System Applications?
