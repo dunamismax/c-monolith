@@ -292,6 +292,10 @@ make verify                # Production readiness check
 make MODE=release          # Optimized production build
 ```
 
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/c-computerphile.png" alt="C Computerphile" width="250" />
+</p>
+
 ## Performance Optimization
 
 ### ARM64 Apple Silicon Tuning
