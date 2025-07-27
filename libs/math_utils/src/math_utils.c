@@ -17,7 +17,15 @@ static int safe_multiply_long_long(long long a, long long b,
     if (a > LLONG_MAX / b)
       return -1;
   } else if (a < 0 && b < 0) {
-    if (a < LLONG_MAX / b)
+    // Both negative, result will be positive
+    // Handle LLONG_MIN edge case
+    if (a == LLONG_MIN || b == LLONG_MIN) {
+      return -1; // Would overflow when negated
+    }
+    // Convert to positive values for the check
+    long long pos_a = -a;
+    long long pos_b = -b;
+    if (pos_a > LLONG_MAX / pos_b)
       return -1;
   } else if (a > 0 && b < 0) {
     if (b < LLONG_MIN / a)

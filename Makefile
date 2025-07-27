@@ -180,7 +180,7 @@ test-run: apps build-tests
 	@printf "\033[36m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n"
 	@echo ""
 	@total=0; passed=0; \
-	for test in test_math_utils test_vector test_integration; do \
+	for test in test_math_utils test_vector test_generic_vector test_integration; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			printf "\033[34mRunning $$test...\033[0m "; \
 			if BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test >/dev/null 2>&1; then \
@@ -207,7 +207,7 @@ test-run: apps build-tests
 # Quick test mode (replaces test.sh --quick)
 test-quick: build-tests
 	@echo "Running quick tests..."
-	@for test in test_math_utils test_vector; do \
+	@for test in test_math_utils test_vector test_generic_vector; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			echo "Running $$test..."; \
 			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
@@ -218,7 +218,7 @@ test-quick: build-tests
 # Test libraries only (replaces test.sh --libs-only) 
 test-libs: build-tests
 	@echo "Testing libraries only..."
-	@for test in test_math_utils test_vector; do \
+	@for test in test_math_utils test_vector test_generic_vector; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			echo "Running $$test..."; \
 			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
