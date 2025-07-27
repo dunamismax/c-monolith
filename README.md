@@ -106,6 +106,8 @@ make run-tic_tac_toe   # AI-powered game
 
 The build system automatically detects your platform and applies optimal compiler flags.
 
+---
+
 <p align="center">
   <img src="https://github.com/dunamismax/images/blob/main/c/c-programming-typed.png" alt="C Programming Typed" width="400" />
 </p>
@@ -243,6 +245,10 @@ Memory-safe dynamic data structures with comprehensive functionality:
 - **Safety**: Bounds checking, null pointer validation, overflow protection
 - **Performance**: Efficient memory management, optimal growth algorithms
 - **Features**: Insert, remove, sort, find, copy operations with automatic resizing
+
+<p align="center">
+  <img src="https://github.com/dunamismax/images/blob/main/c/the-c-programming-language.png" alt="The C Programming Language Book" width="300" />
+</p>
 
 ## Testing & Quality Assurance
 
