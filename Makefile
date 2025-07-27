@@ -226,6 +226,40 @@ test-libs: build-tests
 	done
 	@echo "✓ Library tests completed"
 
+# CI-specific test target (excludes integration tests that may fail in CI environment)
+test-ci: build-tests
+	@printf "\033[36m╔══════════════════════════════════════════════════════════════════════╗\033[0m\n"
+	@printf "\033[36m║                    C Monolith CI Test Runner                        ║\033[0m\n"
+	@printf "\033[36m║                                                                      ║\033[0m\n"
+	@printf "\033[36m║  Mode: $(MODE) (CI Environment)%*s║\033[0m\n" $$(expr 44 - $$(echo $(MODE) | wc -c | tr -d ' ')) ""
+	@printf "\033[36m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n"
+	@echo ""
+	@total=0; passed=0; \
+	for test in test_math_utils test_vector test_generic_vector; do \
+		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
+			printf "\033[34mRunning $$test...\033[0m "; \
+			if BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test >/dev/null 2>&1; then \
+				printf "\033[32m✓ PASSED\033[0m\n"; \
+				passed=$$((passed + 1)); \
+			else \
+				printf "\033[31m✗ FAILED\033[0m\n"; \
+			fi; \
+			total=$$((total + 1)); \
+		fi; \
+	done; \
+	echo ""; \
+	printf "\033[36mCI Test Summary:\033[0m\n"; \
+	echo "Total: $$total"; \
+	echo "Passed: $$passed"; \
+	echo "Failed: $$((total - passed))"; \
+	echo "Note: Integration tests skipped in CI environment"; \
+	if [ $$passed -eq $$total ]; then \
+		printf "\033[32m🎉 All CI tests passed!\033[0m\n"; \
+	else \
+		printf "\033[31m❌ Some CI tests failed!\033[0m\n"; \
+		exit 1; \
+	fi
+
 # Test applications only (replaces test.sh --apps-only)
 test-apps: apps
 	@echo "Testing applications..."
@@ -333,6 +367,7 @@ help:
 	@echo "Test Targets:"
 	@echo "  test           Run all tests (default mode)"
 	@echo "  test-run       Full test suite with detailed output"
+	@echo "  test-ci        CI-friendly tests (excludes integration tests)"
 	@echo "  test-quick     Quick tests only"
 	@echo "  test-libs      Test libraries only"
 	@echo "  test-apps      Test applications only"

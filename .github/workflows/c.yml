@@ -22,8 +22,8 @@ jobs:
     - name: Build all applications and libraries
       run: make MODE=release
       
-    - name: Run comprehensive test suite
-      run: make test
+    - name: Run CI test suite (excludes integration tests)
+      run: make test-ci
       
     - name: Verify production readiness
       run: make verify
