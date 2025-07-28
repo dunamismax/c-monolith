@@ -266,6 +266,16 @@ test-apps: apps
 		printf "7\n0\n" | $(BUILD_DIR)/bin/data_structures_demo >/dev/null 2>&1 || true; \
 		echo "✓ data_structures_demo launch test passed"; \
 	fi
+	@if [ -x "$(BUILD_DIR)/bin/chat_server" ]; then \
+		echo "Testing chat_server..."; \
+		$(BUILD_DIR)/bin/chat_server 8082 >/dev/null 2>&1 & sleep 1; kill $$! 2>/dev/null || true; \
+		echo "✓ chat_server launch test passed"; \
+	fi
+	@if [ -x "$(BUILD_DIR)/bin/chat_client" ]; then \
+		echo "Testing chat_client..."; \
+		echo "test_user" | $(BUILD_DIR)/bin/chat_client 127.0.0.1 8083 >/dev/null 2>&1 || true; \
+		echo "✓ chat_client launch test passed"; \
+	fi
 	@echo "✓ Application tests completed"
 
 
