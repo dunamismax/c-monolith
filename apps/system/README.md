@@ -22,7 +22,7 @@ A complete custom shell demonstrating advanced system programming and process ma
 - **Pipeline Support**: Multi-command pipelines with proper file descriptor management
 - **Job Control**: Background job tracking, signal handling, and process monitoring
 - **Built-in Commands**: cd, pwd, exit, help, jobs, history, env, export, unset
-- **Advanced Features**: Tilde expansion (~), wildcard globbing (*, ?), command history
+- **Advanced Features**: Tilde expansion (~), wildcard globbing (\*, ?), command history
 - **Cross-Platform**: Works on both Linux and macOS with optional readline support
 
 ## Application Types
