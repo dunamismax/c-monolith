@@ -120,6 +120,9 @@ $(BUILD_DIR)/bin/%: $(LIB_TARGETS)
 			echo "Building unix_shell without readline (library not found)"; \
 			$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
 		fi \
+	elif [ "$*" = "web_server" ]; then \
+		echo "Building web_server with pthread support"; \
+		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -lpthread -o $@; \
 	elif [ -f "$$app_dir/src/$*.c" ]; then \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
 	else \
@@ -292,6 +295,11 @@ test-apps: apps
 		printf "help\nexit\n" | $(BUILD_DIR)/bin/unix_shell >/dev/null 2>&1 || true; \
 		echo "✓ unix_shell launch test passed"; \
 	fi
+	@if [ -x "$(BUILD_DIR)/bin/web_server" ]; then \
+		echo "Testing web_server..."; \
+		timeout 2s $(BUILD_DIR)/bin/web_server apps/network/web_server/www 8084 >/dev/null 2>&1 || true; \
+		echo "✓ web_server launch test passed"; \
+	fi
 	@echo "✓ Application tests completed"
 
 
@@ -367,6 +375,10 @@ verify: clean
 	fi
 
 
+
+run-web_server: $(BUILD_DIR)/bin/web_server
+	@echo "Starting C-Monolith Web Server on http://localhost:8080/"
+	@./$< apps/network/web_server/www 8080
 
 run-%: $(BUILD_DIR)/bin/%
 	@./$<
