@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/dunamismax/c-monolith">
-    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=Production+Ready+C+Programming+Monolith;ARM64+Apple+Silicon+Performance+Optimized;Zero+Runtime+Dependencies+Architecture;Memory+Safe+with+AddressSanitizer+Protection;Comprehensive+Test+Suite+All+Passing;Generic+Vector+Data+Structures+Library;Integer+Overflow+Protection+Built+In;Thread+Safe+Testing+Framework;LLVM+Clang+Link+Time+Optimization;Cross+Platform+Parallel+Build+System;Professional+Grade+Security+Hardening;Modern+C11+Standards+Compliance;Buffer+Overflow+and+Path+Traversal+Protection;Format+String+Vulnerability+Prevention;Educational+and+Enterprise+Ready;Scientific+Calculator+and+Interactive+Games;Advanced+Mathematical+Operations+Library;Type+Safe+Generic+Programming+in+C;Instant+Startup+Minimal+Binary+Footprint;MIT+Licensed+Open+Source+Excellence" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=Production+Ready+C+Programming+Monolith;ARM64+Apple+Silicon+Performance+Optimized;Zero+Runtime+Dependencies+Architecture;Memory+Safe+with+AddressSanitizer+Protection;Comprehensive+Test+Suite+51%2B+Tests+Passing;Complete+Data+Structures+Library+Implementation;Interactive+Educational+Data+Structures+Demo;Integer+Overflow+Protection+Built+In;Thread+Safe+Testing+Framework;LLVM+Clang+Link+Time+Optimization;Cross+Platform+Parallel+Build+System;Professional+Grade+Security+Hardening;Modern+C11+Standards+Compliance;Buffer+Overflow+and+Path+Traversal+Protection;Format+String+Vulnerability+Prevention;Educational+and+Enterprise+Ready;Scientific+Calculator+and+Interactive+Games;Advanced+Mathematical+Operations+Library;Type+Safe+Generic+Programming+in+C;Instant+Startup+Minimal+Binary+Footprint;MIT+Licensed+Open+Source+Excellence" alt="Typing SVG" />
   </a>
 </p>
 
@@ -56,25 +56,35 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 │   │   └── file_utils/       # Secure file operations and utilities
 │   │       └── src/file_utils.c
 │   ├── data/                 # Data management and record systems
+│   │   └── data_structures_demo/ # Comprehensive data structures demonstration
+│   │       └── src/data_structures_demo.c
 │   └── embedded/             # Hardware interaction and microcontroller projects
 ├── libs/                     # High-performance shared libraries
 │   ├── math_utils/           # Mathematical algorithms and utilities
 │   │   ├── include/math_utils.h
 │   │   └── src/math_utils.c
-│   └── data_structures/      # Dynamic data structures
-│       ├── include/          # Vector and generic data structures
+│   └── data_structures/      # Comprehensive data structures library
+│       ├── include/          # Complete data structures API
+│       │   ├── data_structures.h # Full data structures library
 │       │   ├── vector.h      # Integer vector implementation
 │       │   └── generic_vector.h # Generic type-safe vector
 │       └── src/
+│           ├── data_structures.c # Complete implementation
 │           ├── vector.c      # Integer vector implementation
 │           └── generic_vector.c # Generic vector implementation
-├── tests/                    # Comprehensive test suite
+├── tests/                    # Comprehensive test suite (51+ individual tests)
 │   ├── libs/                 # Library unit tests
 │   │   ├── test_math_utils.c
 │   │   ├── test_vector.c
 │   │   └── test_generic_vector.c # Generic vector tests
 │   ├── apps/                 # Application integration tests
-│   │   └── test_integration.c
+│   │   ├── test_integration.c
+│   │   ├── test_data_structures_linked_list.c # Linked list comprehensive tests
+│   │   ├── test_data_structures_dynamic_array.c # Dynamic array tests
+│   │   ├── test_data_structures_hash_table.c # Hash table tests
+│   │   ├── test_data_structures_binary_tree.c # Binary tree tests
+│   │   ├── test_data_structures_string_functions.c # String library tests
+│   │   └── test_data_structures_integration.c # Data structures integration
 │   └── test_framework.h      # Thread-safe testing framework
 ├── Makefile                  # Professional build system
 ├── LICENSE                   # MIT License
@@ -98,8 +108,9 @@ cd c-monolith
 make
 
 # 3. Run applications
-make run-calculator     # Scientific calculator
-make run-tic_tac_toe   # AI-powered game
+make run-calculator        # Scientific calculator
+make run-tic_tac_toe      # AI-powered game
+make run-data_structures_demo # Data structures demonstration
 ```
 
 The build system automatically detects your platform and applies optimal compiler flags.
@@ -139,12 +150,13 @@ make build-tests       # Build test suite
 ### Test Targets
 
 ```bash
-make test              # Run all tests (same as test-run)
-make test-run          # Full test suite with colored reporting (4 suites)
-make test-quick        # Quick tests only (math, vector, generic vector)
-make test-libs         # Test libraries only (all 3 library test suites)
-make test-apps         # Test applications only (integration tests)
-make test-coverage     # Run tests with coverage reporting
+make test                   # Run all tests (same as test-run)
+make test-run               # Full test suite with colored reporting (10 suites)
+make test-quick             # Quick tests only (libraries + data structures)
+make test-libs              # Test libraries only (math, vector, generic vector)
+make test-apps              # Test applications only (integration tests)
+make test-data-structures   # Test data structures only (6 comprehensive suites)
+make test-coverage          # Run tests with coverage reporting
 ```
 
 ### Clean Targets
@@ -196,6 +208,42 @@ Automatically detects and optimizes for:
 - **Intel x86_64** with native optimizations
 - **Linux ARM64** and x86_64 support
 
+## Featured Application: Data Structures Demo
+
+The **Data Structures Demo** (`make run-data_structures_demo`) is a comprehensive educational application showcasing fundamental computer science data structures with complete implementations:
+
+### Interactive Demonstrations
+
+```bash
+make run-data_structures_demo
+
+# Menu Options:
+# 1. Linked List Operations    - Dynamic insertion/deletion at any position
+# 2. Dynamic Array Operations  - Automatic resizing with memory management
+# 3. Hash Table Operations     - Collision handling and efficient lookup
+# 4. Binary Tree Operations    - BST with multiple traversal algorithms
+# 5. Graph Operations (BFS/DFS) - Graph traversal with adjacency matrix
+# 6. Custom String Library     - Complete string manipulation functions
+# 7. Run All Demonstrations    - Execute all demos sequentially
+```
+
+### Educational Features
+
+- **Interactive Menu System**: User-friendly interface with step-by-step demonstrations
+- **Memory Management**: Shows proper allocation, deallocation, and safety practices
+- **Algorithm Visualization**: Clear output showing internal state changes
+- **Performance Insights**: Demonstrates time/space complexity characteristics
+- **Real-world Examples**: Practical use cases for each data structure
+- **Comprehensive Coverage**: From basic operations to advanced algorithms
+
+### Technical Implementation
+
+- **Modular Design**: Each data structure implemented as a separate library component
+- **Memory Safety**: Comprehensive bounds checking and error handling
+- **Educational Focus**: Clear, well-commented code suitable for learning
+- **Production Quality**: Fully tested with 51+ individual test cases
+- **Cross-Platform**: Works on all supported platforms with optimal performance
+
 ## Application Categories
 
 Explore comprehensive C programming projects organized by domain and complexity:
@@ -236,13 +284,19 @@ High-performance mathematical operations optimized for ARM64:
 
 ### Data Structures Library
 
-Memory-safe dynamic data structures with comprehensive functionality:
+Comprehensive collection of fundamental data structures with complete implementations:
 
+- **Linked Lists**: Dynamic memory allocation with insertion/deletion at any position
+- **Dynamic Arrays**: Automatic resizing with bounds checking and memory safety
+- **Hash Tables**: Collision handling with separate chaining and optimized hash functions
+- **Binary Search Trees**: Self-balancing operations with traversal algorithms
+- **Graphs**: Adjacency matrix representation with BFS/DFS traversal
+- **String Library**: Custom string manipulation functions with memory management
 - **Integer Vector**: High-performance dynamic arrays for integers
 - **Generic Vector**: Type-safe dynamic arrays for any data type
-- **Safety**: Bounds checking, null pointer validation, overflow protection
-- **Performance**: Efficient memory management, optimal growth algorithms
-- **Features**: Insert, remove, sort, find, copy operations with automatic resizing
+- **Safety**: Comprehensive bounds checking, null pointer validation, overflow protection
+- **Performance**: Optimized memory management and growth algorithms
+- **Testing**: 51+ individual test cases covering all operations and edge cases
 
 <p align="center">
   <img src="https://github.com/dunamismax/images/blob/main/c/the-c-programming-language.png" alt="The C Programming Language Book" width="300" />
@@ -261,10 +315,17 @@ make test-individual        # Detailed test output
 
 **Test Coverage:**
 
-- **Unit Tests**: Library functions with comprehensive edge case testing
+- **Unit Tests**: Library functions with comprehensive edge case testing (51+ individual tests)
   - Math utilities with overflow protection verification
   - Vector operations with bounds checking
   - Generic vector with complex data structure testing
+  - **Data Structures**: Complete test coverage for all implementations
+    - Linked Lists: 8 comprehensive tests (creation, insertion, deletion, edge cases)
+    - Dynamic Arrays: 8 tests (resizing, random access, memory management)
+    - Hash Tables: 9 tests (collision handling, capacity stress, special keys)
+    - Binary Trees: 10 tests (BST properties, traversals, deletion scenarios)
+    - String Functions: 10 tests (custom implementations, special characters)
+    - Integration: 6 tests (multi-structure workflows, performance, memory)
 - **Integration Tests**: Application functionality and security validation
 - **Security Tests**: Buffer overflow, path traversal, format string protection
 - **Thread Safety**: Enhanced test framework with proper state management
@@ -342,7 +403,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <p align="center">
   <strong>C Programming Monolith</strong><br>
-  <sub>Memory Safe • High Performance • ARM64 Optimized • Production Ready • Zero Dependencies</sub>
+  <sub>Memory Safe • High Performance • ARM64 Optimized • 51+ Tests • Complete Data Structures • Zero Dependencies</sub>
 </p>
 
 <p align="center">

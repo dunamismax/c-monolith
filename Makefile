@@ -180,7 +180,10 @@ test-run: apps build-tests
 	@printf "\033[36m╚══════════════════════════════════════════════════════════════════════╝\033[0m\n"
 	@echo ""
 	@total=0; passed=0; \
-	for test in test_math_utils test_vector test_generic_vector test_integration; do \
+	for test in test_math_utils test_vector test_generic_vector test_integration \
+	           test_data_structures_linked_list test_data_structures_dynamic_array \
+	           test_data_structures_hash_table test_data_structures_binary_tree \
+	           test_data_structures_string_functions test_data_structures_integration; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			printf "\033[34mRunning $$test...\033[0m "; \
 			if BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test >/dev/null 2>&1; then \
@@ -207,7 +210,10 @@ test-run: apps build-tests
 # Quick test mode (replaces test.sh --quick)
 test-quick: build-tests
 	@echo "Running quick tests..."
-	@for test in test_math_utils test_vector test_generic_vector; do \
+	@for test in test_math_utils test_vector test_generic_vector \
+	           test_data_structures_linked_list test_data_structures_dynamic_array \
+	           test_data_structures_hash_table test_data_structures_binary_tree \
+	           test_data_structures_string_functions; do \
 		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
 			echo "Running $$test..."; \
 			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
@@ -255,8 +261,26 @@ test-apps: apps
 		printf "3\n" | $(BUILD_DIR)/bin/number_guessing >/dev/null 2>&1 || true; \
 		echo "✓ number_guessing launch test passed"; \
 	fi
+	@if [ -x "$(BUILD_DIR)/bin/data_structures_demo" ]; then \
+		echo "Testing data_structures_demo..."; \
+		printf "7\n0\n" | $(BUILD_DIR)/bin/data_structures_demo >/dev/null 2>&1 || true; \
+		echo "✓ data_structures_demo launch test passed"; \
+	fi
 	@echo "✓ Application tests completed"
 
+
+# Test data structures only
+test-data-structures: build-tests
+	@echo "Testing data structures only..."
+	@for test in test_data_structures_linked_list test_data_structures_dynamic_array \
+	           test_data_structures_hash_table test_data_structures_binary_tree \
+	           test_data_structures_string_functions test_data_structures_integration; do \
+		if [ -x "$(BUILD_DIR)/bin/$$test" ]; then \
+			echo "Running $$test..."; \
+			BUILD_MODE=$(MODE) $(BUILD_DIR)/bin/$$test || exit 1; \
+		fi; \
+	done
+	@echo "✓ Data structures tests completed"
 
 # Coverage testing
 test-coverage:
@@ -332,12 +356,13 @@ help:
 	@echo "  build-tests    Build test suite"
 	@echo ""
 	@echo "Test Targets:"
-	@echo "  test           Run all tests (default mode)"
-	@echo "  test-run       Full test suite with detailed output"
-	@echo "  test-quick     Quick tests only"
-	@echo "  test-libs      Test libraries only"
-	@echo "  test-apps      Test applications only"
-	@echo "  test-coverage  Run tests with coverage reporting"
+	@echo "  test              Run all tests (default mode)"
+	@echo "  test-run          Full test suite with detailed output"
+	@echo "  test-quick        Quick tests only"
+	@echo "  test-libs         Test libraries only"
+	@echo "  test-apps         Test applications only"
+	@echo "  test-data-structures  Test data structures only"
+	@echo "  test-coverage     Run tests with coverage reporting"
 	@echo ""
 	@echo "Clean Targets:"
 	@echo "  clean          Clean build artifacts"
