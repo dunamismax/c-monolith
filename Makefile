@@ -109,7 +109,18 @@ $(BUILD_DIR)/bin/%: $(LIB_TARGETS)
 	@mkdir -p $(dir $@) $(BUILD_DIR)/obj
 	@echo "Building app: $*"
 	@app_dir=$$(find apps -name "$*" -type d); \
-	if [ -f "$$app_dir/src/$*.c" ]; then \
+	if [ "$*" = "unix_shell" ]; then \
+		if command -v pkg-config >/dev/null 2>&1 && pkg-config --exists readline; then \
+			echo "Building unix_shell with readline support"; \
+			$(CC) $(CFLAGS) $(INCLUDES) -DHAVE_READLINE $$app_dir/src/$*.c $(LIB_TARGETS) $$(pkg-config --libs readline) -o $@; \
+		elif [ -f /usr/lib/libreadline.so ] || [ -f /usr/local/lib/libreadline.a ] || [ -f /opt/homebrew/lib/libreadline.a ]; then \
+			echo "Building unix_shell with readline support (detected library)"; \
+			$(CC) $(CFLAGS) $(INCLUDES) -DHAVE_READLINE $$app_dir/src/$*.c $(LIB_TARGETS) -lreadline -o $@; \
+		else \
+			echo "Building unix_shell without readline (library not found)"; \
+			$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
+		fi \
+	elif [ -f "$$app_dir/src/$*.c" ]; then \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
 	else \
 		$(CC) $(CFLAGS) $(INCLUDES) $$(find $$app_dir -name "*.c") $(LIB_TARGETS) -o $@; \
@@ -276,6 +287,11 @@ test-apps: apps
 		echo "test_user" | $(BUILD_DIR)/bin/chat_client 127.0.0.1 8083 >/dev/null 2>&1 || true; \
 		echo "✓ chat_client launch test passed"; \
 	fi
+	@if [ -x "$(BUILD_DIR)/bin/unix_shell" ]; then \
+		echo "Testing unix_shell..."; \
+		printf "help\nexit\n" | $(BUILD_DIR)/bin/unix_shell >/dev/null 2>&1 || true; \
+		echo "✓ unix_shell launch test passed"; \
+	fi
 	@echo "✓ Application tests completed"
 
 
@@ -401,4 +417,6 @@ help:
 	@echo ""
 	@echo "Apps: $(APPS)"
 	@echo "Run:  make run-<app>"
+	@echo ""
+	@echo "Example: make run-unix_shell  # Launch the custom Unix shell"
 

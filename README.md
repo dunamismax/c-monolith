@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/dunamismax/c-monolith">
-    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=Production+Ready+C+Programming+Monolith;ARM64+Apple+Silicon+Performance+Optimized;Zero+Runtime+Dependencies+Architecture;Memory+Safe+with+AddressSanitizer+Protection;Comprehensive+Test+Suite+51%2B+Tests+Passing;Complete+Data+Structures+Library+Implementation;Interactive+Educational+Data+Structures+Demo;Real+Time+Network+Chat+Server+and+Client;Perfect+Socket+Programming+Demonstrations;Thread+Safe+Multi+Client+Broadcasting;Integer+Overflow+Protection+Built+In;Thread+Safe+Testing+Framework;LLVM+Clang+Link+Time+Optimization;Cross+Platform+Parallel+Build+System;Professional+Grade+Security+Hardening;Modern+C11+Standards+Compliance;Buffer+Overflow+and+Path+Traversal+Protection;Format+String+Vulnerability+Prevention;Educational+and+Enterprise+Ready;Scientific+Calculator+and+Interactive+Games;Advanced+Mathematical+Operations+Library;Type+Safe+Generic+Programming+in+C;Instant+Startup+Minimal+Binary+Footprint;MIT+Licensed+Open+Source+Excellence" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=24&pause=1000&color=3071A4&center=true&vCenter=true&width=1000&lines=Production+Ready+C+Programming+Monolith;ARM64+Apple+Silicon+Performance+Optimized;Zero+Runtime+Dependencies+Architecture;Memory+Safe+with+AddressSanitizer+Protection;Comprehensive+Test+Suite+51%2B+Tests+Passing;Complete+Data+Structures+Library+Implementation;Interactive+Educational+Data+Structures+Demo;Real+Time+Network+Chat+Server+and+Client;Perfect+Socket+Programming+Demonstrations;Thread+Safe+Multi+Client+Broadcasting;Full+Featured+Unix+Shell+Implementation;Integer+Overflow+Protection+Built+In;Thread+Safe+Testing+Framework;LLVM+Clang+Link+Time+Optimization;Cross+Platform+Parallel+Build+System;Professional+Grade+Security+Hardening;Modern+C11+Standards+Compliance;Buffer+Overflow+and+Path+Traversal+Protection;Format+String+Vulnerability+Prevention;Educational+and+Enterprise+Ready;Scientific+Calculator+and+Interactive+Games;Advanced+Mathematical+Operations+Library;Type+Safe+Generic+Programming+in+C;Instant+Startup+Minimal+Binary+Footprint;MIT+Licensed+Open+Source+Excellence" alt="Typing SVG" />
   </a>
 </p>
 
@@ -268,7 +268,7 @@ Real-time network programming projects featuring perfect socket programming and 
 
 ### [System Programming](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)
 
-Low-level system interaction projects including shells and system utilities.
+Low-level system interaction projects including shells and system utilities. Features a complete Unix shell implementation with job control, I/O redirection, and process management.
 
 ### [Data Management](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)
 
