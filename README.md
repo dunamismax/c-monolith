@@ -59,8 +59,12 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 │   │   └── web_server/       # HTTP/1.1 web server with static file serving
 │   │       └── src/          # Full HTTP server implementation
 │   ├── system/               # Low-level system interaction projects
-│   │   └── file_utils/       # Secure file operations and utilities
-│   │       └── src/file_utils.c
+│   │   ├── file_utils/       # Secure file operations and utilities
+│   │   │   └── src/file_utils.c
+│   │   ├── process_monitor/  # Real-time system monitoring (htop clone)
+│   │   │   └── src/process_monitor.c
+│   │   └── unix_shell/       # Complete Unix shell implementation
+│   │       └── src/unix_shell.c
 │   ├── data/                 # Data management and record systems
 │   │   └── data_structures_demo/ # Comprehensive data structures demonstration
 │   │       └── src/data_structures_demo.c
@@ -117,6 +121,7 @@ make
 make run-calculator        # Scientific calculator
 make run-tic_tac_toe      # AI-powered game
 make run-data_structures_demo # Data structures demonstration
+make run-process_monitor  # htop-like system monitor
 make run-chat_server      # Real-time chat server
 make run-chat_client      # Chat client (connect to server)
 make run-web_server       # HTTP web server (http://localhost:8080)

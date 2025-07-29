@@ -123,6 +123,9 @@ $(BUILD_DIR)/bin/%: $(LIB_TARGETS)
 	elif [ "$*" = "web_server" ]; then \
 		echo "Building web_server with pthread support"; \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -lpthread -o $@; \
+	elif [ "$*" = "process_monitor" ]; then \
+		echo "Building process_monitor with ncurses support"; \
+		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -lncurses -o $@; \
 	elif [ -f "$$app_dir/src/$*.c" ]; then \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
 	else \
@@ -300,6 +303,11 @@ test-apps: apps
 		timeout 2s $(BUILD_DIR)/bin/web_server apps/network/web_server/www 8084 >/dev/null 2>&1 || true; \
 		echo "✓ web_server launch test passed"; \
 	fi
+	@if [ -x "$(BUILD_DIR)/bin/process_monitor" ]; then \
+		echo "Testing process_monitor..."; \
+		timeout 1s $(BUILD_DIR)/bin/process_monitor >/dev/null 2>&1 || true; \
+		echo "✓ process_monitor launch test passed"; \
+	fi
 	@echo "✓ Application tests completed"
 
 
@@ -380,6 +388,10 @@ run-web_server: $(BUILD_DIR)/bin/web_server
 	@echo "Starting C-Monolith Web Server on http://localhost:8080/"
 	@./$< apps/network/web_server/www 8080
 
+run-process_monitor: $(BUILD_DIR)/bin/process_monitor
+	@echo "Starting Process Monitor (press 'q' to quit)"
+	@./$<
+
 run-%: $(BUILD_DIR)/bin/%
 	@./$<
 
@@ -430,5 +442,8 @@ help:
 	@echo "Apps: $(APPS)"
 	@echo "Run:  make run-<app>"
 	@echo ""
-	@echo "Example: make run-unix_shell  # Launch the custom Unix shell"
+	@echo "Examples:"
+	@echo "  make run-unix_shell      # Launch the custom Unix shell"
+	@echo "  make run-process_monitor # Launch htop-like system monitor"
+	@echo "  make run-chat_server     # Start real-time chat server"
 

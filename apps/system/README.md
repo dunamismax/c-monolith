@@ -25,13 +25,35 @@ A complete custom shell demonstrating advanced system programming and process ma
 - **Advanced Features**: Tilde expansion (~), wildcard globbing (\*, ?), command history
 - **Cross-Platform**: Works on both Linux and macOS with optional readline support
 
+### Process Monitor - Real-time System Monitoring
+
+A comprehensive htop-like system monitor with advanced process management capabilities:
+
+#### **process_monitor** - System Resource Monitor
+
+- **Purpose**: Real-time system and process monitoring with interactive terminal interface
+- **Features**: Process tree view, CPU/memory monitoring, process killing, filtering and sorting
+- **Architecture**: ncurses-based UI with /proc filesystem parsing for real-time data collection
+- **Usage**: `./build/release/bin/process_monitor` or `make run-process_monitor`
+
+#### Key Technical Features
+
+- **Real-time Data Collection**: Direct /proc filesystem parsing for process and system information
+- **Interactive ncurses Interface**: Full-screen terminal UI with keyboard navigation and controls
+- **Multiple View Modes**: Process list, hierarchical tree view, and system information display
+- **Process Management**: Signal-based process termination with proper error handling
+- **Resource Monitoring**: Live CPU percentage, memory usage, and system statistics
+- **Advanced Sorting**: Sort by PID, CPU usage, memory usage, time, or command name
+- **Process Filtering**: Filter processes by name or PID with real-time search
+- **System Information**: Memory usage, load averages, uptime, and process counts
+
 ## Application Types
 
 This directory contains system programming applications such as:
 
 - **Custom Shells**: Command-line interpreters and shell implementations ✅ **IMPLEMENTED**
+- **System Monitors**: Process monitoring and system resource tracking ✅ **IMPLEMENTED**
 - **File Encryption**: Secure file encryption and decryption tools
-- **System Monitors**: Process monitoring and system resource tracking
 - **Memory Managers**: Custom memory allocation and management systems
 - **Process Controllers**: Process spawning, management, and IPC tools
 - **File System Tools**: Custom file system operations and utilities
