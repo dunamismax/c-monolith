@@ -22,16 +22,14 @@
 
 # C Programming Monolith
 
-A production-ready C monolith featuring ARM64-optimized applications, comprehensive security hardening, and a professional build system. Demonstrates modern C development practices with **zero runtime dependencies**, **memory safety**, and **high-performance optimizations**.
+Production-ready C monolith with ARM64 optimization, security hardening, and zero runtime dependencies.
 
 ## Core Features
 
-- **ARM64 Optimization**: Apple Silicon-specific compiler flags with LTO and vectorization
-- **Security Hardened**: Buffer overflow protection, input validation, and memory safety
-- **Professional Build System**: Enhanced Make-based system replacing all scripts
-- **Comprehensive Testing**: Unit, integration, and security tests with coverage reporting
-- **Production Ready**: Memory-safe applications with professional error handling
-- **Zero Dependencies**: Self-contained binaries requiring no external libraries
+- **ARM64 Optimized**: Apple Silicon-specific compiler flags with LTO
+- **Security Hardened**: Buffer overflow protection and memory safety
+- **Zero Dependencies**: Self-contained binaries
+- **Comprehensive Testing**: 51+ individual tests with coverage reporting
 
 <p align="center">
   <img src="https://github.com/dunamismax/images/blob/main/c/C-Logo.png" alt="C Programming Language Logo" width="150" />
@@ -40,65 +38,18 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 ## Project Structure
 
 ```sh
-├── apps/                     # Applications (all categories)
-│   ├── cli/                  # Command-line utilities
-│   │   ├── calculator/       # Scientific calculator with advanced math
-│   │   │   └── src/calculator.c
-│   │   └── text_processor/   # String manipulation and text processing
-│   │       └── src/text_processor.c
-│   ├── games/                # Interactive gaming applications
-│   │   ├── tic_tac_toe/      # AI-powered tic-tac-toe game
-│   │   │   └── src/tic_tac_toe.c
-│   │   └── number_guessing/  # Multi-difficulty guessing game
-│   │       └── src/number_guessing.c
-│   ├── network/              # Network programming and client-server apps
-│   │   ├── chat_server/      # Real-time multi-client chat server
-│   │   │   └── src/          # Server implementation with socket programming
-│   │   ├── chat_client/      # Interactive chat client application
-│   │   │   └── src/          # Client implementation with real-time messaging
-│   │   └── web_server/       # HTTP/1.1 web server with static file serving
-│   │       └── src/          # Full HTTP server implementation
-│   ├── system/               # Low-level system interaction projects
-│   │   ├── file_utils/       # Secure file operations and utilities
-│   │   │   └── src/file_utils.c
-│   │   ├── process_monitor/  # Real-time system monitoring (htop clone)
-│   │   │   └── src/process_monitor.c
-│   │   └── unix_shell/       # Complete Unix shell implementation
-│   │       └── src/unix_shell.c
-│   ├── data/                 # Data management and record systems
-│   │   └── data_structures_demo/ # Comprehensive data structures demonstration
-│   │       └── src/data_structures_demo.c
-│   └── embedded/             # Hardware interaction and microcontroller projects
-├── libs/                     # High-performance shared libraries
-│   ├── math_utils/           # Mathematical algorithms and utilities
-│   │   ├── include/math_utils.h
-│   │   └── src/math_utils.c
-│   └── data_structures/      # Comprehensive data structures library
-│       ├── include/          # Complete data structures API
-│       │   ├── data_structures.h # Full data structures library
-│       │   ├── vector.h      # Integer vector implementation
-│       │   └── generic_vector.h # Generic type-safe vector
-│       └── src/
-│           ├── data_structures.c # Complete implementation
-│           ├── vector.c      # Integer vector implementation
-│           └── generic_vector.c # Generic vector implementation
-├── tests/                    # Comprehensive test suite (51+ individual tests)
-│   ├── libs/                 # Library unit tests
-│   │   ├── test_math_utils.c
-│   │   ├── test_vector.c
-│   │   └── test_generic_vector.c # Generic vector tests
-│   ├── apps/                 # Application integration tests
-│   │   ├── test_integration.c
-│   │   ├── test_data_structures_linked_list.c # Linked list comprehensive tests
-│   │   ├── test_data_structures_dynamic_array.c # Dynamic array tests
-│   │   ├── test_data_structures_hash_table.c # Hash table tests
-│   │   ├── test_data_structures_binary_tree.c # Binary tree tests
-│   │   ├── test_data_structures_string_functions.c # String library tests
-│   │   └── test_data_structures_integration.c # Data structures integration
-│   └── test_framework.h      # Thread-safe testing framework
-├── Makefile                  # Professional build system
-├── LICENSE                   # MIT License
-└── README.md                 # This file
+├── apps/                     # Applications by category
+│   ├── cli/                  # calculator, text_processor, compressor
+│   ├── games/                # tic_tac_toe, number_guessing
+│   ├── network/              # chat_server/client, web_server
+│   ├── system/               # process_monitor, unix_shell
+│   ├── data/                 # data_structures_demo
+│   └── embedded/             # Hardware interaction projects
+├── libs/                     # Shared libraries
+│   ├── math_utils/           # Mathematical algorithms
+│   └── data_structures/      # Complete data structures library
+├── tests/                    # Test suite (51+ individual tests)
+└── Makefile                  # Professional build system
 ```
 
 ---
@@ -107,27 +58,18 @@ A production-ready C monolith featuring ARM64-optimized applications, comprehens
 
 **Prerequisites:** LLVM/Clang 15+ or GCC 11+
 
-### Get Running in 3 Steps
-
 ```bash
-# 1. Clone and navigate
+# Clone and build
 git clone https://github.com/dunamismax/c-monolith.git
 cd c-monolith
-
-# 2. Build everything with optimizations
 make
 
-# 3. Run applications
+# Run applications
 make run-calculator        # Scientific calculator
-make run-tic_tac_toe      # AI-powered game
-make run-data_structures_demo # Data structures demonstration
-make run-process_monitor  # htop-like system monitor
-make run-chat_server      # Real-time chat server
-make run-chat_client      # Chat client (connect to server)
-make run-web_server       # HTTP web server (http://localhost:8080)
+make run-web_server       # HTTP web server (localhost:8080)
+make run-data_structures_demo # Interactive CS demonstrations
+make run-process_monitor  # System monitor
 ```
-
-The build system automatically detects your platform and applies optimal compiler flags.
 
 ---
 
@@ -135,263 +77,56 @@ The build system automatically detects your platform and applies optimal compile
   <img src="https://github.com/dunamismax/images/blob/main/c/c-programming-typed.png" alt="C Programming Typed" width="400" />
 </p>
 
-## Why C for System Applications?
-
-C provides unmatched control over system resources and memory management. This monolith demonstrates how modern C development can achieve both safety and performance through careful design and comprehensive testing.
-
-| Aspect               | High-Level Languages | This C Monolith           |
-| -------------------- | -------------------- | ------------------------- |
-| Runtime Dependencies | Heavy                | Zero dependencies         |
-| Memory Management    | Garbage collected    | Manual with safety checks |
-| Performance          | Variable overhead    | Consistently optimal      |
-| Binary Size          | Large                | Minimal footprint         |
-| Startup Time         | Slow                 | Instant                   |
-| Platform Control     | Limited              | Complete system access    |
-
-## Make Build System
-
-Professional ARM64-optimized build system with comprehensive targets:
-
-### Build Targets
+## Build System
 
 ```bash
+# Build
 make                    # Build everything (release mode)
-make libs              # Build libraries only
-make apps              # Build applications only
-make build-tests       # Build test suite
-```
+make MODE=debug         # Debug with sanitizers
 
-### Test Targets
+# Test
+make test              # Run all tests
+make test-quick        # Quick tests only
 
-```bash
-make test                   # Run all tests (same as test-run)
-make test-run               # Full test suite with colored reporting (10 suites)
-make test-quick             # Quick tests only (libraries + data structures)
-make test-libs              # Test libraries only (math, vector, generic vector)
-make test-apps              # Test applications only (integration tests)
-make test-data-structures   # Test data structures only (6 comprehensive suites)
-make test-coverage          # Run tests with coverage reporting
-```
-
-### Clean Targets
-
-```bash
+# Development
 make clean             # Clean build artifacts
-make clean-all         # Comprehensive cleanup (temp files, logs)
-make clean-verify      # Clean and verify removal
-```
-
-### Development & Verification
-
-```bash
 make verify            # Production readiness check
-make install           # Install to /usr/local
-make format            # Format code with clang-format
-make lint              # Run static analysis
-```
-
-### Build Modes & App Running
-
-```bash
-# Build modes
-make MODE=release      # Maximum performance (default)
-make MODE=debug        # Debug with sanitizers
-make MODE=profile      # Profiling enabled
-
-# Run individual apps
 make run-<app>         # Run specific application
 ```
 
-<p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/logo-logo-modern.png" alt="Modern C Logo" width="250" />
-</p>
+## Applications
 
-## Technology Stack
+### Featured: Data Structures Demo
 
-- **Compiler**: LLVM Clang with ARM64-specific optimizations
-- **Build System**: Professional Makefile with parallel builds and LTO
-- **Testing**: Custom framework with comprehensive coverage
-- **Security**: AddressSanitizer, UBSan, and stack protection
-- **Optimization**: Link-time optimization with Apple Silicon tuning
+Interactive educational application demonstrating CS fundamentals:
 
-## Platform Support
+- Linked Lists, Dynamic Arrays, Hash Tables, Binary Trees
+- Graph traversal (BFS/DFS), Custom String Library
+- Memory-safe implementations with comprehensive testing
 
-Automatically detects and optimizes for:
+### Categories
 
-- **Apple Silicon** (M1/M2/M3) with specific CPU tuning
-- **Intel x86_64** with native optimizations
-- **Linux ARM64** and x86_64 support
+- **CLI**: calculator, text_processor, compressor
+- **Games**: tic_tac_toe, number_guessing  
+- **Network**: chat_server/client, web_server
+- **System**: process_monitor, unix_shell
 
-## Featured Application: Data Structures Demo
+## Libraries
 
-The **Data Structures Demo** (`make run-data_structures_demo`) is a comprehensive educational application showcasing fundamental computer science data structures with complete implementations:
+- **Math Utils**: GCD/LCM, factorial, Fibonacci, prime checking with overflow protection
+- **Data Structures**: Complete implementations of fundamental CS data structures
+- **Testing**: 51+ individual test cases with memory safety validation
 
-### Interactive Demonstrations
+## Testing & Security
 
-```bash
-make run-data_structures_demo
-
-# Menu Options:
-# 1. Linked List Operations    - Dynamic insertion/deletion at any position
-# 2. Dynamic Array Operations  - Automatic resizing with memory management
-# 3. Hash Table Operations     - Collision handling and efficient lookup
-# 4. Binary Tree Operations    - BST with multiple traversal algorithms
-# 5. Graph Operations (BFS/DFS) - Graph traversal with adjacency matrix
-# 6. Custom String Library     - Complete string manipulation functions
-# 7. Run All Demonstrations    - Execute all demos sequentially
-```
-
-### Educational Features
-
-- **Interactive Menu System**: User-friendly interface with step-by-step demonstrations
-- **Memory Management**: Shows proper allocation, deallocation, and safety practices
-- **Algorithm Visualization**: Clear output showing internal state changes
-- **Performance Insights**: Demonstrates time/space complexity characteristics
-- **Real-world Examples**: Practical use cases for each data structure
-- **Comprehensive Coverage**: From basic operations to advanced algorithms
-
-### Technical Implementation
-
-- **Modular Design**: Each data structure implemented as a separate library component
-- **Memory Safety**: Comprehensive bounds checking and error handling
-- **Educational Focus**: Clear, well-commented code suitable for learning
-- **Production Quality**: Fully tested with 51+ individual test cases
-- **Cross-Platform**: Works on all supported platforms with optimal performance
-
-## Application Categories
-
-Explore comprehensive C programming projects organized by domain and complexity:
-
-### [CLI Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)
-
-Command-line utilities and tools for everyday system tasks and calculations.
-
-### [Interactive Games](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)
-
-Console-based games and interactive entertainment applications.
-
-### [Network Applications](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)
-
-Real-time network programming projects featuring perfect socket programming and multi-client server architecture. Includes a complete chat system with thread-safe broadcasting, HTTP/1.1 web server with security hardening, and graceful shutdown handling.
-
-### [System Programming](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)
-
-Low-level system interaction projects including shells and system utilities. Features a complete Unix shell implementation with job control, I/O redirection, and process management.
-
-### [Data Management](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)
-
-Database and record management systems for handling structured data.
-
-### [Embedded & Hardware](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)
-
-Hardware interaction and microcontroller programming projects.
-
-## Shared Libraries
-
-### Math Utils Library
-
-High-performance mathematical operations optimized for ARM64:
-
-- **Functions**: GCD/LCM, factorial, Fibonacci, prime checking, power
-- **Optimization**: ARM64 vectorization, overflow detection
-- **Safety**: Integer overflow protection, bounds checking
-
-### Data Structures Library
-
-Comprehensive collection of fundamental data structures with complete implementations:
-
-- **Linked Lists**: Dynamic memory allocation with insertion/deletion at any position
-- **Dynamic Arrays**: Automatic resizing with bounds checking and memory safety
-- **Hash Tables**: Collision handling with separate chaining and optimized hash functions
-- **Binary Search Trees**: Self-balancing operations with traversal algorithms
-- **Graphs**: Adjacency matrix representation with BFS/DFS traversal
-- **String Library**: Custom string manipulation functions with memory management
-- **Integer Vector**: High-performance dynamic arrays for integers
-- **Generic Vector**: Type-safe dynamic arrays for any data type
-- **Safety**: Comprehensive bounds checking, null pointer validation, overflow protection
-- **Performance**: Optimized memory management and growth algorithms
-- **Testing**: 51+ individual test cases covering all operations and edge cases
-
-<p align="center">
-  <img src="https://github.com/dunamismax/images/blob/main/c/the-c-programming-language.png" alt="The C Programming Language Book" width="300" />
-</p>
-
-## Testing & Quality Assurance
-
-### Comprehensive Test Suite
-
-```bash
-# Test execution examples
-make test                    # All tests with colored output
-make test-coverage          # Generate coverage reports
-make test-individual        # Detailed test output
-```
-
-**Test Coverage:**
-
-- **Unit Tests**: Library functions with comprehensive edge case testing (51+ individual tests)
-  - Math utilities with overflow protection verification
-  - Vector operations with bounds checking
-  - Generic vector with complex data structure testing
-  - **Data Structures**: Complete test coverage for all implementations
-    - Linked Lists: 8 comprehensive tests (creation, insertion, deletion, edge cases)
-    - Dynamic Arrays: 8 tests (resizing, random access, memory management)
-    - Hash Tables: 9 tests (collision handling, capacity stress, special keys)
-    - Binary Trees: 10 tests (BST properties, traversals, deletion scenarios)
-    - String Functions: 10 tests (custom implementations, special characters)
-    - Integration: 6 tests (multi-structure workflows, performance, memory)
-- **Integration Tests**: Application functionality and security validation
-- **Security Tests**: Buffer overflow, path traversal, format string protection
-- **Thread Safety**: Enhanced test framework with proper state management
-- **Performance Tests**: Benchmarking and optimization validation
-
-### Security Features
-
-- **Memory Safety**: AddressSanitizer and UndefinedBehaviorSanitizer with enhanced coverage
-- **Buffer Protection**: Stack canaries, bounds checking, and overflow detection
-- **Input Validation**: Comprehensive sanitization and validation across all applications
-- **Path Security**: Directory traversal protection and canonical path validation
-- **Integer Safety**: Robust overflow detection in mathematical operations
-- **Format String Protection**: Prevention of format string vulnerabilities
-
-## Development Workflow
-
-```bash
-# Complete development cycle
-make clean-all              # Clean everything
-make MODE=debug test        # Debug build with testing
-make format lint           # Code formatting and analysis
-make verify                # Production readiness check
-make MODE=release          # Optimized production build
-```
+- **51+ Individual Tests**: Unit, integration, and security validation
+- **Memory Safety**: AddressSanitizer, UBSan, stack protection
+- **Platform Support**: macOS (ARM64/Intel), Linux (ARM64/x86_64)
+- **Optimization**: ARM64 Apple Silicon tuning with LTO
 
 <p align="center">
   <img src="https://github.com/dunamismax/images/blob/main/c/c-computerphile.png" alt="C Computerphile" width="400" />
 </p>
-
-## Performance Optimization
-
-### ARM64 Apple Silicon Tuning
-
-```makefile
-# Automatic optimization flags
--mcpu=apple-m1 -mtune=apple-m1 -arch arm64    # Apple Silicon
--O3 -flto=thin -ffast-math                    # Maximum optimization
--fvectorize -funroll-loops                    # Vectorization
--falign-functions=32 -falign-loops=32         # Memory alignment
-```
-
-### Parallel Building
-
-- **Automatic Core Detection**: Uses all available CPU cores
-- **Dependency Management**: Smart rebuild only when necessary
-- **Link-Time Optimization**: Whole-program optimization
-
-## Cross-Platform Support
-
-- **macOS**: ARM64 and Intel with Apple-specific optimizations
-- **Linux**: ARM64 and x86_64 with GCC and Clang support
-- **Build System**: Automatic platform detection and flag adaptation
 
 ## License
 
