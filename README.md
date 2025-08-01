@@ -106,10 +106,12 @@ Interactive educational application demonstrating CS fundamentals:
 
 ### Categories
 
-- **CLI**: calculator, text_processor, compressor
-- **Games**: tic_tac_toe, number_guessing  
-- **Network**: chat_server/client, web_server
-- **System**: process_monitor, unix_shell
+- **[CLI](https://github.com/dunamismax/c-monolith/blob/main/apps/cli/README.md)**: calculator, text_processor, compressor
+- **[Games](https://github.com/dunamismax/c-monolith/blob/main/apps/games/README.md)**: tic_tac_toe, number_guessing  
+- **[Network](https://github.com/dunamismax/c-monolith/blob/main/apps/network/README.md)**: chat_server/client, web_server
+- **[System](https://github.com/dunamismax/c-monolith/blob/main/apps/system/README.md)**: process_monitor, unix_shell
+- **[Data](https://github.com/dunamismax/c-monolith/blob/main/apps/data/README.md)**: data_structures_demo
+- **[Embedded](https://github.com/dunamismax/c-monolith/blob/main/apps/embedded/README.md)**: hardware interaction projects
 
 ## Libraries
 
