@@ -44,7 +44,8 @@ static int safe_strcpy(char *dest, size_t dest_size, const char *src) {
 /**
  * Safe string concatenation with bounds checking
  */
-__attribute__((unused)) static int safe_strcat(char *dest, size_t dest_size, const char *src) {
+__attribute__((unused)) static int safe_strcat(char *dest, size_t dest_size,
+                                               const char *src) {
   if (!dest || !src || dest_size == 0) {
     return -1;
   }

@@ -33,7 +33,7 @@ void find_build_path() {
   const char *build_mode = getenv("BUILD_MODE");
   if (build_mode) {
     snprintf(build_path, sizeof(build_path), "build/%s", build_mode);
-    
+
     // Verify this path has executables
     char test_path[512];
     snprintf(test_path, sizeof(test_path), "%s/bin/calculator", build_path);
@@ -41,7 +41,7 @@ void find_build_path() {
       return;
     }
   }
-  
+
   // Fallback: try common build directories
   const char *paths[] = {"build/release", "build/debug", "build/profile", NULL};
 
@@ -54,7 +54,7 @@ void find_build_path() {
       return;
     }
   }
-  
+
   // Default fallback
   strncpy(build_path, "build/release", sizeof(build_path) - 1);
   build_path[sizeof(build_path) - 1] = '\0';
@@ -88,9 +88,10 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
     dup2(pipe_out[1], STDERR_FILENO);
 
     // Suppress AddressSanitizer output for cleaner test results
-    setenv("ASAN_OPTIONS", "abort_on_error=0:halt_on_error=0:detect_leaks=0", 1);
+    setenv("ASAN_OPTIONS", "abort_on_error=0:halt_on_error=0:detect_leaks=0",
+           1);
     setenv("UBSAN_OPTIONS", "abort_on_error=0:halt_on_error=0", 1);
-    
+
     // Set environment for CI compatibility
     setenv("TERM", "xterm", 1);
     setenv("COLUMNS", "80", 1);
@@ -114,7 +115,7 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
     struct timeval timeout;
     FD_ZERO(&read_fds);
     FD_SET(pipe_out[0], &read_fds);
-    timeout.tv_sec = getenv("CI") ? 2 : 5;  // Shorter timeout in CI
+    timeout.tv_sec = getenv("CI") ? 2 : 5; // Shorter timeout in CI
     timeout.tv_usec = 0;
 
     if (select(pipe_out[0] + 1, &read_fds, NULL, NULL, &timeout) > 0) {
@@ -134,7 +135,7 @@ int run_app_with_input(const char *app_path, const char *input, char *output,
     int status;
     // Wait for process to complete
     waitpid(pid, &status, 0);
-    
+
     return WEXITSTATUS(status);
   }
 }
@@ -146,17 +147,19 @@ static int test_calculator_basic(void) {
   char app_path[512];
 
   snprintf(app_path, sizeof(app_path), "%s/bin/calculator", build_path);
-  
+
   // In CI, just check if the app can be executed successfully
   if (getenv("CI")) {
-    int result = system("echo '+ 5 3\nquit' | build/release/bin/calculator >/dev/null 2>&1");
+    int result = system(
+        "echo '+ 5 3\nquit' | build/release/bin/calculator >/dev/null 2>&1");
     return (result == 0);
   }
-  
+
   int result = run_app_with_input(app_path, input, output, sizeof(output));
 
   // Accept either 8.00 or just 8 as valid output
-  return (result == 0 && (strstr(output, "8.00") != NULL || strstr(output, "8") != NULL));
+  return (result == 0 &&
+          (strstr(output, "8.00") != NULL || strstr(output, "8") != NULL));
 }
 
 // Test calculator security (format string protection)
@@ -170,11 +173,14 @@ static int test_calculator_security(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("Calculator security test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("Calculator security test - Exit code: %d, Output: '%.200s'\n",
+           result, output);
   }
 
   // Should not crash and should show error message or invalid input
-  return (result == 0 && (strstr(output, "Error") != NULL || strstr(output, "Invalid") != NULL || strstr(output, "Unknown") != NULL));
+  return (result == 0 && (strstr(output, "Error") != NULL ||
+                          strstr(output, "Invalid") != NULL ||
+                          strstr(output, "Unknown") != NULL));
 }
 
 // Test calculator factorial with overflow protection
@@ -188,7 +194,8 @@ static int test_calculator_factorial_overflow(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("Calculator factorial test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("Calculator factorial test - Exit code: %d, Output: '%.200s'\n",
+           result, output);
   }
 
   // Should exit cleanly regardless of whether overflow protection triggers
@@ -206,7 +213,8 @@ static int test_file_utils_security(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("File utils security test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("File utils security test - Exit code: %d, Output: '%.200s'\n",
+           result, output);
   }
 
   // Should not crash - path validation may vary by system
@@ -226,7 +234,8 @@ static int test_file_utils_basic(void) {
 
   // In CI, just check if the app can be executed successfully
   if (getenv("CI")) {
-    int result = system("echo 'help\nquit' | build/release/bin/file_utils >/dev/null 2>&1");
+    int result = system(
+        "echo 'help\nquit' | build/release/bin/file_utils >/dev/null 2>&1");
     unlink("test_file.txt");
     return (result == 0);
   }
@@ -256,7 +265,8 @@ static int test_text_processor_security(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("Text processor security test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("Text processor security test - Exit code: %d, Output: '%.200s'\n",
+           result, output);
   }
 
   // Should not crash
@@ -270,7 +280,8 @@ static int test_text_processor_basic(void) {
 
   // In CI, just check if the app can be executed successfully
   if (getenv("CI")) {
-    int result = system("echo 'help\nquit' | build/release/bin/text_processor >/dev/null 2>&1");
+    int result = system(
+        "echo 'help\nquit' | build/release/bin/text_processor >/dev/null 2>&1");
     return (result == 0);
   }
 
@@ -293,7 +304,8 @@ static int test_tic_tac_toe_basic(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("Tic-tac-toe test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("Tic-tac-toe test - Exit code: %d, Output: '%.200s'\n", result,
+           output);
   }
 
   return (result == 0);
@@ -310,7 +322,8 @@ static int test_number_guessing_basic(void) {
 
   // Debug output for CI
   if (getenv("CI")) {
-    printf("Number guessing test - Exit code: %d, Output: '%.200s'\n", result, output);
+    printf("Number guessing test - Exit code: %d, Output: '%.200s'\n", result,
+           output);
   }
 
   return (result == 0);

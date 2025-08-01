@@ -36,7 +36,8 @@ int test_summary(const char *suite_name) {
   printf("\n%s Results:\n", suite_name);
   printf("Tests run: %d\n", test_context.tests_run);
   printf("Tests passed: %d\n", test_context.tests_passed);
-  printf("Tests failed: %d\n", test_context.tests_run - test_context.tests_passed);
+  printf("Tests failed: %d\n",
+         test_context.tests_run - test_context.tests_passed);
 
   if (test_context.tests_passed == test_context.tests_run) {
     printf("All tests passed!\n");
