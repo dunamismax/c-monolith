@@ -89,7 +89,17 @@ build-tests: libs
 	@for test_file in $$(find tests -name "*.c"); do \
 		test_name=$$(basename $$test_file .c); \
 		echo "Building test: $$test_name"; \
-		$(CC) $(CFLAGS) $(INCLUDES) -Itests $$test_file $(LIB_TARGETS) -o $(BUILD_DIR)/bin/$$test_name; \
+		if [ "$$test_name" = "test_compressor" ]; then \
+			echo "Building compressor test with compressor source files"; \
+			$(CC) $(CFLAGS) $(INCLUDES) -Itests $$test_file \
+				apps/cli/compressor/src/huffman.c \
+				apps/cli/compressor/src/lz77.c \
+				apps/cli/compressor/src/utils.c \
+				apps/cli/compressor/src/compression_core.c \
+				$(LIB_TARGETS) -lm -o $(BUILD_DIR)/bin/$$test_name; \
+		else \
+			$(CC) $(CFLAGS) $(INCLUDES) -Itests $$test_file $(LIB_TARGETS) -o $(BUILD_DIR)/bin/$$test_name; \
+		fi \
 	done
 	@echo "✓ Test suite built"
 
@@ -126,6 +136,9 @@ $(BUILD_DIR)/bin/%: $(LIB_TARGETS)
 	elif [ "$*" = "process_monitor" ]; then \
 		echo "Building process_monitor with ncurses support"; \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -lncurses -o $@; \
+	elif [ "$*" = "compressor" ]; then \
+		echo "Building compressor with math library support"; \
+		$(CC) $(CFLAGS) $(INCLUDES) $$(find $$app_dir/src -name "*.c") $(LIB_TARGETS) -lm -o $@; \
 	elif [ -f "$$app_dir/src/$*.c" ]; then \
 		$(CC) $(CFLAGS) $(INCLUDES) $$app_dir/src/$*.c $(LIB_TARGETS) -o $@; \
 	else \
@@ -348,7 +361,7 @@ verify: clean
 	fi; \
 	total=$$((total + 1)); \
 	echo "Verifying executables..."; \
-	for app in calculator file_utils text_processor tic_tac_toe number_guessing; do \
+	for app in calculator file_utils text_processor tic_tac_toe number_guessing compressor; do \
 		if [ -x "build/release/bin/$$app" ]; then \
 			echo "✓ $$app executable exists"; \
 			passed=$$((passed + 1)); \
